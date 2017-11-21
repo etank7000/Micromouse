@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.3.2">
+<eagle version="8.4.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -5308,6 +5308,8 @@ http://www.zetex.com&lt;p&gt;
 <part name="T2" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
 <part name="T3" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
 <part name="T4" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
+<part name="AGND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
+<part name="AGND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5426,6 +5428,8 @@ http://www.zetex.com&lt;p&gt;
 <instance part="T2" gate="A" x="215.9" y="-66.04"/>
 <instance part="T3" gate="A" x="281.94" y="-63.5"/>
 <instance part="T4" gate="A" x="332.74" y="-63.5"/>
+<instance part="AGND2" gate="VR1" x="33.02" y="-76.2" rot="R270"/>
+<instance part="AGND6" gate="VR1" x="27.94" y="-78.74" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -6002,6 +6006,16 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="45.72" y1="-99.06" x2="35.56" y2="-99.06" width="0.1524" layer="91"/>
 <junction x="35.56" y="-99.06"/>
 <pinref part="AGND5" gate="VR1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="FSYNC"/>
+<wire x1="45.72" y1="-76.2" x2="35.56" y2="-76.2" width="0.1524" layer="91"/>
+<pinref part="AGND2" gate="VR1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="CLKIN"/>
+<wire x1="45.72" y1="-78.74" x2="30.48" y2="-78.74" width="0.1524" layer="91"/>
+<pinref part="AGND6" gate="VR1" pin="AGND"/>
 </segment>
 </net>
 <net name="REC_RD" class="0">
@@ -6665,6 +6679,11 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="76.2" y1="-73.66" x2="83.82" y2="-73.66" width="0.1524" layer="91"/>
 <label x="83.82" y="-73.66" size="0.889" layer="95" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB13"/>
+<wire x1="-55.88" y1="-88.9" x2="-50.8" y2="-88.9" width="0.1524" layer="91"/>
+<label x="-50.8" y="-88.9" size="0.8128" layer="95" xref="yes"/>
+</segment>
 </net>
 <net name="MISO" class="0">
 <segment>
@@ -6672,12 +6691,22 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="76.2" y1="-76.2" x2="83.82" y2="-76.2" width="0.1524" layer="91"/>
 <label x="83.82" y="-76.2" size="0.889" layer="95" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB14"/>
+<wire x1="-55.88" y1="-86.36" x2="-50.8" y2="-86.36" width="0.1524" layer="91"/>
+<label x="-50.8" y="-86.36" size="0.8128" layer="95" xref="yes"/>
+</segment>
 </net>
 <net name="MOSI" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="SDA/SDI"/>
 <wire x1="76.2" y1="-78.74" x2="83.82" y2="-78.74" width="0.1524" layer="91"/>
 <label x="83.82" y="-78.74" size="0.889" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB15"/>
+<wire x1="-55.88" y1="-83.82" x2="-50.8" y2="-83.82" width="0.1524" layer="91"/>
+<label x="-50.8" y="-83.82" size="0.8128" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="INT" class="0">
