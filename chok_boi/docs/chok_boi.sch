@@ -5212,16 +5212,16 @@ http://www.zetex.com&lt;p&gt;
 <part name="C_BAT2" library="SparkFun-Passives" deviceset="CAP" device="1206" value="100uF"/>
 <part name="R_RLF" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="U$7" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
-<part name="R_RLS" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
+<part name="R_RLD" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="U$8" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
-<part name="R_RRS" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
+<part name="R_RRD" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="U$9" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
 <part name="R_RRF" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="LEFT_FRONT_EMITTER" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
 <part name="R_ELF" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10"/>
 <part name="R_ELF_PD" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47k"/>
 <part name="U$11" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
-<part name="R_ES1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
+<part name="R_ED1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
 <part name="R_ES_PD" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47k"/>
 <part name="U$13" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
 <part name="R_ERF" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10"/>
@@ -5257,9 +5257,9 @@ http://www.zetex.com&lt;p&gt;
 <part name="C_5V2" library="SparkFun-Passives" deviceset="CAP" device="1206" value="100uF"/>
 <part name="C_ELF1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
 <part name="C_ELF2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_S1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
-<part name="C_S2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="R_ES2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
+<part name="C_EM_D1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
+<part name="C_EM_D2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="R_ED2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
 <part name="C_ERF1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
 <part name="C_ERF2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="R_VM1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="20k"/>
@@ -5284,22 +5284,22 @@ http://www.zetex.com&lt;p&gt;
 <part name="R_BOOT1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47k"/>
 <part name="U$18" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
 <part name="U$19" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
-<part name="R_ES3" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
-<part name="R_ES4" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
+<part name="R_EH1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
+<part name="R_EH2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
 <part name="R_ERF_PD1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47k"/>
-<part name="C_ERF3" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_ERF4" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
+<part name="C_E_H2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_E_H1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
 <part name="U$20" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
 <part name="U$21" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
-<part name="R_RRF1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
-<part name="R_RRF2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
+<part name="R_RRH" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
+<part name="R_RLH" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="U1" library="SparkFun-Sensors" deviceset="MPU-6000" device=""/>
-<part name="C_5V4" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V5" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V6" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V7" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V8" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V9" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_LD" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_RD" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_RF" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_RH" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_LH" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C_REC_LF" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_5V11" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_5V12" library="SparkFun" deviceset="CAP" device="0603-CAP" value="2.2nF"/>
 <part name="C_5V10" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.01uF"/>
@@ -5332,16 +5332,16 @@ http://www.zetex.com&lt;p&gt;
 <instance part="C_BAT2" gate="G$1" x="35.56" y="33.02"/>
 <instance part="R_RLF" gate="G$1" x="162.56" y="40.64" rot="R90"/>
 <instance part="U$7" gate="G$1" x="193.04" y="58.42"/>
-<instance part="R_RLS" gate="G$1" x="195.58" y="40.64" rot="R90"/>
+<instance part="R_RLD" gate="G$1" x="195.58" y="40.64" rot="R90"/>
 <instance part="U$8" gate="G$1" x="228.6" y="58.42"/>
-<instance part="R_RRS" gate="G$1" x="231.14" y="40.64" rot="R90"/>
+<instance part="R_RRD" gate="G$1" x="231.14" y="40.64" rot="R90"/>
 <instance part="U$9" gate="G$1" x="266.7" y="58.42"/>
 <instance part="R_RRF" gate="G$1" x="269.24" y="40.64" rot="R90"/>
 <instance part="LEFT_FRONT_EMITTER" gate="G$1" x="162.56" y="-27.94"/>
 <instance part="R_ELF" gate="G$1" x="162.56" y="-45.72" rot="R90"/>
 <instance part="R_ELF_PD" gate="G$1" x="144.78" y="-73.66" rot="R90"/>
 <instance part="U$11" gate="G$1" x="218.44" y="-20.32"/>
-<instance part="R_ES1" gate="G$1" x="218.44" y="-50.8" rot="R90"/>
+<instance part="R_ED1" gate="G$1" x="218.44" y="-50.8" rot="R90"/>
 <instance part="R_ES_PD" gate="G$1" x="200.66" y="-73.66" rot="R90"/>
 <instance part="U$13" gate="G$1" x="284.48" y="-27.94"/>
 <instance part="R_ERF" gate="G$1" x="284.48" y="-45.72" rot="R90"/>
@@ -5377,9 +5377,9 @@ http://www.zetex.com&lt;p&gt;
 <instance part="C_5V2" gate="G$1" x="93.98" y="38.1"/>
 <instance part="C_ELF1" gate="G$1" x="175.26" y="-30.48"/>
 <instance part="C_ELF2" gate="G$1" x="185.42" y="-30.48"/>
-<instance part="C_S1" gate="G$1" x="233.68" y="-30.48"/>
-<instance part="C_S2" gate="G$1" x="243.84" y="-30.48"/>
-<instance part="R_ES2" gate="G$1" x="228.6" y="-50.8" rot="R90"/>
+<instance part="C_EM_D1" gate="G$1" x="233.68" y="-30.48"/>
+<instance part="C_EM_D2" gate="G$1" x="243.84" y="-30.48"/>
+<instance part="R_ED2" gate="G$1" x="228.6" y="-50.8" rot="R90"/>
 <instance part="C_ERF1" gate="G$1" x="294.64" y="-30.48"/>
 <instance part="C_ERF2" gate="G$1" x="304.8" y="-30.48"/>
 <instance part="R_VM1" gate="G$1" x="-228.6" y="-76.2" rot="R180"/>
@@ -5404,22 +5404,22 @@ http://www.zetex.com&lt;p&gt;
 <instance part="R_BOOT1" gate="G$1" x="-83.82" y="-132.08" rot="R270"/>
 <instance part="U$18" gate="G$1" x="335.28" y="-20.32"/>
 <instance part="U$19" gate="G$1" x="335.28" y="-35.56"/>
-<instance part="R_ES3" gate="G$1" x="335.28" y="-50.8" rot="R90"/>
-<instance part="R_ES4" gate="G$1" x="345.44" y="-50.8" rot="R90"/>
+<instance part="R_EH1" gate="G$1" x="335.28" y="-50.8" rot="R90"/>
+<instance part="R_EH2" gate="G$1" x="345.44" y="-50.8" rot="R90"/>
 <instance part="R_ERF_PD1" gate="G$1" x="322.58" y="-71.12" rot="R90"/>
-<instance part="C_ERF3" gate="G$1" x="363.22" y="-30.48"/>
-<instance part="C_ERF4" gate="G$1" x="353.06" y="-30.48"/>
+<instance part="C_E_H2" gate="G$1" x="363.22" y="-30.48"/>
+<instance part="C_E_H1" gate="G$1" x="353.06" y="-30.48"/>
 <instance part="U$20" gate="G$1" x="307.34" y="58.42"/>
 <instance part="U$21" gate="G$1" x="347.98" y="58.42"/>
-<instance part="R_RRF1" gate="G$1" x="309.88" y="40.64" rot="R90"/>
-<instance part="R_RRF2" gate="G$1" x="350.52" y="40.64" rot="R90"/>
+<instance part="R_RRH" gate="G$1" x="309.88" y="40.64" rot="R90"/>
+<instance part="R_RLH" gate="G$1" x="350.52" y="40.64" rot="R90"/>
 <instance part="U1" gate="G$1" x="60.96" y="-78.74"/>
-<instance part="C_5V4" gate="G$1" x="203.2" y="58.42"/>
-<instance part="C_5V5" gate="G$1" x="238.76" y="58.42"/>
-<instance part="C_5V6" gate="G$1" x="276.86" y="58.42"/>
-<instance part="C_5V7" gate="G$1" x="317.5" y="58.42"/>
-<instance part="C_5V8" gate="G$1" x="358.14" y="58.42"/>
-<instance part="C_5V9" gate="G$1" x="170.18" y="58.42"/>
+<instance part="C_REC_LD" gate="G$1" x="203.2" y="58.42"/>
+<instance part="C_REC_RD" gate="G$1" x="238.76" y="58.42"/>
+<instance part="C_REC_RF" gate="G$1" x="276.86" y="58.42"/>
+<instance part="C_REC_RH" gate="G$1" x="317.5" y="58.42"/>
+<instance part="C_REC_LH" gate="G$1" x="358.14" y="58.42"/>
+<instance part="C_REC_LF" gate="G$1" x="170.18" y="58.42"/>
 <instance part="C_5V11" gate="G$1" x="22.86" y="-93.98"/>
 <instance part="C_5V12" gate="G$1" x="35.56" y="-93.98"/>
 <instance part="C_5V10" gate="G$1" x="15.24" y="-71.12"/>
@@ -5520,10 +5520,10 @@ http://www.zetex.com&lt;p&gt;
 <pinref part="C_ELF2" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="-33.02" x2="185.42" y2="-33.02" width="0.1524" layer="91"/>
 <junction x="175.26" y="-33.02"/>
-<pinref part="C_S1" gate="G$1" pin="2"/>
+<pinref part="C_EM_D1" gate="G$1" pin="2"/>
 <wire x1="233.68" y1="-33.02" x2="233.68" y2="-81.28" width="0.1524" layer="91"/>
 <junction x="233.68" y="-81.28"/>
-<pinref part="C_S2" gate="G$1" pin="2"/>
+<pinref part="C_EM_D2" gate="G$1" pin="2"/>
 <wire x1="243.84" y1="-33.02" x2="233.68" y2="-33.02" width="0.1524" layer="91"/>
 <junction x="233.68" y="-33.02"/>
 <pinref part="C_ERF2" gate="G$1" pin="2"/>
@@ -5532,8 +5532,8 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="294.64" y1="-33.02" x2="294.64" y2="-81.28" width="0.1524" layer="91"/>
 <junction x="294.64" y="-33.02"/>
 <junction x="294.64" y="-81.28"/>
-<pinref part="C_ERF4" gate="G$1" pin="2"/>
-<pinref part="C_ERF3" gate="G$1" pin="2"/>
+<pinref part="C_E_H1" gate="G$1" pin="2"/>
+<pinref part="C_E_H2" gate="G$1" pin="2"/>
 <wire x1="322.58" y1="-81.28" x2="294.64" y2="-81.28" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="-33.02" x2="363.22" y2="-33.02" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="-33.02" x2="353.06" y2="-81.28" width="0.1524" layer="91"/>
@@ -5749,10 +5749,10 @@ http://www.zetex.com&lt;p&gt;
 <pinref part="C_ELF2" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="-25.4" x2="185.42" y2="-25.4" width="0.1524" layer="91"/>
 <junction x="175.26" y="-25.4"/>
-<pinref part="C_S1" gate="G$1" pin="1"/>
+<pinref part="C_EM_D1" gate="G$1" pin="1"/>
 <wire x1="233.68" y1="-10.16" x2="233.68" y2="-25.4" width="0.1524" layer="91"/>
 <junction x="233.68" y="-10.16"/>
-<pinref part="C_S2" gate="G$1" pin="1"/>
+<pinref part="C_EM_D2" gate="G$1" pin="1"/>
 <wire x1="233.68" y1="-25.4" x2="243.84" y2="-25.4" width="0.1524" layer="91"/>
 <junction x="233.68" y="-25.4"/>
 <wire x1="284.48" y1="-10.16" x2="294.64" y2="-10.16" width="0.1524" layer="91"/>
@@ -5766,8 +5766,8 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="294.64" y1="-10.16" x2="335.28" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="335.28" y1="-10.16" x2="335.28" y2="-15.24" width="0.1524" layer="91"/>
 <junction x="294.64" y="-10.16"/>
-<pinref part="C_ERF4" gate="G$1" pin="1"/>
-<pinref part="C_ERF3" gate="G$1" pin="1"/>
+<pinref part="C_E_H1" gate="G$1" pin="1"/>
+<pinref part="C_E_H2" gate="G$1" pin="1"/>
 <wire x1="353.06" y1="-25.4" x2="363.22" y2="-25.4" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="-25.4" x2="353.06" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="-10.16" x2="335.28" y2="-10.16" width="0.1524" layer="91"/>
@@ -5896,7 +5896,7 @@ http://www.zetex.com&lt;p&gt;
 <net name="REC_LD" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="E"/>
-<pinref part="R_RLS" gate="G$1" pin="2"/>
+<pinref part="R_RLD" gate="G$1" pin="2"/>
 <wire x1="195.58" y1="53.34" x2="195.58" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="48.26" x2="195.58" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="48.26" x2="193.04" y2="48.26" width="0.1524" layer="91"/>
@@ -5929,10 +5929,10 @@ http://www.zetex.com&lt;p&gt;
 <segment>
 <pinref part="R_RRF" gate="G$1" pin="1"/>
 <wire x1="269.24" y1="35.56" x2="269.24" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="R_RRS" gate="G$1" pin="1"/>
+<pinref part="R_RRD" gate="G$1" pin="1"/>
 <wire x1="231.14" y1="35.56" x2="231.14" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="269.24" y1="25.4" x2="238.76" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="R_RLS" gate="G$1" pin="1"/>
+<pinref part="R_RLD" gate="G$1" pin="1"/>
 <wire x1="238.76" y1="25.4" x2="231.14" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="35.56" x2="195.58" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="25.4" x2="203.2" y2="25.4" width="0.1524" layer="91"/>
@@ -5944,33 +5944,33 @@ http://www.zetex.com&lt;p&gt;
 <junction x="195.58" y="25.4"/>
 <pinref part="AGND1" gate="VR1" pin="AGND"/>
 <junction x="162.56" y="25.4"/>
-<pinref part="R_RRF1" gate="G$1" pin="1"/>
+<pinref part="R_RRH" gate="G$1" pin="1"/>
 <wire x1="170.18" y1="25.4" x2="162.56" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="35.56" x2="309.88" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="25.4" x2="276.86" y2="25.4" width="0.1524" layer="91"/>
 <junction x="269.24" y="25.4"/>
-<pinref part="R_RRF2" gate="G$1" pin="1"/>
+<pinref part="R_RLH" gate="G$1" pin="1"/>
 <wire x1="276.86" y1="25.4" x2="269.24" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="350.52" y1="35.56" x2="350.52" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="350.52" y1="25.4" x2="317.5" y2="25.4" width="0.1524" layer="91"/>
 <junction x="309.88" y="25.4"/>
-<pinref part="C_5V9" gate="G$1" pin="2"/>
+<pinref part="C_REC_LF" gate="G$1" pin="2"/>
 <wire x1="317.5" y1="25.4" x2="309.88" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="55.88" x2="170.18" y2="25.4" width="0.1524" layer="91"/>
 <junction x="170.18" y="25.4"/>
-<pinref part="C_5V4" gate="G$1" pin="2"/>
+<pinref part="C_REC_LD" gate="G$1" pin="2"/>
 <wire x1="203.2" y1="55.88" x2="203.2" y2="25.4" width="0.1524" layer="91"/>
 <junction x="203.2" y="25.4"/>
-<pinref part="C_5V5" gate="G$1" pin="2"/>
+<pinref part="C_REC_RD" gate="G$1" pin="2"/>
 <wire x1="238.76" y1="55.88" x2="238.76" y2="25.4" width="0.1524" layer="91"/>
 <junction x="238.76" y="25.4"/>
-<pinref part="C_5V6" gate="G$1" pin="2"/>
+<pinref part="C_REC_RF" gate="G$1" pin="2"/>
 <wire x1="276.86" y1="55.88" x2="276.86" y2="25.4" width="0.1524" layer="91"/>
 <junction x="276.86" y="25.4"/>
-<pinref part="C_5V7" gate="G$1" pin="2"/>
+<pinref part="C_REC_RH" gate="G$1" pin="2"/>
 <wire x1="317.5" y1="55.88" x2="317.5" y2="25.4" width="0.1524" layer="91"/>
 <junction x="317.5" y="25.4"/>
-<pinref part="C_5V8" gate="G$1" pin="2"/>
+<pinref part="C_REC_LH" gate="G$1" pin="2"/>
 <wire x1="358.14" y1="55.88" x2="358.14" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="358.14" y1="25.4" x2="350.52" y2="25.4" width="0.1524" layer="91"/>
 <junction x="350.52" y="25.4"/>
@@ -6021,7 +6021,7 @@ http://www.zetex.com&lt;p&gt;
 <net name="REC_RD" class="0">
 <segment>
 <pinref part="U$8" gate="G$1" pin="E"/>
-<pinref part="R_RRS" gate="G$1" pin="2"/>
+<pinref part="R_RRD" gate="G$1" pin="2"/>
 <wire x1="231.14" y1="53.34" x2="231.14" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="48.26" x2="231.14" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="48.26" x2="228.6" y2="48.26" width="0.1524" layer="91"/>
@@ -6043,8 +6043,8 @@ http://www.zetex.com&lt;p&gt;
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="R_ES1" gate="G$1" pin="1"/>
-<pinref part="R_ES2" gate="G$1" pin="1"/>
+<pinref part="R_ED1" gate="G$1" pin="1"/>
+<pinref part="R_ED2" gate="G$1" pin="1"/>
 <wire x1="228.6" y1="-55.88" x2="218.44" y2="-55.88" width="0.1524" layer="91"/>
 <pinref part="T2" gate="A" pin="C"/>
 <wire x1="218.44" y1="-55.88" x2="218.44" y2="-60.96" width="0.1524" layer="91"/>
@@ -6376,23 +6376,23 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="350.52" y1="63.5" x2="350.52" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="350.52" y1="71.12" x2="317.5" y2="71.12" width="0.1524" layer="91"/>
 <junction x="309.88" y="71.12"/>
-<pinref part="C_5V9" gate="G$1" pin="1"/>
+<pinref part="C_REC_LF" gate="G$1" pin="1"/>
 <wire x1="317.5" y1="71.12" x2="309.88" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="63.5" x2="170.18" y2="71.12" width="0.1524" layer="91"/>
 <junction x="170.18" y="71.12"/>
-<pinref part="C_5V4" gate="G$1" pin="1"/>
+<pinref part="C_REC_LD" gate="G$1" pin="1"/>
 <wire x1="203.2" y1="63.5" x2="203.2" y2="71.12" width="0.1524" layer="91"/>
 <junction x="203.2" y="71.12"/>
-<pinref part="C_5V5" gate="G$1" pin="1"/>
+<pinref part="C_REC_RD" gate="G$1" pin="1"/>
 <wire x1="238.76" y1="63.5" x2="238.76" y2="71.12" width="0.1524" layer="91"/>
 <junction x="238.76" y="71.12"/>
-<pinref part="C_5V6" gate="G$1" pin="1"/>
+<pinref part="C_REC_RF" gate="G$1" pin="1"/>
 <wire x1="276.86" y1="63.5" x2="276.86" y2="71.12" width="0.1524" layer="91"/>
 <junction x="276.86" y="71.12"/>
-<pinref part="C_5V7" gate="G$1" pin="1"/>
+<pinref part="C_REC_RH" gate="G$1" pin="1"/>
 <wire x1="317.5" y1="63.5" x2="317.5" y2="71.12" width="0.1524" layer="91"/>
 <junction x="317.5" y="71.12"/>
-<pinref part="C_5V8" gate="G$1" pin="1"/>
+<pinref part="C_REC_LH" gate="G$1" pin="1"/>
 <wire x1="358.14" y1="63.5" x2="358.14" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="358.14" y1="71.12" x2="350.52" y2="71.12" width="0.1524" layer="91"/>
 <junction x="350.52" y="71.12"/>
@@ -6581,8 +6581,8 @@ http://www.zetex.com&lt;p&gt;
 </net>
 <net name="N$19" class="0">
 <segment>
-<pinref part="R_ES4" gate="G$1" pin="1"/>
-<pinref part="R_ES3" gate="G$1" pin="1"/>
+<pinref part="R_EH2" gate="G$1" pin="1"/>
+<pinref part="R_EH1" gate="G$1" pin="1"/>
 <wire x1="345.44" y1="-55.88" x2="335.28" y2="-55.88" width="0.1524" layer="91"/>
 <pinref part="T4" gate="A" pin="C"/>
 <wire x1="335.28" y1="-55.88" x2="335.28" y2="-58.42" width="0.1524" layer="91"/>
@@ -6592,7 +6592,7 @@ http://www.zetex.com&lt;p&gt;
 <net name="REC_RH" class="0">
 <segment>
 <pinref part="U$20" gate="G$1" pin="E"/>
-<pinref part="R_RRF1" gate="G$1" pin="2"/>
+<pinref part="R_RRH" gate="G$1" pin="2"/>
 <wire x1="309.88" y1="53.34" x2="309.88" y2="45.72" width="0.1524" layer="91"/>
 <label x="309.88" y="48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -6604,7 +6604,7 @@ http://www.zetex.com&lt;p&gt;
 </net>
 <net name="REC_LH" class="0">
 <segment>
-<pinref part="R_RRF2" gate="G$1" pin="2"/>
+<pinref part="R_RLH" gate="G$1" pin="2"/>
 <pinref part="U$21" gate="G$1" pin="E"/>
 <wire x1="350.52" y1="45.72" x2="350.52" y2="53.34" width="0.1524" layer="91"/>
 <label x="350.52" y="48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -6718,8 +6718,8 @@ http://www.zetex.com&lt;p&gt;
 </net>
 <net name="D2_EM" class="0">
 <segment>
-<pinref part="R_ES1" gate="G$1" pin="2"/>
-<pinref part="R_ES2" gate="G$1" pin="2"/>
+<pinref part="R_ED1" gate="G$1" pin="2"/>
+<pinref part="R_ED2" gate="G$1" pin="2"/>
 <wire x1="218.44" y1="-45.72" x2="228.6" y2="-45.72" width="0.1524" layer="91"/>
 <pinref part="U$17" gate="G$1" pin="-"/>
 <wire x1="218.44" y1="-40.64" x2="218.44" y2="-45.72" width="0.1524" layer="91"/>
@@ -6729,9 +6729,9 @@ http://www.zetex.com&lt;p&gt;
 <net name="H2_EM" class="0">
 <segment>
 <pinref part="U$19" gate="G$1" pin="-"/>
-<pinref part="R_ES3" gate="G$1" pin="2"/>
+<pinref part="R_EH1" gate="G$1" pin="2"/>
 <wire x1="335.28" y1="-40.64" x2="335.28" y2="-45.72" width="0.1524" layer="91"/>
-<pinref part="R_ES4" gate="G$1" pin="2"/>
+<pinref part="R_EH2" gate="G$1" pin="2"/>
 <wire x1="335.28" y1="-45.72" x2="345.44" y2="-45.72" width="0.1524" layer="91"/>
 <junction x="335.28" y="-45.72"/>
 </segment>
