@@ -2963,185 +2963,6 @@ It has a reduced top mask to make it harder to install upside-down.</description
 <circle x="-3.81" y="0" radius="1.02390625" width="0" layer="30"/>
 <circle x="3.81" y="0" radius="1.04726875" width="0" layer="30"/>
 </package>
-<package name="CAP-PTH-SMALL">
-<wire x1="1.27" y1="0.635" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
-<pad name="1" x="0" y="0" drill="0.7" diameter="1.651"/>
-<pad name="2" x="2.54" y="0" drill="0.7" diameter="1.651"/>
-<text x="0.508" y="1.27" size="0.4064" layer="25">&gt;Name</text>
-<text x="0.254" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
-</package>
-<package name="CAP-PTH-SMALL2">
-<wire x1="1.27" y1="0.635" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
-<wire x1="-1.27" y1="1.27" x2="3.81" y2="1.27" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="1.27" x2="3.81" y2="-1.27" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="-1.27" x2="-1.27" y2="-1.27" width="0.2032" layer="21"/>
-<wire x1="-1.27" y1="-1.27" x2="-1.27" y2="1.27" width="0.2032" layer="21"/>
-<pad name="1" x="0" y="0" drill="0.7" diameter="1.651"/>
-<pad name="2" x="2.54" y="0" drill="0.7" diameter="1.651"/>
-<text x="-1.27" y="1.905" size="0.6096" layer="25">&gt;Name</text>
-<text x="-1.27" y="-2.54" size="0.6096" layer="27">&gt;Value</text>
-</package>
-<package name="CAP-PTH-LARGE">
-<wire x1="0" y1="0.635" x2="0" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="0" y2="-0.635" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="-2.54" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="2.54" y2="0" width="0.2032" layer="21"/>
-<pad name="1" x="-4.826" y="0" drill="0.9" diameter="1.905"/>
-<pad name="2" x="4.572" y="0" drill="0.9" diameter="1.905"/>
-<text x="-0.762" y="1.27" size="0.4064" layer="25">&gt;Name</text>
-<text x="-1.016" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
-</package>
-<package name="GRM43D">
-<wire x1="2.25" y1="1.6" x2="1.1" y2="1.6" width="0.127" layer="51"/>
-<wire x1="1.1" y1="1.6" x2="-1.1" y2="1.6" width="0.127" layer="51"/>
-<wire x1="-1.1" y1="1.6" x2="-2.25" y2="1.6" width="0.127" layer="51"/>
-<wire x1="-2.25" y1="1.6" x2="-2.25" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="-2.25" y1="-1.6" x2="-1.1" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="-1.1" y1="-1.6" x2="1.1" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="1.1" y1="-1.6" x2="2.25" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="2.25" y1="-1.6" x2="2.25" y2="1.6" width="0.127" layer="51"/>
-<wire x1="1.1" y1="1.6" x2="1.1" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="-1.1" y1="1.6" x2="-1.1" y2="-1.6" width="0.127" layer="51"/>
-<wire x1="-2.3" y1="1.8" x2="2.3" y2="1.8" width="0.127" layer="21"/>
-<wire x1="-2.3" y1="-1.8" x2="2.3" y2="-1.8" width="0.127" layer="21"/>
-<smd name="A" x="1.927" y="0" dx="3.2" dy="1.65" layer="1" rot="R90"/>
-<smd name="C" x="-1.927" y="0" dx="3.2" dy="1.65" layer="1" rot="R90"/>
-<text x="-2" y="2" size="0.4064" layer="25">&gt;NAME</text>
-<text x="0" y="-2" size="0.4064" layer="27" rot="R180">&gt;VALUE</text>
-<rectangle x1="-2.2" y1="-1.6" x2="-1.1" y2="1.6" layer="51"/>
-<rectangle x1="1.1" y1="-1.6" x2="2.2" y2="1.6" layer="51"/>
-</package>
-<package name="0603-CAP">
-<wire x1="-1.473" y1="0.983" x2="1.473" y2="0.983" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="0.983" x2="1.473" y2="-0.983" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="-0.983" x2="-1.473" y2="-0.983" width="0.0508" layer="39"/>
-<wire x1="-1.473" y1="-0.983" x2="-1.473" y2="0.983" width="0.0508" layer="39"/>
-<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
-<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
-<wire x1="0" y1="0.0305" x2="0" y2="-0.0305" width="0.5588" layer="21"/>
-<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<text x="-0.889" y="0.762" size="0.4064" layer="25" font="vector">&gt;NAME</text>
-<text x="-1.016" y="-1.143" size="0.4064" layer="27" font="vector">&gt;VALUE</text>
-<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
-<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
-</package>
-<package name="0402-CAP">
-<description>&lt;b&gt;CAPACITOR&lt;/b&gt;&lt;p&gt;
-chip</description>
-<wire x1="-0.245" y1="0.224" x2="0.245" y2="0.224" width="0.1524" layer="51"/>
-<wire x1="0.245" y1="-0.224" x2="-0.245" y2="-0.224" width="0.1524" layer="51"/>
-<wire x1="-1.473" y1="0.483" x2="1.473" y2="0.483" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="0.483" x2="1.473" y2="-0.483" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="-0.483" x2="-1.473" y2="-0.483" width="0.0508" layer="39"/>
-<wire x1="-1.473" y1="-0.483" x2="-1.473" y2="0.483" width="0.0508" layer="39"/>
-<wire x1="0" y1="0.0305" x2="0" y2="-0.0305" width="0.4064" layer="21"/>
-<smd name="1" x="-0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
-<smd name="2" x="0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
-<text x="-0.889" y="0.6985" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-1.0795" y="-1.143" size="0.4064" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.554" y1="-0.3048" x2="-0.254" y2="0.2951" layer="51"/>
-<rectangle x1="0.2588" y1="-0.3048" x2="0.5588" y2="0.2951" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
-</package>
-<package name="CAP-PTH-5MM">
-<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.2032" layer="21"/>
-<pad name="1" x="-2.5" y="0" drill="0.7" diameter="1.651"/>
-<pad name="2" x="2.5" y="0" drill="0.7" diameter="1.651"/>
-<text x="-0.762" y="1.27" size="0.4064" layer="25">&gt;Name</text>
-<text x="-1.016" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
-</package>
-<package name="AXIAL-5MM">
-<wire x1="-1.14" y1="0.762" x2="1.14" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="1.14" y1="0.762" x2="1.14" y2="0" width="0.2032" layer="21"/>
-<wire x1="1.14" y1="0" x2="1.14" y2="-0.762" width="0.2032" layer="21"/>
-<wire x1="1.14" y1="-0.762" x2="-1.14" y2="-0.762" width="0.2032" layer="21"/>
-<wire x1="-1.14" y1="-0.762" x2="-1.14" y2="0" width="0.2032" layer="21"/>
-<wire x1="-1.14" y1="0" x2="-1.14" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="1.14" y1="0" x2="1.394" y2="0" width="0.2032" layer="21"/>
-<wire x1="-1.14" y1="0" x2="-1.394" y2="0" width="0.2032" layer="21"/>
-<pad name="P$1" x="-2.5" y="0" drill="0.9" diameter="1.8796"/>
-<pad name="P$2" x="2.5" y="0" drill="0.9" diameter="1.8796"/>
-<text x="-2.54" y="1.17" size="0.4" layer="25">&gt;Name</text>
-<text x="-1.032" y="-0.208" size="0.4" layer="21" ratio="15">&gt;Value</text>
-</package>
-<package name="CTZ3">
-<description>CTZ3 Series land pattern for variable capacitor - CTZ3E-50C-W1-PF</description>
-<wire x1="-1.6" y1="1.4" x2="-1.6" y2="-2.25" width="0.127" layer="51"/>
-<wire x1="-1.6" y1="-2.25" x2="1.6" y2="-2.25" width="0.127" layer="51"/>
-<wire x1="1.6" y1="1.4" x2="1.6" y2="-2.25" width="0.127" layer="51"/>
-<wire x1="-0.5" y1="0" x2="0.5" y2="0" width="0.127" layer="51"/>
-<wire x1="-1.6" y1="1.4" x2="-1" y2="2.2" width="0.127" layer="51"/>
-<wire x1="1.6" y1="1.4" x2="1" y2="2.2" width="0.127" layer="51"/>
-<wire x1="-1" y1="2.2" x2="1" y2="2.2" width="0.127" layer="51"/>
-<wire x1="0" y1="0.8" x2="0" y2="-0.8" width="0.127" layer="51"/>
-<wire x1="-0.8" y1="0" x2="0.8" y2="0" width="0.127" layer="51"/>
-<wire x1="-1.05" y1="2.25" x2="-1.7" y2="1.45" width="0.127" layer="21"/>
-<wire x1="-1.7" y1="1.45" x2="-1.7" y2="-2.35" width="0.127" layer="21"/>
-<wire x1="-1.7" y1="-2.35" x2="-1.05" y2="-2.35" width="0.127" layer="21"/>
-<wire x1="1.05" y1="2.25" x2="1.7" y2="1.4" width="0.127" layer="21"/>
-<wire x1="1.7" y1="1.4" x2="1.7" y2="-2.35" width="0.127" layer="21"/>
-<wire x1="1.7" y1="-2.35" x2="1.05" y2="-2.35" width="0.127" layer="21"/>
-<smd name="+" x="0" y="2.05" dx="1.5" dy="1.2" layer="1"/>
-<smd name="-" x="0" y="-2.05" dx="1.5" dy="1.2" layer="1"/>
-<text x="-2" y="3" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-2" y="-3.4" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-<package name="CAP-PTH-SMALL-KIT">
-<description>&lt;h3&gt;CAP-PTH-SMALL-KIT&lt;/h3&gt;
-Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.com/products/8375) or 22pF caps (http://www.sparkfun.com/products/8571).&lt;br&gt;
-&lt;br&gt;
-&lt;b&gt;Warning:&lt;/b&gt; This is the KIT version of this package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.</description>
-<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.254" layer="21"/>
-<wire x1="-2.667" y1="1.27" x2="2.667" y2="1.27" width="0.254" layer="21"/>
-<wire x1="2.667" y1="1.27" x2="2.667" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="2.667" y1="-1.27" x2="-2.667" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="-2.667" y1="-1.27" x2="-2.667" y2="1.27" width="0.254" layer="21"/>
-<pad name="1" x="-1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<pad name="2" x="1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<polygon width="0.127" layer="30">
-<vertex x="-1.4021" y="-0.9475" curve="-90"/>
-<vertex x="-2.357" y="-0.0178" curve="-90.011749"/>
-<vertex x="-1.4046" y="0.9576" curve="-90"/>
-<vertex x="-0.4546" y="-0.0204" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="-1.4046" y="-0.4395" curve="-90.012891"/>
-<vertex x="-1.8491" y="-0.0153" curve="-90"/>
-<vertex x="-1.4046" y="0.452" curve="-90"/>
-<vertex x="-0.9627" y="-0.0051" curve="-90.012967"/>
-</polygon>
-<polygon width="0.127" layer="30">
-<vertex x="1.397" y="-0.9475" curve="-90"/>
-<vertex x="0.4421" y="-0.0178" curve="-90.011749"/>
-<vertex x="1.3945" y="0.9576" curve="-90"/>
-<vertex x="2.3445" y="-0.0204" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="1.3945" y="-0.4395" curve="-90.012891"/>
-<vertex x="0.95" y="-0.0153" curve="-90"/>
-<vertex x="1.3945" y="0.452" curve="-90"/>
-<vertex x="1.8364" y="-0.0051" curve="-90.012967"/>
-</polygon>
-</package>
-<package name="CAP-PTH-SMALLEZ">
-<description>This is the "EZ" version of the .1" spaced ceramic thru-hole cap.&lt;br&gt;
-It has reduced top mask to make it harder to put the component on the wrong side of the board.</description>
-<wire x1="1.27" y1="0.635" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
-<wire x1="-1.27" y1="1.27" x2="3.81" y2="1.27" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="1.27" x2="3.81" y2="-1.27" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="-1.27" x2="-1.27" y2="-1.27" width="0.2032" layer="21"/>
-<wire x1="-1.27" y1="-1.27" x2="-1.27" y2="1.27" width="0.2032" layer="21"/>
-<pad name="1" x="0" y="0" drill="0.7" diameter="1.651" stop="no"/>
-<pad name="2" x="2.54" y="0" drill="0.7" diameter="1.651" stop="no"/>
-<text x="-1.27" y="1.905" size="0.6096" layer="25">&gt;Name</text>
-<text x="-1.27" y="-2.54" size="0.6096" layer="27">&gt;Value</text>
-<circle x="0" y="0" radius="0.898025" width="0" layer="30"/>
-<circle x="2.54" y="0" radius="0.915809375" width="0" layer="30"/>
-<circle x="0" y="0" radius="0.40160625" width="0" layer="29"/>
-<circle x="2.54" y="0" radius="0.40160625" width="0" layer="29"/>
-</package>
 </packages>
 <symbols>
 <symbol name="INDUCTOR">
@@ -3172,16 +2993,6 @@ It has reduced top mask to make it harder to put the component on the wrong side
 <text x="-3.81" y="-3.302" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
-</symbol>
-<symbol name="CAP">
-<wire x1="0" y1="2.54" x2="0" y2="2.032" width="0.1524" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="0.508" width="0.1524" layer="94"/>
-<text x="1.524" y="2.921" size="1.778" layer="95">&gt;NAME</text>
-<text x="1.524" y="-2.159" size="1.778" layer="96">&gt;VALUE</text>
-<rectangle x1="-2.032" y1="0.508" x2="2.032" y2="1.016" layer="94"/>
-<rectangle x1="-2.032" y1="1.524" x2="2.032" y2="2.032" layer="94"/>
-<pin name="1" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="2" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -3628,141 +3439,6 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <connects>
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="CAP" prefix="C" uservalue="yes">
-<description>&lt;b&gt;Capacitor&lt;/b&gt;
-Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
-<gates>
-<gate name="G$1" symbol="CAP" x="0" y="0"/>
-</gates>
-<devices>
-<device name="PTH" package="CAP-PTH-SMALL">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="PTH2" package="CAP-PTH-SMALL2">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="0805" package="0805">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="PTH3" package="CAP-PTH-LARGE">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="SMD" package="GRM43D">
-<connects>
-<connect gate="G$1" pin="1" pad="A"/>
-<connect gate="G$1" pin="2" pad="C"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="0603-CAP" package="0603-CAP">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="0402-CAP" package="0402-CAP">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="PTH1" package="CAP-PTH-5MM">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="_" package="AXIAL-5MM">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="1210" package="1210">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="1206" package="1206">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="ASMD" package="CTZ3">
-<connects>
-<connect gate="G$1" pin="1" pad="+"/>
-<connect gate="G$1" pin="2" pad="-"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="KIT" package="CAP-PTH-SMALL-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="EZ" package="CAP-PTH-SMALLEZ">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -5169,6 +4845,336 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </deviceset>
 </devicesets>
 </library>
+<library name="Volks73-Kemet">
+<description>&lt;h1&gt;Volks73's Library for Kemet Parts&lt;/h1&gt;
+&lt;p&gt;
+&lt;a href="https://github.com/volks73/eagle-libraries/"&gt;Repository&lt;/a&gt;
+&lt;/p&gt;
+&lt;h3&gt;Licensing:&lt;/h3&gt; 
+&lt;p&gt;
+Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0), &lt;a href="http://creativecommons.org/licenses/by-sa/3.0/"&gt;http://creativecommons.org/licenses/by-sa/3.0/&lt;/a&gt;. 
+&lt;/p&gt;
+&lt;p&gt;
+For attribution, please provide a link in any documentation or design files to the repository on Github. 
+&lt;/p&gt;</description>
+<packages>
+<package name="X">
+<description>&lt;h1&gt;2917 (7343 Metric)&lt;/h1&gt;
+&lt;h2&gt;T491 Series, X Size Code&lt;/h2&gt;</description>
+<smd name="A" x="-3.22" y="0" dx="2.77" dy="2.55" layer="1"/>
+<smd name="C" x="3.22" y="0" dx="2.77" dy="2.55" layer="1" rot="R180"/>
+<wire x1="-5.11" y1="2.8" x2="5.11" y2="2.8" width="0.127" layer="49"/>
+<wire x1="5.11" y1="2.8" x2="5.11" y2="-2.8" width="0.127" layer="49"/>
+<wire x1="5.11" y1="-2.8" x2="-5.11" y2="-2.8" width="0.127" layer="49"/>
+<wire x1="-5.11" y1="-2.8" x2="-5.11" y2="2.8" width="0.127" layer="49"/>
+<text x="-2.54" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.175" y="-4.445" size="1.27" layer="27">&gt;VALUE</text>
+<text x="-6.35" y="1.27" size="0.8128" layer="21">A</text>
+<text x="5.715" y="1.27" size="0.8128" layer="21">C</text>
+<text x="-6.35" y="-2.54" size="0.8128" layer="21">+</text>
+<text x="5.715" y="-2.54" size="0.8128" layer="21">-</text>
+<rectangle x1="-3.65" y1="-1.2" x2="-2.35" y2="1.2" layer="51"/>
+<rectangle x1="2.35" y1="-1.2" x2="3.65" y2="1.2" layer="51"/>
+<wire x1="-1.27" y1="0" x2="-0.235" y2="0" width="0.127" layer="21"/>
+<wire x1="-0.235" y1="0" x2="-0.235" y2="1.24" width="0.127" layer="21"/>
+<wire x1="-0.235" y1="0" x2="-0.235" y2="-1.24" width="0.127" layer="21"/>
+<wire x1="1.27" y1="0" x2="0.335" y2="0" width="0.127" layer="21"/>
+<wire x1="0.835" y1="-1.24" x2="0.935" y2="1.24" width="0.127" layer="21" curve="-100"/>
+<wire x1="-3.5" y1="1.5" x2="-3.5" y2="2.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="2.5" x2="-2.54" y2="2.5" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="2.5" x2="3.5" y2="2.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="2.5" x2="3.5" y2="1.5" width="0.127" layer="21"/>
+<wire x1="3.4" y1="-2.5" x2="-2.54" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="-2.5" x2="-3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-1.5" x2="-3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="-1.5" x2="3.5" y2="-2.5" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="2.5" x2="-2.54" y2="1.5" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="-2.5" x2="-2.54" y2="-1.5" width="0.127" layer="21"/>
+</package>
+<package name="D">
+<description>&lt;h1&gt;2917 (7343 Metric)&lt;/h1&gt;
+&lt;h2&gt;T491 Series, D Size Code&lt;/h2&gt;</description>
+<smd name="-" x="-3.22" y="0" dx="2.77" dy="2.55" layer="1"/>
+<smd name="+" x="3.22" y="0" dx="2.77" dy="2.55" layer="1" rot="R180"/>
+<wire x1="-5.11" y1="-2.8" x2="-5.11" y2="2.8" width="0.127" layer="49"/>
+<wire x1="-5.11" y1="2.8" x2="5.11" y2="2.8" width="0.127" layer="49"/>
+<wire x1="5.11" y1="2.8" x2="5.11" y2="-2.8" width="0.127" layer="49"/>
+<wire x1="5.11" y1="-2.8" x2="-5.11" y2="-2.8" width="0.127" layer="49"/>
+<wire x1="1.27" y1="0" x2="0.235" y2="0" width="0.127" layer="21"/>
+<wire x1="0.235" y1="0" x2="0.235" y2="-1.24" width="0.127" layer="21"/>
+<wire x1="0.235" y1="0" x2="0.235" y2="1.24" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="0" x2="-0.335" y2="0" width="0.127" layer="21"/>
+<wire x1="-0.835" y1="1.24" x2="-0.935" y2="-1.24" width="0.127" layer="21" curve="-100"/>
+<wire x1="-3.8" y1="-2.3" x2="3.175" y2="-2.3" width="0.127" layer="21"/>
+<wire x1="3.175" y1="-2.3" x2="3.8" y2="-2.3" width="0.127" layer="21"/>
+<wire x1="3.8" y1="2.3" x2="-3.8" y2="2.3" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="2.3" x2="-3.81" y2="1.5" width="0.127" layer="21"/>
+<wire x1="3.81" y1="1.51" x2="3.81" y2="2.31" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-2.3" x2="3.81" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="-2.3" x2="-3.81" y2="-1.5" width="0.127" layer="21"/>
+<rectangle x1="-3.8" y1="-1.2" x2="-1.8" y2="1.2" layer="51"/>
+<rectangle x1="1.8" y1="-1.2" x2="3.8" y2="1.2" layer="51" rot="R180"/>
+<text x="5.715" y="1.27" size="1.27" layer="21">A</text>
+<text x="5.715" y="-2.54" size="1.27" layer="21">+</text>
+<text x="-6.35" y="1.27" size="1.27" layer="21">C</text>
+<text x="-6.35" y="-2.54" size="1.27" layer="21">-</text>
+<wire x1="3.175" y1="1.51" x2="3.175" y2="2.31" width="0.127" layer="21"/>
+<wire x1="3.175" y1="-2.3" x2="3.175" y2="-1.5" width="0.127" layer="21"/>
+<text x="-5.08" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-5.08" y="-4.445" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="A">
+<description>&lt;h1&gt;1206 (3216 Metric)&lt;/h1&gt;
+&lt;h2&gt;T491 Series, A Size Code&lt;/h2&gt;</description>
+<smd name="C" x="-1.31" y="0" dx="1.8" dy="1.23" layer="1"/>
+<smd name="A" x="1.31" y="0" dx="1.8" dy="1.23" layer="1"/>
+<wire x1="-1.7" y1="-0.9" x2="-1.7" y2="0.9" width="0.127" layer="49"/>
+<wire x1="-1.7" y1="0.9" x2="1.7" y2="0.9" width="0.127" layer="49"/>
+<wire x1="1.7" y1="0.9" x2="1.7" y2="-0.9" width="0.127" layer="49"/>
+<wire x1="1.7" y1="-0.9" x2="-1.7" y2="-0.9" width="0.127" layer="49"/>
+<text x="3.175" y="-0.635" size="1.27" layer="21">A</text>
+<text x="-3.81" y="-0.635" size="1.27" layer="21">C</text>
+<text x="4.445" y="0" size="1.27" layer="21">+</text>
+<text x="-5.08" y="0" size="1.27" layer="21">-</text>
+<rectangle x1="-1.5275" y1="-0.6235" x2="-0.6235" y2="0.6235" layer="51"/>
+<rectangle x1="0.6235" y1="-0.6235" x2="1.5275" y2="0.6235" layer="51" rot="R180"/>
+<text x="-3.175" y="1.27" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.175" y="-2.54" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="ELECTROLYTIC_CAPACITOR">
+<wire x1="-2.54" y1="0.762" x2="0" y2="0.762" width="0.254" layer="94"/>
+<wire x1="0" y1="0.762" x2="2.54" y2="0.762" width="0.254" layer="94"/>
+<wire x1="0" y1="-0.492" x2="0" y2="-0.5081" width="0.1524" layer="94"/>
+<wire x1="0" y1="-0.5081" x2="0" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="-0.492" x2="2.4892" y2="-1.3462" width="0.254" layer="94" curve="-37.878202" cap="flat"/>
+<wire x1="-2.4669" y1="-1.3424" x2="0" y2="-0.5081" width="0.254" layer="94" curve="-37.376341" cap="flat"/>
+<text x="-3.81" y="-3.81" size="1.778" layer="95" rot="R90">&gt;NAME</text>
+<text x="5.08" y="-4.064" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<rectangle x1="-2.253" y1="1.43" x2="-1.364" y2="1.557" layer="94"/>
+<rectangle x1="-1.872" y1="1.049" x2="-1.745" y2="1.938" layer="94"/>
+<pin name="A" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
+<pin name="C" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
+<wire x1="0" y1="0.762" x2="0" y2="2.54" width="0.1524" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="T491?*" prefix="C" uservalue="yes">
+<description>&lt;h1&gt;Tantalum Surface Mount Capacitor - Standard Tantalum&lt;/h1&gt;
+&lt;h2&gt;T491 Series Industrial Grade MnO&lt;sub&gt;2&lt;/sub&gt;&lt;/h2&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"&gt;Datasheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
+&lt;p&gt;
+The KEMET T491 Series, designed specifially for today’s highly automated surface mount processes and equipment, is the leading choice for surface mount designs. The T491 combines KEMET’s proven solid tantalum technology, acclaimed and respected throughout the world, with the latest in materials, processes and automation, resulting in unsurpassed total performance and value. This product meets or exceeds the requirements of EIA standard 535BAAC. This series is classifid
+as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time at ≤30°C / 85% RH. The T491 standard terminations are available in 100% matte tin and provide excellent wetting characteristics and compatibility with today's surface mount solder systems. Tin/lead (Sn/Pb) terminations are available upon request for any part number. Gold-plated terminations are also available for use with conductive epoxy attachment processes. Standard packaging of these devices is tape and reel in accordance with EIA 481. This system provides perfect compatibility with all tape-fed placement units.
+&lt;/p&gt;
+&lt;h3&gt;Benefits&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Meets or exceeds EIA Standard 535BAAC&lt;/li&gt;
+&lt;li&gt;Taped and reeled per EIA 481&lt;/li&gt;
+&lt;li&gt;Symmetrical, compliant terminations&lt;/li&gt;
+&lt;li&gt;Optional gold-plated terminations&lt;/li&gt;
+&lt;li&gt;Laser-marked case&lt;/li&gt;
+&lt;li&gt;100% surge current test on C, D, E, U, V, X sizes&lt;/li&gt;
+&lt;li&gt;Halogen free epoxy&lt;/li&gt;
+&lt;li&gt;Capacitance 0.1 µF to 1,000 µF&lt;/li&gt;
+&lt;li&gt;Tolerance ±10%, ±20%&lt;/li&gt;
+&lt;li&gt;Voltage 2.5 – 50 VDC&lt;/li&gt;
+&lt;li&gt;Extended range values&lt;/li&gt;
+&lt;li&gt;Low profie case sizes&lt;/li&gt;
+&lt;li&gt;RoHS Compliant and lead-free terminations&lt;br&gt;
+(See www.kemet.com for transition information)&lt;/li&gt;
+&lt;li&gt;Operating temperature: -55ºC to +125ºC&lt;/li&gt;
+&lt;/ul&gt;</description>
+<gates>
+<gate name="G$1" symbol="ELECTROLYTIC_CAPACITOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="X" package="X">
+<connects>
+<connect gate="G$1" pin="A" pad="A"/>
+<connect gate="G$1" pin="C" pad="C"/>
+</connects>
+<technologies>
+<technology name="107K025AT">
+<attribute name="CAPACITANCE" value="100uF"/>
+<attribute name="CATEGORY" value="Capacitors"/>
+<attribute name="DESCRIPTION" value="CAP TANT 100UF 25V 10% 2917"/>
+<attribute name="DOCUMENTATION_LINK" value="&lt;a href=&quot;http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf&quot;&gt;Datasheet&lt;/a&gt;"/>
+<attribute name="DOCUMENTATION_URL" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="ESR" value="300 mOhm"/>
+<attribute name="FAMILY" value="Tantalum Capacitors"/>
+<attribute name="FEATURES" value="General Purpose"/>
+<attribute name="HEIGHT-SEATED" value="0.169&quot; (4.30mm)"/>
+<attribute name="LEAD_SPACING" value="-"/>
+<attribute name="MANUFACTURER" value="Kemet"/>
+<attribute name="MANUFACTURER_SIZE_CODE" value="X"/>
+<attribute name="MOUNTING_TYPE" value="Surface Mount"/>
+<attribute name="OPERATING_TEMPERATURE" value="-55C ~ 125C"/>
+<attribute name="PACKAGE" value="2917 (7343 Metric)"/>
+<attribute name="PART_NUMBER" value="T491X107K025AT"/>
+<attribute name="SERIES" value="T491"/>
+<attribute name="SIZE" value="0.287&quot; L x 0.169&quot; W (7.30mm x 4.30mm)"/>
+<attribute name="SUPPLIER_ITEM_INFO" value="http://www.digikey.com/product-detail/en/T491X107K025AT/399-8410-1-ND/3472133"/>
+<attribute name="SUPPLIER_ITEM_LINK" value="&lt;a href=&quot;&quot;&gt;Details&lt;/a&gt;"/>
+<attribute name="SUPPLIER_ITEM_NUMBER" value="399-8410-1-ND"/>
+<attribute name="SUPPLIER_ITEM_URL" value=""/>
+<attribute name="SUPPLIER_LINK" value="&lt;a href=&quot;http://www.digikey.com&quot;&gt;Home Page&lt;/a&gt;"/>
+<attribute name="SUPPLIER_NAME" value="Digi-Key"/>
+<attribute name="SUPPLIER_URL" value="http://www.digikey.com"/>
+<attribute name="TOLERANCE" value="10%"/>
+<attribute name="TYPE" value="Molded"/>
+<attribute name="VOLTAGE-RATED" value="25V"/>
+</technology>
+</technologies>
+</device>
+<device name="D" package="D">
+<connects>
+<connect gate="G$1" pin="A" pad="+"/>
+<connect gate="G$1" pin="C" pad="-"/>
+</connects>
+<technologies>
+<technology name="107K016AT">
+<attribute name="CAPACITANCE" value="100µF"/>
+<attribute name="CATEGORY" value="Capacitors"/>
+<attribute name="DATASHEET" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="DESCRIPTION" value="CAP TANT 100UF 16V 10% 2917"/>
+<attribute name="DOCUMENTATION_LINK" value="&lt;a href=&quot;http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf&quot;&gt;Datasheet&lt;/a&gt;"/>
+<attribute name="DOCUMENTATION_URL" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="ESR" value="700 mOhm"/>
+<attribute name="FAMILY" value="Tantalum Capacitors"/>
+<attribute name="FEATURES" value="General Purpose"/>
+<attribute name="HEIGHT-SEATED" value="0.122&quot; (3.10mm)"/>
+<attribute name="LEAD_SPACING" value="-"/>
+<attribute name="LIFETIME_TEMP" value="2000 Hrs @ 85°C"/>
+<attribute name="MANUFACTURER" value="Kemet"/>
+<attribute name="MANUFACTURER_SIZE_CODE" value="D"/>
+<attribute name="MOUNTING_TYPE" value="Surface Mount"/>
+<attribute name="OPERATING_TEMPERATURE" value="-55°C ~ 125°C"/>
+<attribute name="PART_NUMBER" value="T491D107K016AT"/>
+<attribute name="SERIES" value="T491"/>
+<attribute name="SIZE" value="0.287&quot; L x 0.169&quot; W (7.30mm x 4.30mm)"/>
+<attribute name="SUPPLIER_ITEM_INFO" value="http://www.digikey.com/product-detail/en/T491D107K016AT/399-3770-1-ND/819095"/>
+<attribute name="SUPPLIER_ITEM_LINK" value="&lt;a href=&quot;http://www.digikey.com/product-detail/en/T491D107K016AT/399-3770-1-ND/819095&quot;&gt;Details&lt;/a&gt;"/>
+<attribute name="SUPPLIER_ITEM_NUMBER" value="399-3770-1-ND"/>
+<attribute name="SUPPLIER_ITEM_URL" value="http://www.digikey.com/product-detail/en/T491D107K016AT/399-3770-1-ND/819095"/>
+<attribute name="SUPPLIER_LINK" value="&lt;a href=&quot;http://www.digikey.com&quot;&gt;Home Page&lt;/a&gt;"/>
+<attribute name="SUPPLIER_NAME" value="Digi-Key"/>
+<attribute name="SUPPLIER_URL" value="http://www.digikey.com"/>
+<attribute name="TOLERANCE" value="±10%"/>
+<attribute name="TYPE" value="Molded"/>
+<attribute name="VOLTAGE-RATED" value="16V"/>
+</technology>
+<technology name="107M006AT">
+<attribute name="CAPACITANCE" value="100µF"/>
+<attribute name="CATEGORY" value="Capacitors"/>
+<attribute name="DATASHEET" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="DESCRIPTION" value="CAP TANT 100UF 6.3V 20% 2917"/>
+<attribute name="DOCUMENTATION_LINK" value="&lt;a href=&quot;http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf&quot;&gt;Datasheet&lt;/a&gt;"/>
+<attribute name="DOCUMENTATION_URL" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="ESR" value="800 mOhm"/>
+<attribute name="FAMILY" value="Tantalum Capacitors"/>
+<attribute name="FEATURES" value="General Purpose"/>
+<attribute name="HEIGHT-SEATED" value="0.122&quot; (3.10mm)"/>
+<attribute name="LEAD_SPACING" value="-"/>
+<attribute name="LIFETIME_TEMP" value="2000 Hrs @ 85°C"/>
+<attribute name="MANUFACTURER" value="Kemet"/>
+<attribute name="MANUFACTURER_SIZE_CODE" value="D"/>
+<attribute name="MOUNTING_TYPE" value="Surface Mount"/>
+<attribute name="OPERATING_TEMPERATURE" value="-55°C ~ 125°C"/>
+<attribute name="PART_NUMBER" value="T491D107M006AT"/>
+<attribute name="SERIES" value="T491"/>
+<attribute name="SIZE" value="0.287&quot; L x 0.169&quot; W (7.30mm x 4.30mm)"/>
+<attribute name="SUPPLIER_ITEM_INFO" value="http://www.digikey.com/product-detail/en/T491D107M006AT/399-8367-1-ND/3472090"/>
+<attribute name="SUPPLIER_ITEM_LINK" value="&lt;a href=&quot;http://www.digikey.com/product-detail/en/T491D107M006AT/399-8367-1-ND/3472090&quot;&gt;Details&lt;/a&gt;"/>
+<attribute name="SUPPLIER_ITEM_NUMBER" value="399-8367-1-ND"/>
+<attribute name="SUPPLIER_ITEM_URL" value="http://www.digikey.com/product-detail/en/T491D107M006AT/399-8367-1-ND/3472090"/>
+<attribute name="SUPPLIER_LINK" value="&lt;a href=&quot;http://www.digikey.com&quot;&gt;Home Page&lt;/a&gt;"/>
+<attribute name="SUPPLIER_NAME" value="Digi-Key"/>
+<attribute name="SUPPLIER_URL" value="http://www.digikey.com"/>
+<attribute name="TOLERANCE" value="±20%"/>
+<attribute name="TYPE" value="Molded"/>
+<attribute name="VOLTAGE-RATED" value="6.3V"/>
+</technology>
+<technology name="107M010AT">
+<attribute name="CAPACITANCE" value="100µF"/>
+<attribute name="CATEGORY" value="Capacitors"/>
+<attribute name="DATASHEET" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="DESCRIPTION" value="CAP TANT 100UF 10V 20% 2917"/>
+<attribute name="DOCUMENTATION_LINK" value="&lt;a href=&quot;http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf&quot;&gt;Datasheet&lt;/a&gt;"/>
+<attribute name="DOCUMENTATION_URL" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf"/>
+<attribute name="ESR" value="700 mOhm"/>
+<attribute name="FAMILY" value="Tantalum Capacitors"/>
+<attribute name="FEATURES" value="General Purpose"/>
+<attribute name="HEIGHT-SEATED" value="0.122&quot; (3.10mm)"/>
+<attribute name="LEAD_SPACING" value="-"/>
+<attribute name="LIFETIME_TEMP" value="2000 Hrs @ 85°C"/>
+<attribute name="MANUFACTURER" value="Kemet"/>
+<attribute name="MANUFACTURER_SIZE_CODE" value="D"/>
+<attribute name="MOUNTING_TYPE" value="Surface Mount"/>
+<attribute name="OPERATING_TEMPERATURE" value="-55°C ~ 125°C"/>
+<attribute name="PART_NUMBER" value="T491D107M010AT"/>
+<attribute name="SERIES" value="T491"/>
+<attribute name="SIZE" value="0.287&quot; L x 0.169&quot; W (7.30mm x 4.30mm)"/>
+<attribute name="SUPPLIER_ITEM_INFO" value="http://www.digikey.com/product-detail/en/T491D107M010AT/399-3772-1-ND/819097"/>
+<attribute name="SUPPLIER_ITEM_LINK" value="&lt;a href=&quot;http://www.digikey.com/product-detail/en/T491D107M010AT/399-3772-1-ND/819097&quot;&gt;Details&lt;/a&gt;"/>
+<attribute name="SUPPLIER_ITEM_NUMBER" value="399-3772-1-ND"/>
+<attribute name="SUPPLIER_ITEM_URL" value="http://www.digikey.com/product-detail/en/T491D107M010AT/399-3772-1-ND/819097"/>
+<attribute name="SUPPLIER_LINK" value="&lt;a href=&quot;http://www.digikey.com&quot;&gt;Home Page&lt;/a&gt;"/>
+<attribute name="SUPPLIER_NAME" value="Digi-Key"/>
+<attribute name="SUPPLIER_URL" value="http://www.digikey.com"/>
+<attribute name="TOLERANCE" value="±20%"/>
+<attribute name="TYPE" value="Molded"/>
+<attribute name="VOLTAGE-RATED" value="10V"/>
+</technology>
+</technologies>
+</device>
+<device name="A" package="A">
+<connects>
+<connect gate="G$1" pin="A" pad="A"/>
+<connect gate="G$1" pin="C" pad="C"/>
+</connects>
+<technologies>
+<technology name="106K010AT">
+<attribute name="CAPACITANCE" value="10µF" constant="no"/>
+<attribute name="CATEGORY" value="Capacitors" constant="no"/>
+<attribute name="DESCRIPTION" value="CAP TANT 10UF 10V 10% 1206" constant="no"/>
+<attribute name="DOCUMENTATION_LINK" value="&lt;a href=&quot;http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf&quot;&gt;Datasheet&lt;/a&gt;" constant="no"/>
+<attribute name="DOCUMENTATION_URL" value="http://www.kemet.com/Lists/ProductCatalog/Attachments/254/KEM_T2005_T491.pdf" constant="no"/>
+<attribute name="ESR" value="3.8 Ohm" constant="no"/>
+<attribute name="FAMILY" value="Tantalum Capacitors" constant="no"/>
+<attribute name="FEATURES" value="General Purpose" constant="no"/>
+<attribute name="HEIGHT" value="0.071&quot; (1.80mm)" constant="no"/>
+<attribute name="LEAD_SPACING" value="-" constant="no"/>
+<attribute name="LIFETIME_AT_TEMP" value="2000 Hrs @ 85°C" constant="no"/>
+<attribute name="MANUFACTURER" value="Kemet" constant="no"/>
+<attribute name="MANUFACTURER_SIZE_CODE" value="A" constant="no"/>
+<attribute name="MOUNTING_TYPE" value="Surface Mount" constant="no"/>
+<attribute name="OPERATING_TEMPERATURE" value="-55°C ~ 125°C" constant="no"/>
+<attribute name="PACKAGE" value="1206 (3216 Metric)" constant="no"/>
+<attribute name="PART_NUMBER" value="T491A106K010AT" constant="no"/>
+<attribute name="SERIES" value="T491" constant="no"/>
+<attribute name="SIZE" value="0.126&quot; L x 0.063&quot; W (3.20mm x 1.60mm)" constant="no"/>
+<attribute name="SUPPLIER_ITEM_LINK" value="&lt;a href=&quot;http://www.digikey.com/product-detail/en/T491A106K010AT/399-3684-1-ND/819009&quot;&gt;Details&lt;/a&gt;" constant="no"/>
+<attribute name="SUPPLIER_ITEM_NUMBER" value="399-3684-1-ND" constant="no"/>
+<attribute name="SUPPLIER_ITEM_URL" value="http://www.digikey.com/product-detail/en/T491A106K010AT/399-3684-1-ND/819009" constant="no"/>
+<attribute name="SUPPLIER_LINK" value="&lt;a href=&quot;http://www.digikey.com&quot;&gt;Home Page&lt;/a&gt;" constant="no"/>
+<attribute name="SUPPLIER_NAME" value="Digi-Key" constant="no"/>
+<attribute name="SUPPLIER_URL" value="http://www.digikey.com" constant="no"/>
+<attribute name="TOLERANCE" value="±10%" constant="no"/>
+<attribute name="TYPE" value="Molded" constant="no"/>
+<attribute name="VOLTAGE-RATED" value="10V" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5191,7 +5197,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C_NR" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="U$5" library="STM32F10x F4xx" deviceset="STM32F405/415_LQFP64" device=""/>
 <part name="REC_LF" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
-<part name="C_BAT2" library="SparkFun-Passives" deviceset="CAP" device="1206" value="100uF"/>
+<part name="C_BAT2" library="SparkFun" deviceset="CAP" device="1210" value="47uF"/>
 <part name="R_RLF" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
 <part name="U$7" library="sfh4550 _ teft4300" deviceset="RECEIVER" device=""/>
 <part name="R_RLD" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="1.8k"/>
@@ -5235,7 +5241,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C_3.3V2" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="1007" value="10uH"/>
 <part name="C_BAT1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_5V2" library="SparkFun-Passives" deviceset="CAP" device="1206" value="100uF"/>
+<part name="C_5V2" library="SparkFun" deviceset="CAP" device="1210" value="47uF"/>
 <part name="C_ELF1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
 <part name="C_ELF2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_EM_D1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
@@ -5288,7 +5294,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="U2" library="SparkFun-IC-Special-Function" deviceset="DRV883X" device="" value="DRV8835"/>
 <part name="C_M1" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_M2" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C_MB" library="SparkFun" deviceset="CAP" device="0603-CAP" value="100uF"/>
+<part name="C_MB" library="Volks73-Kemet" deviceset="T491?*" device="X" technology="107K025AT" value="100uF"/>
+<part name="C1" library="SparkFun" deviceset="CAP" device="1210"/>
 </parts>
 <sheets>
 <sheet>
@@ -5405,7 +5412,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="U2" gate="G$1" x="-137.16" y="-180.34"/>
 <instance part="C_M1" gate="G$1" x="-165.1" y="-177.8" rot="R180"/>
 <instance part="C_M2" gate="G$1" x="-177.8" y="-177.8" rot="R180"/>
-<instance part="C_MB" gate="G$1" x="-187.96" y="-177.8" rot="R180"/>
+<instance part="C_MB" gate="G$1" x="-190.5" y="-180.34"/>
+<instance part="C1" gate="G$1" x="-193.04" y="-149.86"/>
 </instances>
 <busses>
 </busses>
@@ -5671,13 +5679,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-152.4" y1="-170.18" x2="-177.8" y2="-170.18" width="0.1524" layer="91"/>
 <label x="-195.58" y="-170.18" size="0.889" layer="95" rot="R180" xref="yes"/>
 <pinref part="C_M2" gate="G$1" pin="2"/>
-<wire x1="-177.8" y1="-170.18" x2="-187.96" y2="-170.18" width="0.1524" layer="91"/>
-<wire x1="-187.96" y1="-170.18" x2="-195.58" y2="-170.18" width="0.1524" layer="91"/>
+<wire x1="-177.8" y1="-170.18" x2="-190.5" y2="-170.18" width="0.1524" layer="91"/>
+<wire x1="-190.5" y1="-170.18" x2="-195.58" y2="-170.18" width="0.1524" layer="91"/>
 <wire x1="-177.8" y1="-175.26" x2="-177.8" y2="-170.18" width="0.1524" layer="91"/>
 <junction x="-177.8" y="-170.18"/>
-<pinref part="C_MB" gate="G$1" pin="2"/>
-<wire x1="-187.96" y1="-175.26" x2="-187.96" y2="-170.18" width="0.1524" layer="91"/>
-<junction x="-187.96" y="-170.18"/>
+<pinref part="C_MB" gate="G$1" pin="A"/>
+<wire x1="-190.5" y1="-175.26" x2="-190.5" y2="-170.18" width="0.1524" layer="91"/>
+<junction x="-190.5" y="-170.18"/>
 </segment>
 </net>
 <net name="5V" class="0">
@@ -6062,26 +6070,26 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="PWMLB" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="PB7"/>
-<wire x1="-99.06" y1="-35.56" x2="-99.06" y2="-30.48" width="0.1524" layer="91"/>
-<label x="-99.06" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
-</segment>
-<segment>
 <pinref part="U2" gate="G$1" pin="AIN1/PH"/>
 <wire x1="-152.4" y1="-177.8" x2="-154.94" y2="-177.8" width="0.1524" layer="91"/>
 <label x="-154.94" y="-177.8" size="0.889" layer="95" rot="R180" xref="yes"/>
 </segment>
-</net>
-<net name="PWMLF" class="0">
 <segment>
 <pinref part="U$5" gate="G$1" pin="PB6"/>
 <wire x1="-96.52" y1="-35.56" x2="-96.52" y2="-30.48" width="0.1524" layer="91"/>
 <label x="-96.52" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
+</net>
+<net name="PWMLF" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="AIN2/EN"/>
 <wire x1="-152.4" y1="-180.34" x2="-154.94" y2="-180.34" width="0.1524" layer="91"/>
 <label x="-154.94" y="-180.34" size="0.889" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB7"/>
+<wire x1="-99.06" y1="-35.56" x2="-99.06" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-99.06" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="PWMRB" class="0">
@@ -6120,24 +6128,19 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="-198.12" y="-190.5" size="0.889" layer="95" rot="R180" xref="yes"/>
 <pinref part="C_M1" gate="G$1" pin="1"/>
 <wire x1="-165.1" y1="-190.5" x2="-177.8" y2="-190.5" width="0.1524" layer="91"/>
-<wire x1="-177.8" y1="-190.5" x2="-187.96" y2="-190.5" width="0.1524" layer="91"/>
-<wire x1="-187.96" y1="-190.5" x2="-198.12" y2="-190.5" width="0.1524" layer="91"/>
+<wire x1="-177.8" y1="-190.5" x2="-190.5" y2="-190.5" width="0.1524" layer="91"/>
+<wire x1="-190.5" y1="-190.5" x2="-198.12" y2="-190.5" width="0.1524" layer="91"/>
 <wire x1="-165.1" y1="-182.88" x2="-165.1" y2="-190.5" width="0.1524" layer="91"/>
 <junction x="-165.1" y="-190.5"/>
 <pinref part="C_M2" gate="G$1" pin="1"/>
 <wire x1="-177.8" y1="-182.88" x2="-177.8" y2="-190.5" width="0.1524" layer="91"/>
 <junction x="-177.8" y="-190.5"/>
-<pinref part="C_MB" gate="G$1" pin="1"/>
-<wire x1="-187.96" y1="-182.88" x2="-187.96" y2="-190.5" width="0.1524" layer="91"/>
-<junction x="-187.96" y="-190.5"/>
+<pinref part="C_MB" gate="G$1" pin="C"/>
+<wire x1="-190.5" y1="-185.42" x2="-190.5" y2="-190.5" width="0.1524" layer="91"/>
+<junction x="-190.5" y="-190.5"/>
 </segment>
 </net>
 <net name="EM_LF" class="0">
-<segment>
-<pinref part="U$5" gate="G$1" pin="PC6"/>
-<wire x1="-55.88" y1="-81.28" x2="-50.8" y2="-81.28" width="0.1524" layer="91"/>
-<label x="-50.8" y="-81.28" size="0.889" layer="95" xref="yes"/>
-</segment>
 <segment>
 <pinref part="R_ELF_PD" gate="G$1" pin="2"/>
 <wire x1="144.78" y1="-68.58" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
@@ -6146,6 +6149,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="144.78" y1="-66.04" x2="144.78" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="-66.04" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
 <junction x="144.78" y="-66.04"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PA11"/>
+<wire x1="-55.88" y1="-63.5" x2="-50.8" y2="-63.5" width="0.1524" layer="91"/>
+<label x="-50.8" y="-63.5" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="EM_RF" class="0">
@@ -6416,14 +6424,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="LED1" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="PA11"/>
-<wire x1="-55.88" y1="-63.5" x2="-50.8" y2="-63.5" width="0.1524" layer="91"/>
-<label x="-50.8" y="-63.5" size="0.889" layer="95" xref="yes"/>
-</segment>
-<segment>
 <pinref part="LED1" gate="G$1" pin="A"/>
 <wire x1="-180.34" y1="27.94" x2="-180.34" y2="33.02" width="0.1524" layer="91"/>
 <label x="-180.34" y="33.02" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PC6"/>
+<wire x1="-55.88" y1="-81.28" x2="-50.8" y2="-81.28" width="0.1524" layer="91"/>
+<label x="-50.8" y="-81.28" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="LED2" class="0">
