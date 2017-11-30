@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.3.2">
+<eagle version="8.4.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -5295,7 +5295,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <part name="C_M1" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_M2" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_MB" library="Volks73-Kemet" deviceset="T491?*" device="X" technology="107K025AT" value="100uF"/>
-<part name="C1" library="SparkFun" deviceset="CAP" device="1210"/>
 </parts>
 <sheets>
 <sheet>
@@ -5413,7 +5412,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <instance part="C_M1" gate="G$1" x="-165.1" y="-177.8" rot="R180"/>
 <instance part="C_M2" gate="G$1" x="-177.8" y="-177.8" rot="R180"/>
 <instance part="C_MB" gate="G$1" x="-190.5" y="-180.34"/>
-<instance part="C1" gate="G$1" x="-193.04" y="-149.86"/>
 </instances>
 <busses>
 </busses>
@@ -6429,9 +6427,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-180.34" y="33.02" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$5" gate="G$1" pin="PC6"/>
-<wire x1="-55.88" y1="-81.28" x2="-50.8" y2="-81.28" width="0.1524" layer="91"/>
-<label x="-50.8" y="-81.28" size="0.889" layer="95" xref="yes"/>
+<pinref part="U$5" gate="G$1" pin="PC10"/>
+<wire x1="-78.74" y1="-35.56" x2="-78.74" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-78.74" y="-30.48" size="0.8128" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="LED2" class="0">
@@ -6441,9 +6439,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-167.64" y="33.02" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$5" gate="G$1" pin="PC10"/>
-<wire x1="-78.74" y1="-35.56" x2="-78.74" y2="-30.48" width="0.1524" layer="91"/>
-<label x="-78.74" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
+<pinref part="U$5" gate="G$1" pin="PC11"/>
+<wire x1="-81.28" y1="-35.56" x2="-81.28" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-81.28" y="-30.48" size="0.8128" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="LED3" class="0">
@@ -6453,9 +6451,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-154.94" y="33.02" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$5" gate="G$1" pin="PC0"/>
-<wire x1="-129.54" y1="-71.12" x2="-134.62" y2="-71.12" width="0.1524" layer="91"/>
-<label x="-134.62" y="-71.12" size="0.889" layer="95" rot="R180" xref="yes"/>
+<pinref part="U$5" gate="G$1" pin="PC12"/>
+<wire x1="-83.82" y1="-35.56" x2="-83.82" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-83.82" y="-30.48" size="0.8128" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="N$12" class="0">
