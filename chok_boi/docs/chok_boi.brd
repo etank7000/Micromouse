@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.3.2">
+<eagle version="8.4.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1818,10 +1818,10 @@ Please make sure your boards conform to these design rules.</description>
 <param name="slThermalsForVias" value="0"/>
 <param name="dpMaxLengthDifference" value="10mm"/>
 <param name="dpGapFactor" value="2.5"/>
-<param name="checkGrid" value="0"/>
 <param name="checkAngle" value="0"/>
 <param name="checkFont" value="1"/>
 <param name="checkRestrict" value="1"/>
+<param name="checkStop" value="0"/>
 <param name="useDiameter" value="13"/>
 <param name="maxErrors" value="50"/>
 </designrules>
@@ -2820,8 +2820,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="C_M2" pad="1"/>
 <contactref element="C_MB" pad="C"/>
 <polygon width="0.1524" layer="1" thermals="no" rank="4">
-<vertex x="43.6372" y="46.4312"/>
-<vertex x="15.5956" y="46.4312"/>
+<vertex x="43.8658" y="57.2262"/>
+<vertex x="15.3162" y="57.1754"/>
 <vertex x="15.5956" y="25.4762"/>
 <vertex x="43.6372" y="25.4762"/>
 </polygon>
