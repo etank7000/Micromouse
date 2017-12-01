@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.4.1">
+<eagle version="8.3.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -4628,76 +4628,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </deviceset>
 </devicesets>
 </library>
-<library name="zetex" urn="urn:adsk.eagle:library:418">
-<description>&lt;b&gt;Zetex Power MOS FETs, Bridges, Diodes&lt;/b&gt;&lt;p&gt;
-http://www.zetex.com&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="SOT323" urn="urn:adsk.eagle:footprint:30953/1" library_version="1">
-<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;</description>
-<wire x1="-1" y1="-0.55" x2="1" y2="-0.55" width="0.2032" layer="51"/>
-<wire x1="1" y1="-0.55" x2="1" y2="0.55" width="0.2032" layer="21"/>
-<wire x1="1" y1="0.55" x2="-1" y2="0.55" width="0.2032" layer="51"/>
-<wire x1="-1" y1="0.55" x2="-1" y2="-0.55" width="0.2032" layer="21"/>
-<smd name="1" x="0" y="0.9" dx="0.5" dy="1" layer="1"/>
-<smd name="2" x="-0.65" y="-0.9" dx="0.5" dy="1" layer="1"/>
-<smd name="3" x="0.65" y="-0.9" dx="0.5" dy="1" layer="1"/>
-<text x="1.225" y="0.03" size="1.016" layer="25">&gt;NAME</text>
-<text x="1.225" y="-1.33" size="1.016" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.15" y1="0.65" x2="0.15" y2="1.2" layer="51"/>
-<rectangle x1="-0.8" y1="-1.2" x2="-0.5" y2="-0.65" layer="51"/>
-<rectangle x1="0.5" y1="-1.2" x2="0.8" y2="-0.65" layer="51"/>
-</package>
-</packages>
-<packages3d>
-<package3d name="SOT323" urn="urn:adsk.eagle:package:30986/1" type="box" library_version="1">
-<description>Small Outline Transistor</description>
-</package3d>
-</packages3d>
-<symbols>
-<symbol name="NPN" urn="urn:adsk.eagle:symbol:30947/1" library_version="1">
-<wire x1="2.54" y1="2.54" x2="0.508" y2="1.524" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.54" x2="0.508" y2="-1.524" width="0.1524" layer="94"/>
-<wire x1="1.778" y1="-1.524" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.54" x2="1.27" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="1.778" y2="-1.524" width="0.1524" layer="94"/>
-<text x="-10.16" y="7.62" size="1.778" layer="95">&gt;NAME</text>
-<text x="-10.16" y="5.08" size="1.778" layer="96">&gt;VALUE</text>
-<rectangle x1="-0.254" y1="-2.54" x2="0.508" y2="2.54" layer="94"/>
-<pin name="B" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
-<pin name="E" x="2.54" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="C" x="2.54" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="NPNSOT323" urn="urn:adsk.eagle:component:31027/1" prefix="T" uservalue="yes" library_version="1">
-<description>&lt;b&gt;NPN TRANSISTOR&lt;/b&gt;</description>
-<gates>
-<gate name="A" symbol="NPN" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SOT323">
-<connects>
-<connect gate="A" pin="B" pad="2"/>
-<connect gate="A" pin="C" pad="1"/>
-<connect gate="A" pin="E" pad="3"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:30986/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="DSS4160U-7" constant="no"/>
-<attribute name="OC_FARNELL" value="1710696" constant="no"/>
-<attribute name="OC_NEWARK" value="25R4558" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-IC-Special-Function">
 <description>&lt;h3&gt;SparkFun Special Function ICs&lt;/h3&gt;
 This library contains ICs that do not really fit into the other, more generic categories.  Basically, anything that serves some function but has a bunch of brains or special bias circuitry that prevents it from being used as a general part qualifies for this category.
@@ -5175,6 +5105,54 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 </deviceset>
 </devicesets>
 </library>
+<library name="DMN3150LW">
+<packages>
+<package name="DMN3150LW">
+<wire x1="-1.075" y1="0.65" x2="1.075" y2="0.65" width="0.127" layer="21"/>
+<wire x1="1.075" y1="0.65" x2="1.075" y2="-0.65" width="0.127" layer="21"/>
+<wire x1="1.075" y1="-0.65" x2="-1.075" y2="-0.65" width="0.127" layer="21"/>
+<wire x1="-1.075" y1="-0.65" x2="-1.075" y2="0.65" width="0.127" layer="21"/>
+<smd name="S" x="0.65" y="-0.95" dx="0.7" dy="0.9" layer="1"/>
+<smd name="G" x="-0.65" y="-0.95" dx="0.7" dy="0.9" layer="1"/>
+<smd name="D" x="0" y="0.95" dx="0.7" dy="0.9" layer="1"/>
+<text x="-0.8128" y="-0.0762" size="0.2" layer="25" font="vector">DMN3150LW</text>
+</package>
+</packages>
+<symbols>
+<symbol name="DMN3150LW">
+<wire x1="2.54" y1="5.08" x2="-2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-1.27" x2="-2.54" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-5.08" x2="2.54" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="1.27" x2="-2.54" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-1.27" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<text x="6.35" y="-5.08" size="1.27" layer="94" rot="R90">DMN3150LW</text>
+<pin name="D" x="2.54" y="7.62" visible="pad" length="short" rot="R270"/>
+<pin name="S" x="2.54" y="-7.62" visible="pad" length="short" rot="R90"/>
+<pin name="G" x="-7.62" y="0" visible="pad" length="short"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="DMN3150LW">
+<gates>
+<gate name="G$1" symbol="DMN3150LW" x="17.78" y="12.7"/>
+</gates>
+<devices>
+<device name="" package="DMN3150LW">
+<connects>
+<connect gate="G$1" pin="D" pad="D"/>
+<connect gate="G$1" pin="G" pad="G"/>
+<connect gate="G$1" pin="S" pad="S"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5268,7 +5246,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <part name="S1" library="SparkFun" deviceset="SWITCH-SPST" device="PTH"/>
 <part name="SERIAL1" library="pinhead" deviceset="PINHD-1X4" device=""/>
 <part name="SERIAL2" library="pinhead" deviceset="PINHD-1X4" device=""/>
-<part name="R_BOOT1" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="47k"/>
 <part name="U$18" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
 <part name="U$19" library="sfh4550 _ teft4300" deviceset="EMITTER" device=""/>
 <part name="R_EH1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
@@ -5285,16 +5262,16 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <part name="C_GY_CP" library="SparkFun" deviceset="CAP" device="0603-CAP" value="2.2nF"/>
 <part name="C_GY_VDD" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.01uF"/>
 <part name="AGND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
-<part name="T1" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
-<part name="T2" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
-<part name="T3" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
-<part name="T4" library="zetex" library_urn="urn:adsk.eagle:library:418" deviceset="NPNSOT323" device="" package3d_urn="urn:adsk.eagle:package:30986/1"/>
 <part name="AGND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
 <part name="AGND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
 <part name="U2" library="SparkFun-IC-Special-Function" deviceset="DRV883X" device="" value="DRV8835"/>
 <part name="C_M1" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_M2" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_MB" library="Volks73-Kemet" deviceset="T491?*" device="X" technology="107K025AT" value="100uF"/>
+<part name="NMOS1" library="DMN3150LW" deviceset="DMN3150LW" device=""/>
+<part name="NMOS2" library="DMN3150LW" deviceset="DMN3150LW" device=""/>
+<part name="NMOS3" library="DMN3150LW" deviceset="DMN3150LW" device=""/>
+<part name="NMOS4" library="DMN3150LW" deviceset="DMN3150LW" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5385,7 +5362,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <instance part="S1" gate="1" x="-83.82" y="73.66"/>
 <instance part="SERIAL1" gate="A" x="-203.2" y="-40.64"/>
 <instance part="SERIAL2" gate="A" x="-223.52" y="-40.64"/>
-<instance part="R_BOOT1" gate="G$1" x="-83.82" y="-132.08" rot="R270"/>
 <instance part="U$18" gate="G$1" x="335.28" y="-20.32"/>
 <instance part="U$19" gate="G$1" x="335.28" y="-35.56"/>
 <instance part="R_EH1" gate="G$1" x="335.28" y="-50.8" rot="R90"/>
@@ -5402,16 +5378,16 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <instance part="C_GY_CP" gate="G$1" x="35.56" y="-93.98"/>
 <instance part="C_GY_VDD" gate="G$1" x="15.24" y="-71.12"/>
 <instance part="AGND5" gate="VR1" x="22.86" y="-101.6"/>
-<instance part="T1" gate="A" x="160.02" y="-66.04"/>
-<instance part="T2" gate="A" x="215.9" y="-66.04"/>
-<instance part="T3" gate="A" x="281.94" y="-63.5"/>
-<instance part="T4" gate="A" x="332.74" y="-63.5"/>
 <instance part="AGND2" gate="VR1" x="33.02" y="-76.2" rot="R270"/>
 <instance part="AGND6" gate="VR1" x="27.94" y="-78.74" rot="R270"/>
 <instance part="U2" gate="G$1" x="-137.16" y="-180.34"/>
 <instance part="C_M1" gate="G$1" x="-165.1" y="-177.8" rot="R180"/>
 <instance part="C_M2" gate="G$1" x="-177.8" y="-177.8" rot="R180"/>
 <instance part="C_MB" gate="G$1" x="-190.5" y="-180.34"/>
+<instance part="NMOS1" gate="G$1" x="160.02" y="-66.04"/>
+<instance part="NMOS2" gate="G$1" x="215.9" y="-66.04"/>
+<instance part="NMOS3" gate="G$1" x="281.94" y="-66.04"/>
+<instance part="NMOS4" gate="G$1" x="332.74" y="-66.04"/>
 </instances>
 <busses>
 </busses>
@@ -5525,17 +5501,17 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <wire x1="335.28" y1="-81.28" x2="322.58" y2="-81.28" width="0.1524" layer="91"/>
 <wire x1="322.58" y1="-76.2" x2="322.58" y2="-81.28" width="0.1524" layer="91"/>
 <junction x="322.58" y="-81.28"/>
-<pinref part="T1" gate="A" pin="E"/>
-<wire x1="162.56" y1="-71.12" x2="162.56" y2="-81.28" width="0.1524" layer="91"/>
-<pinref part="T2" gate="A" pin="E"/>
-<wire x1="218.44" y1="-71.12" x2="218.44" y2="-81.28" width="0.1524" layer="91"/>
-<junction x="218.44" y="-81.28"/>
-<pinref part="T3" gate="A" pin="E"/>
-<wire x1="284.48" y1="-68.58" x2="284.48" y2="-81.28" width="0.1524" layer="91"/>
-<junction x="284.48" y="-81.28"/>
-<pinref part="T4" gate="A" pin="E"/>
-<wire x1="335.28" y1="-68.58" x2="335.28" y2="-81.28" width="0.1524" layer="91"/>
+<pinref part="NMOS4" gate="G$1" pin="S"/>
+<wire x1="335.28" y1="-73.66" x2="335.28" y2="-81.28" width="0.1524" layer="91"/>
 <junction x="335.28" y="-81.28"/>
+<pinref part="NMOS3" gate="G$1" pin="S"/>
+<wire x1="284.48" y1="-73.66" x2="284.48" y2="-81.28" width="0.1524" layer="91"/>
+<junction x="284.48" y="-81.28"/>
+<pinref part="NMOS1" gate="G$1" pin="S"/>
+<wire x1="162.56" y1="-73.66" x2="162.56" y2="-81.28" width="0.1524" layer="91"/>
+<pinref part="NMOS2" gate="G$1" pin="S"/>
+<wire x1="218.44" y1="-73.66" x2="218.44" y2="-81.28" width="0.1524" layer="91"/>
+<junction x="218.44" y="-81.28"/>
 </segment>
 <segment>
 <pinref part="C_VDD3" gate="G$1" pin="2"/>
@@ -5568,8 +5544,8 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <junction x="-63.5" y="-139.7"/>
 <wire x1="-83.82" y1="-139.7" x2="-76.2" y2="-139.7" width="0.1524" layer="91"/>
 <junction x="-76.2" y="-139.7"/>
-<pinref part="R_BOOT1" gate="G$1" pin="2"/>
-<wire x1="-83.82" y1="-137.16" x2="-83.82" y2="-139.7" width="0.1524" layer="91"/>
+<pinref part="U$5" gate="G$1" pin="PB2"/>
+<wire x1="-83.82" y1="-109.22" x2="-83.82" y2="-139.7" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="GND11" gate="1" pin="GND"/>
@@ -6006,8 +5982,8 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <pinref part="R_ED1" gate="G$1" pin="1"/>
 <pinref part="R_ED2" gate="G$1" pin="1"/>
 <wire x1="228.6" y1="-55.88" x2="218.44" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="T2" gate="A" pin="C"/>
-<wire x1="218.44" y1="-55.88" x2="218.44" y2="-60.96" width="0.1524" layer="91"/>
+<pinref part="NMOS2" gate="G$1" pin="D"/>
+<wire x1="218.44" y1="-58.42" x2="218.44" y2="-55.88" width="0.1524" layer="91"/>
 <junction x="218.44" y="-55.88"/>
 </segment>
 </net>
@@ -6025,9 +6001,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-43.18" y="-213.36" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="AOUT2"/>
-<wire x1="-121.92" y1="-175.26" x2="-116.84" y2="-175.26" width="0.1524" layer="91"/>
-<label x="-116.84" y="-175.26" size="0.889" layer="95" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="BOUT2"/>
+<wire x1="-121.92" y1="-177.8" x2="-116.84" y2="-177.8" width="0.1524" layer="91"/>
+<label x="-116.84" y="-177.8" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="MLB" class="0">
@@ -6037,9 +6013,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-35.56" y="-213.36" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="AOUT1"/>
-<wire x1="-121.92" y1="-170.18" x2="-116.84" y2="-170.18" width="0.1524" layer="91"/>
-<label x="-116.84" y="-170.18" size="0.889" layer="95" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="BOUT1"/>
+<wire x1="-121.92" y1="-172.72" x2="-116.84" y2="-172.72" width="0.1524" layer="91"/>
+<label x="-116.84" y="-172.72" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="MRF" class="0">
@@ -6049,9 +6025,9 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="96.52" y="-213.36" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="BOUT2"/>
-<wire x1="-121.92" y1="-177.8" x2="-116.84" y2="-177.8" width="0.1524" layer="91"/>
-<label x="-116.84" y="-177.8" size="0.889" layer="95" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="AOUT2"/>
+<wire x1="-121.92" y1="-175.26" x2="-116.84" y2="-175.26" width="0.1524" layer="91"/>
+<label x="-116.84" y="-175.26" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="MRB" class="0">
@@ -6061,28 +6037,16 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="104.14" y="-213.36" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="BOUT1"/>
-<wire x1="-121.92" y1="-172.72" x2="-116.84" y2="-172.72" width="0.1524" layer="91"/>
-<label x="-116.84" y="-172.72" size="0.889" layer="95" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="AOUT1"/>
+<wire x1="-121.92" y1="-170.18" x2="-116.84" y2="-170.18" width="0.1524" layer="91"/>
+<label x="-116.84" y="-170.18" size="0.889" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="PWMLB" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="AIN1/PH"/>
-<wire x1="-152.4" y1="-177.8" x2="-154.94" y2="-177.8" width="0.1524" layer="91"/>
-<label x="-154.94" y="-177.8" size="0.889" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="U$5" gate="G$1" pin="PB6"/>
-<wire x1="-96.52" y1="-35.56" x2="-96.52" y2="-30.48" width="0.1524" layer="91"/>
-<label x="-96.52" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
-</segment>
-</net>
-<net name="PWMLF" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="AIN2/EN"/>
-<wire x1="-152.4" y1="-180.34" x2="-154.94" y2="-180.34" width="0.1524" layer="91"/>
-<label x="-154.94" y="-180.34" size="0.889" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="BIN1/PH"/>
+<wire x1="-152.4" y1="-182.88" x2="-154.94" y2="-182.88" width="0.1524" layer="91"/>
+<label x="-154.94" y="-182.88" size="0.889" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="U$5" gate="G$1" pin="PB7"/>
@@ -6090,28 +6054,40 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <label x="-99.06" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
-<net name="PWMRB" class="0">
+<net name="PWMLF" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="PB8"/>
-<wire x1="-104.14" y1="-35.56" x2="-104.14" y2="-30.48" width="0.1524" layer="91"/>
-<label x="-104.14" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="BIN2/EN"/>
+<wire x1="-152.4" y1="-185.42" x2="-154.94" y2="-185.42" width="0.1524" layer="91"/>
+<label x="-154.94" y="-185.42" size="0.889" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="BIN1/PH"/>
-<wire x1="-152.4" y1="-182.88" x2="-154.94" y2="-182.88" width="0.1524" layer="91"/>
-<label x="-154.94" y="-182.88" size="0.889" layer="95" rot="R180" xref="yes"/>
+<pinref part="U$5" gate="G$1" pin="PB6"/>
+<wire x1="-96.52" y1="-35.56" x2="-96.52" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-96.52" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
-<net name="PWMRF" class="0">
+<net name="PWMRB" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="AIN1/PH"/>
+<wire x1="-152.4" y1="-177.8" x2="-154.94" y2="-177.8" width="0.1524" layer="91"/>
+<label x="-154.94" y="-177.8" size="0.889" layer="95" rot="R180" xref="yes"/>
+</segment>
 <segment>
 <pinref part="U$5" gate="G$1" pin="PB9"/>
 <wire x1="-106.68" y1="-35.56" x2="-106.68" y2="-30.48" width="0.1524" layer="91"/>
 <label x="-106.68" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
+</net>
+<net name="PWMRF" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="BIN2/EN"/>
-<wire x1="-152.4" y1="-185.42" x2="-154.94" y2="-185.42" width="0.1524" layer="91"/>
-<label x="-154.94" y="-185.42" size="0.889" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="AIN2/EN"/>
+<wire x1="-152.4" y1="-180.34" x2="-154.94" y2="-180.34" width="0.1524" layer="91"/>
+<label x="-154.94" y="-180.34" size="0.889" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB8"/>
+<wire x1="-104.14" y1="-35.56" x2="-104.14" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-104.14" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="MGND" class="0">
@@ -6141,11 +6117,11 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <net name="EM_LF" class="0">
 <segment>
 <pinref part="R_ELF_PD" gate="G$1" pin="2"/>
-<wire x1="144.78" y1="-68.58" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
 <label x="144.78" y="-53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="T1" gate="A" pin="B"/>
+<wire x1="144.78" y1="-68.58" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="NMOS1" gate="G$1" pin="G"/>
 <wire x1="144.78" y1="-66.04" x2="144.78" y2="-53.34" width="0.1524" layer="91"/>
-<wire x1="157.48" y1="-66.04" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="-66.04" x2="144.78" y2="-66.04" width="0.1524" layer="91"/>
 <junction x="144.78" y="-66.04"/>
 </segment>
 <segment>
@@ -6157,12 +6133,12 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <net name="EM_RF" class="0">
 <segment>
 <pinref part="R_ERF_PD" gate="G$1" pin="2"/>
-<wire x1="266.7" y1="-68.58" x2="266.7" y2="-63.5" width="0.1524" layer="91"/>
 <label x="266.7" y="-53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="T3" gate="A" pin="B"/>
-<wire x1="266.7" y1="-63.5" x2="266.7" y2="-53.34" width="0.1524" layer="91"/>
-<wire x1="279.4" y1="-63.5" x2="266.7" y2="-63.5" width="0.1524" layer="91"/>
-<junction x="266.7" y="-63.5"/>
+<wire x1="266.7" y1="-68.58" x2="266.7" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="NMOS3" gate="G$1" pin="G"/>
+<wire x1="266.7" y1="-66.04" x2="266.7" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="274.32" y1="-66.04" x2="266.7" y2="-66.04" width="0.1524" layer="91"/>
+<junction x="266.7" y="-66.04"/>
 </segment>
 <segment>
 <pinref part="U$5" gate="G$1" pin="PA2"/>
@@ -6343,11 +6319,11 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <net name="EM_D" class="0">
 <segment>
 <pinref part="R_ED_PD" gate="G$1" pin="2"/>
-<wire x1="200.66" y1="-68.58" x2="200.66" y2="-66.04" width="0.1524" layer="91"/>
 <label x="200.66" y="-53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="T2" gate="A" pin="B"/>
+<wire x1="200.66" y1="-68.58" x2="200.66" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="NMOS2" gate="G$1" pin="G"/>
 <wire x1="200.66" y1="-66.04" x2="200.66" y2="-53.34" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="-66.04" x2="200.66" y2="-66.04" width="0.1524" layer="91"/>
+<wire x1="208.28" y1="-66.04" x2="200.66" y2="-66.04" width="0.1524" layer="91"/>
 <junction x="200.66" y="-66.04"/>
 </segment>
 <segment>
@@ -6484,13 +6460,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <wire x1="218.44" y1="-25.4" x2="218.44" y2="-30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$10" class="0">
-<segment>
-<pinref part="U$5" gate="G$1" pin="PB2"/>
-<pinref part="R_BOOT1" gate="G$1" pin="1"/>
-<wire x1="-83.82" y1="-109.22" x2="-83.82" y2="-127" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="H_EM" class="0">
 <segment>
 <pinref part="U$18" gate="G$1" pin="-"/>
@@ -6503,8 +6472,8 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <pinref part="R_EH2" gate="G$1" pin="1"/>
 <pinref part="R_EH1" gate="G$1" pin="1"/>
 <wire x1="345.44" y1="-55.88" x2="335.28" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="T4" gate="A" pin="C"/>
-<wire x1="335.28" y1="-55.88" x2="335.28" y2="-58.42" width="0.1524" layer="91"/>
+<pinref part="NMOS4" gate="G$1" pin="D"/>
+<wire x1="335.28" y1="-58.42" x2="335.28" y2="-55.88" width="0.1524" layer="91"/>
 <junction x="335.28" y="-55.88"/>
 </segment>
 </net>
@@ -6537,12 +6506,11 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <net name="EM_H" class="0">
 <segment>
 <pinref part="R_EH_PD" gate="G$1" pin="2"/>
-<wire x1="322.58" y1="-66.04" x2="322.58" y2="-63.5" width="0.1524" layer="91"/>
 <label x="322.58" y="-55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="T4" gate="A" pin="B"/>
-<wire x1="322.58" y1="-63.5" x2="322.58" y2="-55.88" width="0.1524" layer="91"/>
-<wire x1="330.2" y1="-63.5" x2="322.58" y2="-63.5" width="0.1524" layer="91"/>
-<junction x="322.58" y="-63.5"/>
+<wire x1="322.58" y1="-66.04" x2="322.58" y2="-55.88" width="0.1524" layer="91"/>
+<pinref part="NMOS4" gate="G$1" pin="G"/>
+<wire x1="325.12" y1="-66.04" x2="322.58" y2="-66.04" width="0.1524" layer="91"/>
+<junction x="322.58" y="-66.04"/>
 </segment>
 <segment>
 <pinref part="U$5" gate="G$1" pin="PA6"/>
@@ -6564,20 +6532,6 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <pinref part="U1" gate="G$1" pin="CPOUT"/>
 <wire x1="35.56" y1="-88.9" x2="35.56" y2="-83.82" width="0.1524" layer="91"/>
 <wire x1="35.56" y1="-83.82" x2="45.72" y2="-83.82" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$7" class="0">
-<segment>
-<pinref part="R_ELF" gate="G$1" pin="1"/>
-<pinref part="T1" gate="A" pin="C"/>
-<wire x1="162.56" y1="-50.8" x2="162.56" y2="-60.96" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$23" class="0">
-<segment>
-<pinref part="R_ERF" gate="G$1" pin="1"/>
-<pinref part="T3" gate="A" pin="C"/>
-<wire x1="284.48" y1="-50.8" x2="284.48" y2="-58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -6622,6 +6576,11 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <wire x1="45.72" y1="-73.66" x2="40.64" y2="-73.66" width="0.1524" layer="91"/>
 <label x="40.64" y="-73.66" size="0.889" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB10"/>
+<wire x1="-81.28" y1="-109.22" x2="-81.28" y2="-114.3" width="0.1524" layer="91"/>
+<label x="-81.28" y="-114.3" size="0.889" layer="95" rot="R270" xref="yes"/>
+</segment>
 </net>
 <net name="SS1" class="0">
 <segment>
@@ -6661,6 +6620,25 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <wire x1="-152.4" y1="-175.26" x2="-154.94" y2="-175.26" width="0.1524" layer="91"/>
 <label x="-154.94" y="-175.26" size="0.889" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="PB4"/>
+<wire x1="-91.44" y1="-35.56" x2="-91.44" y2="-30.48" width="0.1524" layer="91"/>
+<label x="-91.44" y="-30.48" size="0.889" layer="95" rot="R90" xref="yes"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="NMOS3" gate="G$1" pin="D"/>
+<pinref part="R_ERF" gate="G$1" pin="1"/>
+<wire x1="284.48" y1="-58.42" x2="284.48" y2="-50.8" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="NMOS1" gate="G$1" pin="D"/>
+<pinref part="R_ELF" gate="G$1" pin="1"/>
+<wire x1="162.56" y1="-58.42" x2="162.56" y2="-50.8" width="0.1524" layer="91"/>
+</segment>
 </net>
 </nets>
 </sheet>
@@ -6677,11 +6655,6 @@ with this version.
 Since Version 8.3, EAGLE supports URNs for individual library
 assets (packages, symbols, and devices). The URNs of those assets
 will not be understood (or retained) with this version.
-</note>
-<note version="8.3" severity="warning">
-Since Version 8.3, EAGLE supports the association of 3D packages
-with devices in libraries, schematics, and board files. Those 3D
-packages will not be understood (or retained) with this version.
 </note>
 </compatibility>
 </eagle>
