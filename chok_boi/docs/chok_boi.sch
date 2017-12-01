@@ -5227,7 +5227,7 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <part name="R_ED2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="5.6"/>
 <part name="C_ERF1" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="4.7uF"/>
 <part name="C_ERF2" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
-<part name="R_VM1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="20k"/>
+<part name="R_VM1" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="47k"/>
 <part name="R_VM2" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="10k"/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="U$12" library="Futura 1.0 motor mount template" deviceset="FUTURA_V1.0_MOTOR_MOUNT" device=""/>
@@ -5260,7 +5260,7 @@ as MSL (Moisture Sensitivity Level) 1 under J STD 020: unlimited flor life time 
 <part name="U1" library="SparkFun-Sensors" deviceset="MPU-6000" device=""/>
 <part name="C_GY_REG" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C_GY_CP" library="SparkFun" deviceset="CAP" device="0603-CAP" value="2.2nF"/>
-<part name="C_GY_VDD" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.01uF"/>
+<part name="C_GY_VDD" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="AGND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
 <part name="AGND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>
 <part name="AGND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="AGND" device=""/>

@@ -233,6 +233,9 @@ Sahil Gandhi, Eric Tan, Jason Xu</text>
 <text x="54.864" y="47.2694" size="0.508" layer="21">GND</text>
 <text x="56.8198" y="47.2948" size="0.508" layer="21">SWDIO</text>
 <text x="59.69" y="47.3202" size="0.508" layer="21">RESET</text>
+<text x="13.5636" y="71.9582" size="0.889" layer="21">ON</text>
+<text x="8.128" y="71.9582" size="0.889" layer="21">OFF</text>
+<text x="16.2052" y="6.6802" size="0.889" layer="21" rot="SR270">RESET</text>
 </plain>
 <libraries>
 <library name="SparkFun-Retired">
@@ -1954,7 +1957,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="NAME" x="6.1976" y="33.8582" size="0.4064" layer="25" font="vector"/>
 <attribute name="VALUE" x="5.842" y="31.4706" size="0.4064" layer="27" font="vector"/>
 </element>
-<element name="C_GY_VDD" library="SparkFun" package="0603-CAP" value="0.01uF" x="72.3646" y="37.0078" smashed="yes" rot="R90">
+<element name="C_GY_VDD" library="SparkFun" package="0603-CAP" value="0.1uF" x="72.3646" y="37.0078" smashed="yes" rot="R90">
 <attribute name="NAME" x="71.6026" y="36.1188" size="0.4064" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="73.5076" y="35.9918" size="0.4064" layer="27" font="vector" rot="R90"/>
 </element>
@@ -2086,10 +2089,10 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="R_RLH" library="SparkFun-Passives" package="0603-RES" value="1.8k" x="67.8688" y="53.721"/>
 <element name="R_RRD" library="SparkFun-Passives" package="0603-RES" value="1.8k" x="77.2668" y="28.702"/>
-<element name="R_VM1" library="SparkFun-Passives" package="0603-RES" value="20k" x="18.7706" y="58.9534" rot="R270"/>
+<element name="R_VM1" library="SparkFun-Passives" package="0603-RES" value="47k" x="18.7706" y="58.9534" rot="R270"/>
 <element name="R_VM2" library="SparkFun-Passives" package="0603-RES" value="10k" x="16.0782" y="59.817"/>
 <element name="S1" library="SparkFun" package="SWITCH-SPDT" value="" x="11.5588" y="69.254" smashed="yes" rot="R90">
-<attribute name="NAME" x="-6.8308" y="70.778" size="1.778" layer="25" ratio="10" rot="R90"/>
+<attribute name="NAME" x="11.1506" y="71.9582" size="0.889" layer="25" ratio="10"/>
 <attribute name="VALUE" x="21.0838" y="65.444" size="1.778" layer="27" ratio="10" rot="R90"/>
 </element>
 <element name="SERIAL1" library="pinhead" package="1X04" value="" x="56.8452" y="53.1876" smashed="yes" rot="R180">
@@ -2813,7 +2816,7 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="28.4734" y="39.3954"/>
 <vertex x="27.1526" y="39.0398"/>
 </polygon>
-<wire x1="23.9268" y1="38.5064" x2="25.4508" y2="40.0304" width="1.2192" layer="1"/>
+<wire x1="23.9268" y1="38.5064" x2="25.4508" y2="40.0304" width="0.9144" layer="1"/>
 <wire x1="28.702" y1="40.0304" x2="29.4894" y2="40.8178" width="1.2192" layer="1"/>
 <wire x1="29.4894" y1="40.8178" x2="31.3436" y2="40.8178" width="1.2192" layer="1"/>
 <wire x1="31.3436" y1="40.8178" x2="32.3596" y2="41.8338" width="1.2192" layer="1"/>
@@ -2946,10 +2949,10 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="C_M2" pad="1"/>
 <contactref element="C_MB" pad="C"/>
 <polygon width="0.1524" layer="1" thermals="no" rank="4">
-<vertex x="43.8658" y="57.2262"/>
-<vertex x="15.3162" y="57.1754"/>
-<vertex x="15.5956" y="25.4762"/>
-<vertex x="43.6372" y="25.4762"/>
+<vertex x="43.6118" y="57.1754"/>
+<vertex x="15.9004" y="57.1754"/>
+<vertex x="15.9004" y="25.4762"/>
+<vertex x="43.6118" y="25.4762"/>
 </polygon>
 <wire x1="11.176" y1="58.4708" x2="20.619" y2="49.0278" width="1.524" layer="1"/>
 <wire x1="20.619" y1="49.0278" x2="20.619" y2="41.3004" width="1.524" layer="1"/>
