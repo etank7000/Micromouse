@@ -104,7 +104,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15 
     */
-    GPIO_InitStruct.Pin = VOLTMETER_Pin|REC_RF_Pin|REC_RS_Pin|GYRO_Pin;
+    GPIO_InitStruct.Pin = VOLTMETER_Pin|REC_RF_Pin|REC_RS_Pin|OUTZ_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -139,7 +139,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15 
     */
-    HAL_GPIO_DeInit(GPIOA, VOLTMETER_Pin|REC_RF_Pin|REC_RS_Pin|GYRO_Pin);
+    HAL_GPIO_DeInit(GPIOA, VOLTMETER_Pin|REC_RF_Pin|REC_RS_Pin|OUTZ_Pin);
 
     HAL_GPIO_DeInit(GPIOC, REC_LS_Pin|REC_LF_Pin);
 

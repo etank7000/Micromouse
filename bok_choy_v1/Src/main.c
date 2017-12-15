@@ -46,13 +46,20 @@
 /* USER CODE BEGIN Includes */
 #include "delay.h"
 #include "encoder.h"
+#include "motor.h"
+#include "ir_sensor.h"
+#include "gyro.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+volatile int systickCallback = 1;
+#define SIZE 2000
+int myindex = 0;
+int arr[SIZE];
+volatile int testing = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,7 +71,24 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-#define BUFFER_MOO
+void HAL_SYSTICK_Callback(void)
+{
+  if (!systickCallback)
+  {
+    return;
+  }
+  if (testing)
+  {
+    readAngle();
+    arr[myindex] = getAngle();
+    myindex++;
+    if (myindex >= SIZE)
+    {
+      testing = 0;
+    }
+  }
+
+}
 /* USER CODE END 0 */
 
 int main(void)
@@ -99,9 +123,56 @@ int main(void)
   MX_ADC1_Init();
 
   /* USER CODE BEGIN 2 */
+  /* GPIO_AF_Init(); */
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+  /* print("%lu\r\n", __HAL_TIM_GET_COMPARE(&htim4, TIM_CHANNEL_4)); */
+  /* __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_4, 333); */
+  /* __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0); */
+  /* __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 333); */
+  /* __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 0); */
+  /* int i = 0; */
+  /* setLeftMotor(333); */
+  /* setRightMotor(333); */
+
+  /* while (i <= 333) */
+  /* { */
+  /*   setLeftMotor(i); */
+  /*   setRightMotor(i); */
+  /*   HAL_Delay(2); */
+  /*   i += 1; */
+  /* } */
+  /* HAL_Delay(2000); */
+  /* while (i >= 0) */
+  /* { */
+  /*   setLeftMotor(i); */
+  /*   setRightMotor(i); */
+  /*   HAL_Delay(2); */
+  /*   i -= 1; */
+  /* } */
+
+
+  /* htim4.Instance->CCR1 = 100; */
+  /* htim4.Instance->CCR4 = 100; */
+  /* turnOn(LED2); */
+  /* turnOn(PWMLF); */
+  /* HAL_Delay(1000); */
+  /* turnOff(PWMLF); */
+  /* turnOff(LED2); */
+  calibrateGyro();
+  testing = 1;
+
+  while (testing);
+  turnOn(LED2);
+  int ii;
+  for (ii = 0; ii < SIZE; ii++)
+    print("%d\r\n", arr[ii]);
 
   /* USER CODE END 2 */
 
@@ -114,7 +185,6 @@ int main(void)
   /* USER CODE BEGIN 3 */
     /* uint32_t start = micros(); */
     /* uint32_t val = readADC(&hadc1, ADC_CHANNEL_3, ADC_SAMPLETIME_84CYCLES); */
-    /* uint32_t end = micros(); */
     /* turnOn(LED3); */
     /* if (end - start > 50U) */
     /*   Error_Handler(); */
@@ -123,11 +193,24 @@ int main(void)
     /* while (micros() - start < 500000U); */
     /* turnOff(LED2); */
     /* print("%lu\t%lu\r\n", getLeftEncCount(), getRightEncCount()); */
-    print("%lu\t%lu\r\n", TIM2->CNT, TIM5->CNT);
+    /* print("%lu\t%lu\r\n", TIM2->CNT, TIM5->CNT); */
     /* char buf[256] = "hello\r\n"; */
     /* HAL_UART_Transmit(&huart1, (uint8_t*)buf, sizeof(buf), 1000); */
+    /* print("%lu\r\n", __HAL_TIM_GET_AUTORELOAD(&htim4)); */
     
     /* HAL_Delay(2000U); */
+    /* readReceivers(); */
+    /* print("%d\t%d\t%d\t%d\r\n", getRecLF(), getRecLS(), getRecRS(), getRecRF()); */
+    /* HAL_Delay(1000U); */
+
+    /* readAngle(); */
+    /* uint32_t end = micros(); */
+    /* print("%d\r\n", getAngle()); */
+    /* print("%lu\r\n", end-start); */
+
+
+
+
   }
   /* USER CODE END 3 */
 

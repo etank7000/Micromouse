@@ -48,32 +48,30 @@
 
 #define LED3_Pin GPIO_PIN_0
 #define LED3_GPIO_Port GPIOC
+#define EM_RF_Pin GPIO_PIN_2
+#define EM_RF_GPIO_Port GPIOA
 #define VOLTMETER_Pin GPIO_PIN_3
 #define VOLTMETER_GPIO_Port GPIOA
 #define REC_RF_Pin GPIO_PIN_4
 #define REC_RF_GPIO_Port GPIOA
+#define EM_S_Pin GPIO_PIN_5
+#define EM_S_GPIO_Port GPIOA
 #define REC_RS_Pin GPIO_PIN_6
 #define REC_RS_GPIO_Port GPIOA
-#define GYRO_Pin GPIO_PIN_7
-#define GYRO_GPIO_Port GPIOA
+#define OUTZ_Pin GPIO_PIN_7
+#define OUTZ_GPIO_Port GPIOA
 #define REC_LS_Pin GPIO_PIN_4
 #define REC_LS_GPIO_Port GPIOC
 #define REC_LF_Pin GPIO_PIN_5
 #define REC_LF_GPIO_Port GPIOC
+#define EM_LF_Pin GPIO_PIN_6
+#define EM_LF_GPIO_Port GPIOC
 #define LED1_Pin GPIO_PIN_11
 #define LED1_GPIO_Port GPIOA
 #define LED2_Pin GPIO_PIN_10
 #define LED2_GPIO_Port GPIOC
 #define BOOT0_Pin GPIO_PIN_5
 #define BOOT0_GPIO_Port GPIOB
-#define PWMLF_Pin GPIO_PIN_6
-#define PWMLF_GPIO_Port GPIOB
-#define PWMLB_Pin GPIO_PIN_7
-#define PWMLB_GPIO_Port GPIOB
-#define PWMRB_Pin GPIO_PIN_8
-#define PWMRB_GPIO_Port GPIOB
-#define PWMRF_Pin GPIO_PIN_9
-#define PWMRF_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
