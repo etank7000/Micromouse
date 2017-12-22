@@ -49,6 +49,11 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    tim.h
+ * @brief   This file provides code for the configuration of the TIM instances.
+ */
+
 /* USER CODE END Includes */
 
 extern TIM_HandleTypeDef htim2;

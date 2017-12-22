@@ -42,6 +42,11 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    main.h
+ * @brief   This file contains the common defines of the application
+ */
+
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -90,6 +95,7 @@
 #define MODE_GPIO_Port GPIOB
 #define BOOT0_Pin GPIO_PIN_5
 #define BOOT0_GPIO_Port GPIOB
+#define BOOT0_EXTI_IRQn EXTI9_5_IRQn
 #define PH_L_Pin GPIO_PIN_7
 #define PH_L_GPIO_Port GPIOB
 #define PH_R_Pin GPIO_PIN_9

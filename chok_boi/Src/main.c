@@ -45,6 +45,8 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#include <limits.h>
+
 #include "delay.h"
 #include "encoder.h"
 #include "motor.h"
@@ -56,6 +58,17 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+enum State
+{
+  CHOOSING,
+  LOCKED,
+  RUNNING,
+  DEBUGGING
+};
+
+static volatile uint32_t g_modeNum = 0;
+static volatile enum State g_state = CHOOSING;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,12 +77,56 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
+void HAL_SYSTICK_Callback(void);
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+static void chooseMode(void);
+static void resetAll(void);
+
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
 
 void HAL_SYSTICK_Callback(void)
 {
+  if (g_state == LOCKED)
+  {
+  }
+  else if (g_state == RUNNING)
+  {
+  }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  switch (GPIO_Pin)
+  {
+    case BOOT0_Pin:
+      switch (g_state)
+      {
+        case CHOOSING:
+          g_state = LOCKED;
+          break;
+        case LOCKED:
+          g_state = CHOOSING;
+          break;
+        case RUNNING:
+        case DEBUGGING:
+          resetAll();
+          g_state = CHOOSING;
+          break;
+      }
+      break;
+    /* case INT_Pin: */
+    /*   break; */
+  }
+}
+
+static void chooseMode(void)
+{
+  g_modeNum = getLeftEncCount() / 440;  // TODO: Change 440 to a constant
+  if (g_modeNum & 1) set(LED3); else reset(LED3);
+  if (g_modeNum & 2) set(LED2); else reset(LED2);
+  if (g_modeNum & 4) set(LED1); else reset(LED1);
 }
 
 /* USER CODE END 0 */
@@ -111,7 +168,14 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
-  set(MODE);
+  __HAL_TIM_SET_AUTORELOAD(&htim2, 3520UL); // TODO: Change 3520 to a constant
+  do
+  {
+    chooseMode();
+  } while (g_state == CHOOSING);
+  __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
+
+  set(MODE);  // This MODE is the motor driver input
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 
@@ -188,7 +252,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-void resetAll()
+static void resetAll()
 {
   reset(EM_LF);
   reset(EM_RF);
@@ -199,6 +263,8 @@ void resetAll()
   setRightMotor(0);
   HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
   HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
+  resetLeftEncCount();
+  resetRightEncCount();
   reset(LED1);
   reset(LED2);
   reset(LED3);

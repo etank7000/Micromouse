@@ -49,6 +49,12 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    usart.h
+ * @brief   This file provides code for the configuration
+ *          of the USART instances.
+ */
+
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
@@ -63,6 +69,13 @@ void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+/**
+ * @brief Writes a formatted C string to USART.
+ *
+ * Format specifiers work the same way as the printf function in C.
+ *
+ * @param format C string that contains the text to be written.
+ */
 void print(const char *format, ...);
 
 /* USER CODE END Prototypes */

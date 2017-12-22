@@ -49,6 +49,11 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    spi.h
+ * @brief   This file provides code for the configuration of the SPI instances.
+ */
+
 /* USER CODE END Includes */
 
 extern SPI_HandleTypeDef hspi2;

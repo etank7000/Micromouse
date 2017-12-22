@@ -49,6 +49,11 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    adc.h
+ * @brief   This file provides code for the configuration of the ADC instances.
+ */
+
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;

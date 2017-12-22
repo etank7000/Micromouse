@@ -50,13 +50,18 @@
 
 /* USER CODE BEGIN Includes */
 
+/**
+ * @file    gpio.h
+ * @brief   This file contains all the functions prototypes for the gpio
+ */
+
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
 
 #define set(label) HAL_GPIO_WritePin(label##_GPIO_Port, label##_Pin, GPIO_PIN_SET)
 #define reset(label) HAL_GPIO_WritePin(label##_GPIO_Port, label##_Pin, GPIO_PIN_RESET)
-#define toggle(label) HAL_GPIO_WritePin(label##_GPIO_Port, label##_Pin)
+#define toggle(label) HAL_GPIO_TogglePin(label##_GPIO_Port, label##_Pin)
 
 /* USER CODE END Private defines */
 
