@@ -12,26 +12,26 @@
  * @brief Left encoder step count.
  * @return The left encoder reading.
  */
-uint32_t getLeftEncCount(void);
+uint32_t getLeftEnc(void);
 
 /**
  * @brief Right encoder step count.
  * @return The right encoder reading.
  */
-uint32_t getRightEncCount(void);
+uint32_t getRightEnc(void);
 
 /**
  * @brief Reset the left encoder step count.
  *
  * This function sets the left encoder step count to 0.
  */
-void resetLeftEncCount(void);
+void resetLeftEnc(void);
 
 /**
  * @brief Reset the right encoder step count.
  *
  * This function sets the right encoder step count to 0.
  */
-void resetRightEncCount(void);
+void resetRightEnc(void);
 
 #endif  // ENCODER_H

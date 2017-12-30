@@ -47,10 +47,10 @@
 /* USER CODE BEGIN Includes */
 #include <limits.h>
 
-#include "delay.h"
-#include "encoder.h"
-#include "motor.h"
 #include "ir_sensor.h"
+#include "encoder.h"
+#include "controller.h"
+#include "debug.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,12 +58,16 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+const unsigned int ENC_MODE_RELOAD = 3520UL;
+const unsigned int NUM_MODES = 8UL;
+const int REC_START = 3000;
+
 enum State
 {
+  IDLE,
   CHOOSING,
   LOCKED,
-  RUNNING,
-  DEBUGGING
+  RUNNING
 };
 
 static volatile uint32_t g_modeNum = 0;
@@ -80,22 +84,42 @@ void SystemClock_Config(void);
 void HAL_SYSTICK_Callback(void);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 static void chooseMode(void);
-static void resetAll(void);
 
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
 
+// This is the 1ms systick interrupt.
 void HAL_SYSTICK_Callback(void)
 {
   if (g_state == LOCKED)
   {
+    readReceivers();
+    if (getRecLD() > REC_START && getRecRD() > REC_START)
+    {
+      g_state = IDLE;
+    }
   }
   else if (g_state == RUNNING)
   {
+    switch (g_modeNum)
+    {
+      case 4:
+        speedProfile();
+        updateSpeedData();
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+    }
   }
 }
 
+// This function gets called when the BOOT0 button is pressed
+// or when the INT signal from the gyro is received.
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   switch (GPIO_Pin)
@@ -110,9 +134,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
           g_state = CHOOSING;
           break;
         case RUNNING:
-        case DEBUGGING:
-          resetAll();
-          g_state = CHOOSING;
+        case IDLE:
           break;
       }
       break;
@@ -121,9 +143,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
+// Rotate the left wheel to select among the 8 modes. The LEDs will light
+// up to correspond to the mode number. An unlit LED represents a binary 0
+// while a lit LED represents a binary 1. The value is read left to right.
 static void chooseMode(void)
 {
-  g_modeNum = getLeftEncCount() / 440;  // TODO: Change 440 to a constant
+  g_modeNum = getLeftEnc() / (ENC_MODE_RELOAD / NUM_MODES);
   if (g_modeNum & 1) set(LED3); else reset(LED3);
   if (g_modeNum & 2) set(LED2); else reset(LED2);
   if (g_modeNum & 4) set(LED1); else reset(LED1);
@@ -168,27 +193,87 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
-  __HAL_TIM_SET_AUTORELOAD(&htim2, 3520UL); // TODO: Change 3520 to a constant
-  do
+  // This loop is for the initial test to make sure all the sensors have
+  // proper readings. Comment out after verification.
+  while (1)
   {
-    chooseMode();
-  } while (g_state == CHOOSING);
-  __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
+    printSensorValues();
+  }
 
-  set(MODE);  // This MODE is the motor driver input
-  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+  // Change the encoder autoreload value to wrap back to 0 when it reaches
+  // 3520. This is done for mode selection.
+  __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_MODE_RELOAD - 1UL);
+
+  // Use the left wheel to select a mode.
+  while (g_state == CHOOSING)
+  {
+    resetLeftEnc();
+    resetRightEnc();
+    // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
+    do
+    {
+      chooseMode();
+    } while (g_state == CHOOSING);
+
+    // Can either press BOOT0 button again to choose another mode, or block the 
+    // left and right forward IR sensors to start running in desired mode.
+    while (g_state == LOCKED);  // Better alternative to polling?
+
+    HAL_Delay(2000);    // Wait for 2 seconds
+
+    // If g_state == IDLE then that means we blocked the IR sensors instead
+    // of pressing BOOT0 again. Prepare for running or debugging by
+    // setting up the motor driver and encoder.
+    if (g_state == IDLE)
+    {
+      __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
+      set(MODE);  // This MODE is the motor driver input
+      HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+      resetLeftEnc();
+      resetRightEnc();
+      g_state = RUNNING;
+    }
+  }
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
+  while (g_state == RUNNING)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 
+    switch (g_modeNum)
+    {
+      case 0:
+        // Search mode
+        break;
+      case 1:
+        //  Speed mode 1
+        break;
+      case 2:
+        // Speed mode 2
+        break;
+      case 3:
+        printSensorValues();
+        break;
+      case 4:
+        debugSpeedProfile();
+        g_state = IDLE;
+        break;
+    }
+  }
+
+  // Reaching this point means we are done with the main routine. Proceed to
+  // enter a low power state.
+  while (1)
+  {
+    resetSpeedProfile();
+    HAL_PWR_EnterSTANDBYMode();
   }
   /* USER CODE END 3 */
 
@@ -252,24 +337,6 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-static void resetAll()
-{
-  reset(EM_LF);
-  reset(EM_RF);
-  reset(EM_H);
-  reset(EM_D);
-  reset(MODE);
-  setLeftMotor(0);
-  setRightMotor(0);
-  HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-  resetLeftEncCount();
-  resetRightEncCount();
-  reset(LED1);
-  reset(LED2);
-  reset(LED3);
-}
-
 /* USER CODE END 4 */
 
 /**
@@ -281,7 +348,8 @@ void _Error_Handler(char * file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  resetAll();
+  g_state = IDLE;
+  resetSpeedProfile();
   while(1) 
   {
   }

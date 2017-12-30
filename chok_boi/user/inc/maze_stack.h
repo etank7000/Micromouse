@@ -10,6 +10,10 @@
  *
  * The mouse always starts in cell (0, 0).
  */
+
+#ifndef MAZE_STACK_H
+#define MAZE_STACK_H
+
 typedef struct cell
 {
   unsigned char x;    /**< x-coordinate */
@@ -43,3 +47,5 @@ cell stack_top(void);
  * @retval 1 if the stack is empty, 0 otherwise
  */
 int stack_empty(void);
+
+#endif  // MAZE_STACK_H
