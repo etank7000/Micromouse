@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -51,6 +51,7 @@
 #include "encoder.h"
 #include "controller.h"
 #include "debug.h"
+#include "motor.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -71,7 +72,7 @@ enum State
 };
 
 static volatile uint32_t g_modeNum = 0;
-static volatile enum State g_state = CHOOSING;
+static volatile enum State g_state = IDLE;
 
 /* USER CODE END PV */
 
@@ -190,11 +191,29 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  // Test LED blink after power system and MCU have been soldered.
+  // Comment out or remove after verification.
+  set(MODE);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+  setLeftMotor(250);
+  setRightMotor(250);
+  while (1)
+  {
+      /* unsigned char aTxBuffer = 0xAB; */
+      /* short aRxBuffer = 0; */
+      /* HAL_SPI_Transmit(&hspi2, (uint8_t*)&aTxBuffer, sizeof(unsigned char), 1000); */
+      /* HAL_SPI_Receive(&hspi2, (uint8_t*)&aRxBuffer, sizeof(short), 1000); */
+      /* print("%hd\r\n", aRxBuffer); */
+      toggle(LED2);
+      HAL_Delay(1000);
+  }
+
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
   // This loop is for the initial test to make sure all the sensors have
-  // proper readings. Comment out after verification.
+  // proper readings. Comment out or remove after verification.
   while (1)
   {
     printSensorValues();
@@ -205,6 +224,7 @@ int main(void)
   __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_MODE_RELOAD - 1UL);
 
   // Use the left wheel to select a mode.
+  g_state = CHOOSING;
   while (g_state == CHOOSING)
   {
     resetLeftEnc();
@@ -219,13 +239,12 @@ int main(void)
     // left and right forward IR sensors to start running in desired mode.
     while (g_state == LOCKED);  // Better alternative to polling?
 
-    HAL_Delay(2000);    // Wait for 2 seconds
-
     // If g_state == IDLE then that means we blocked the IR sensors instead
     // of pressing BOOT0 again. Prepare for running or debugging by
     // setting up the motor driver and encoder.
     if (g_state == IDLE)
     {
+      HAL_Delay(2000);    // Wait for 2 seconds
       __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
       set(MODE);  // This MODE is the motor driver input
       HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
