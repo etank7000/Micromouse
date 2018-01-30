@@ -200,13 +200,24 @@ int main(void)
   setRightMotor(250);
   while (1)
   {
-      /* unsigned char aTxBuffer = 0xAB; */
-      /* short aRxBuffer = 0; */
-      /* HAL_SPI_Transmit(&hspi2, (uint8_t*)&aTxBuffer, sizeof(unsigned char), 1000); */
-      /* HAL_SPI_Receive(&hspi2, (uint8_t*)&aRxBuffer, sizeof(short), 1000); */
-      /* print("%hd\r\n", aRxBuffer); */
-      toggle(LED2);
-      HAL_Delay(1000);
+      unsigned char aTxBuffer = 0x80 | 0x3B;
+      /* uint8_t aRxBuffer = 0; */
+      uint16_t bit_data;
+      float data;
+      uint8_t responseH, responseL;
+
+      reset(SS1);
+      HAL_Delay(1);
+      HAL_SPI_Transmit(&hspi2, (uint8_t*)&aTxBuffer, sizeof(unsigned char), 1000);
+      HAL_SPI_Receive(&hspi2, (uint8_t*)&responseH, sizeof(uint8_t), 1000);
+      HAL_SPI_Receive(&hspi2, (uint8_t*)&responseL, sizeof(uint8_t), 1000);
+      bit_data = ((int16_t)responseH<<8) | responseL;
+      data=(float)bit_data;
+      print("%hu\r\n", bit_data);
+      set(SS1);
+      HAL_Delay(1);
+      /* toggle(LED2); */
+      /* HAL_Delay(1000); */
   }
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);

@@ -1,2 +1,9 @@
 *.s#*
 *.b#*
+chok_boi/tags
+bok_choy_v1
+*.vscode
+gcc-arm-non-eabi-6-2017-q2-update
+Drivers/docs
+Drivers/Doxyfile
+build
