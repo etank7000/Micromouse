@@ -1,9 +1,35 @@
+# compiled output
+/build
+
+# compiler
+/gcc-arm-none-eabi-6-2017-q2-update
+
+# IDEs and editors
+/.idea
+.project
+.mxproject
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# EAGLE schematic and PCB backup files
 *.s#*
 *.b#*
-chok_boi/tags
-bok_choy_v1
-*.vscode
-gcc-arm-non-eabi-6-2017-q2-update
-Drivers/docs
-Drivers/Doxyfile
-build
+
+# Doxygen documentation generator
+Doxyfile
+
+# misc
+tags
+docs
+datasheets
+en.DM00105879.pdf
