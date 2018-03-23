@@ -13,13 +13,7 @@
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # EAGLE schematic and PCB backup files
 *.s#*
@@ -29,6 +23,7 @@
 Doxyfile
 
 # misc
+.dep
 tags
 docs
 datasheets

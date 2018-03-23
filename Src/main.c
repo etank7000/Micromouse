@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
-  * File Name          : main.c
-  * Description        : Main program body
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -53,6 +53,7 @@
 #include "debug.h"
 #include "motor.h"
 #include "gyro.h"
+#include "battery_checker.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -62,7 +63,7 @@
 
 const unsigned int ENC_MODE_RELOAD = 3520UL;
 const unsigned int NUM_MODES = 8UL;
-const int REC_START = 3000;
+const int REC_START = 3200;
 
 enum State
 {
@@ -97,7 +98,7 @@ void HAL_SYSTICK_Callback(void)
   if (g_state == LOCKED)
   {
     readReceivers();
-    if (getRecLD() > REC_START && getRecRD() > REC_START)
+    if (getRecLF() > REC_START && getRecRF() > REC_START)
     {
       g_state = IDLE;
     }
@@ -106,15 +107,17 @@ void HAL_SYSTICK_Callback(void)
   {
     switch (g_modeNum)
     {
-      case 4:
+      case 2:
+        readReceivers();
         speedProfile();
         updateSpeedData();
         break;
       case 5:
-        break;
-      case 6:
-        break;
-      case 7:
+        if (!isTurning())
+        {
+          readReceivers();
+          speedProfile();
+        }
         break;
     }
   }
@@ -158,9 +161,13 @@ static void chooseMode(void)
 
 /* USER CODE END 0 */
 
+/**
+  * @brief  The application entry point.
+  *
+  * @retval None
+  */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -189,39 +196,25 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_USART1_UART_Init();
-
   /* USER CODE BEGIN 2 */
 
-  // Test LED blink after power system and MCU have been soldered.
-  // Comment out or remove after verification.
-  /* set(MODE); */
-  /* HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1); */
-  /* HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3); */
-  /* setLeftMotor(250); */
-  /* setRightMotor(250); */
-
-  /* print("%hd\r\n", who_am_i()); */
   /* print("%hd\r\n", who_am_i()); */
   /* gyro_spi_init(); */
   /* HAL_Delay(100); */
   /* set_gyro_scale(); */
   /* HAL_Delay(1000); */
-  /* while (1) */
-  /* { */
-  /*   int d = (int)readGyro(); */
-  /*   print("%d\r\n", d); */
-  /*   HAL_Delay(100); */
-  /* } */
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
   // This loop is for the initial test to make sure all the sensors have
   // proper readings. Comment out or remove after verification.
-  while (1)
-  {
-    printSensorValues();
-  }
+  /* while (1) */
+  /* { */
+  /*   printSensorValues(); */
+  /*   print("%d\r\n", getVoltage()); */
+  /*   HAL_Delay(100); */
+  /* } */
 
   // Change the encoder autoreload value to wrap back to 0 when it reaches
   // 3520. This is done for mode selection.
@@ -248,7 +241,15 @@ int main(void)
     // setting up the motor driver and encoder.
     if (g_state == IDLE)
     {
-      HAL_Delay(2000);    // Wait for 2 seconds
+      int i = 0;
+      while (i < 6)
+      {
+        toggle(LED1);
+        toggle(LED2);
+        toggle(LED3);
+        i++;
+        HAL_Delay(500);    // Wait for 2 seconds
+      }
       __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
       set(MODE);  // This MODE is the motor driver input
       HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
@@ -273,20 +274,33 @@ int main(void)
     switch (g_modeNum)
     {
       case 0:
-        // Search mode
-        break;
-      case 1:
-        //  Speed mode 1
-        break;
-      case 2:
-        // Speed mode 2
-        break;
-      case 3:
         printSensorValues();
         break;
-      case 4:
+      case 1:
+        printGyroValues();
+        break;
+      case 2:
         debugSpeedProfile();
         g_state = IDLE;
+        break;
+      case 3:
+        turnRight();
+        HAL_Delay(1500);
+        turnLeft();
+        HAL_Delay(1500);
+        break;
+      case 5:
+        moveUntilWall();
+        HAL_Delay(800);
+        turn();
+        HAL_Delay(800);
+        // Search mode
+        break;
+      case 6:
+        //  Speed mode 1
+        break;
+      case 7:
+        // Speed mode 2
         break;
     }
   }
@@ -302,8 +316,10 @@ int main(void)
 
 }
 
-/** System Clock Configuration
-*/
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
 
@@ -364,10 +380,11 @@ void SystemClock_Config(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
-  * @param  None
+  * @param  file: The file name as string.
+  * @param  line: The line in file as a number.
   * @retval None
   */
-void _Error_Handler(char * file, int line)
+void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
@@ -379,35 +396,32 @@ void _Error_Handler(char * file, int line)
     toggle(LED1);
     HAL_Delay(1000);
   }
-  /* USER CODE END Error_Handler_Debug */ 
+  /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
-
+#ifdef  USE_FULL_ASSERT
 /**
-   * @brief Reports the name of the source file and the source line number
-   * where the assert_param error has occurred.
-   * @param file: pointer to the source file name
-   * @param line: assert_param error line source number
-   * @retval None
-   */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t* file, uint32_t line)
-{
+{ 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
-
 }
-
-#endif
-
-/**
-  * @}
-  */ 
+#endif /* USE_FULL_ASSERT */
 
 /**
   * @}
-*/ 
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

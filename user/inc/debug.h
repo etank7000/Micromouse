@@ -9,10 +9,14 @@
 #include "stm32f4xx_hal.h"
 
 /**
- * @brief Print readings from IR sensors, encoders, and gyro.
- * @todo Read and print gyro values.
+ * @brief Print readings from IR sensors and encoders.
  */
 void printSensorValues(void);
+
+/**
+ * @brief Print readings from gyro.
+ */
+void printGyroValues(void);
 
 /**
  * @brief Update data for plotting speed profile.

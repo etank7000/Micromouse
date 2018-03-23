@@ -23,6 +23,18 @@ void resetSpeedProfile(void);
  */
 void moveUntilWall(void);
 
+void turn(void);
+
+/**
+ * @brief Turn right 90 degrees.
+ */
+void turnRight(void);
+
+/**
+ * @brief Turn left 90 degrees.
+ */
+void turnLeft(void);
+
 /**
  * @brief Get current translational speed according to encoder feedback.
  */
