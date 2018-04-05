@@ -198,11 +198,11 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  /* print("%hd\r\n", who_am_i()); */
-  /* gyro_spi_init(); */
-  /* HAL_Delay(100); */
-  /* set_gyro_scale(); */
-  /* HAL_Delay(1000); */
+  print("%hd\r\n", who_am_i());
+  gyro_spi_init();
+  HAL_Delay(100); 
+  set_gyro_scale();
+  HAL_Delay(1000); 
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
