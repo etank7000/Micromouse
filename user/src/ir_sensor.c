@@ -15,6 +15,8 @@ void readReceivers(void)
   recRF = readRecRF();
   recLH = readRecLH();
   recRH = readRecRH();
+  recLD = readRecLD();
+  recRD = readRecRD();
 
   uint32_t start = micros();
 

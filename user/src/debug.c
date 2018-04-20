@@ -10,7 +10,7 @@
 static volatile int speedData[2][DATA_SIZE];
 static volatile int dataNum = 0;
 static int angle = 0;
-int baseGyroRef = (int)readGyro();
+static int baseGyroRef = 0;
 
 void printSensorValues(void) {
   readReceivers();
@@ -20,7 +20,20 @@ void printSensorValues(void) {
    * getRecRF(), */
   /*       getLeftEnc(), getRightEnc() */
   /*       ); */
-  print("lEnc: %lu  rEnc: %lu\r\n", getLeftEnc(), getRightEnc());
+  /* print("lEnc: %lu  rEnc: %lu\r\n", getLeftEnc(), getRightEnc()); */
+  // print("LF: %d  LD: %d  LH: %d  RH: %d  RD: %d  RF: %d\r\n",
+  //       getRecLF(), getRecLD(), getRecLH(), getRecRH(), getRecRD(),
+  //       getRecRF());
+  print("LD: %d  RD: %d\r\n", getRecLD(), getRecRD());
+}
+
+void calibrateGyro(void) {
+  baseGyroRef = 0;
+  for (int i = 0; i < 10; i++) {
+    baseGyroRef += readGyro();
+  }
+  baseGyroRef /= 10;
+  print("%d\r\n", baseGyroRef);
 }
 
 void printGyroValues(void) {
@@ -30,7 +43,7 @@ void printGyroValues(void) {
   }
   outz /= 10;
   int diff = outz - baseGyroRef;
-  angle += diff;
+  angle += diff / 21;
   print("%d\t", angle);
   print("%d\r\n", outz);
   HAL_Delay(100);

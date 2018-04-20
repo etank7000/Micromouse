@@ -13,6 +13,8 @@
  */
 void printSensorValues(void);
 
+void calibrateGyro(void);
+
 /**
  * @brief Print readings from gyro.
  */

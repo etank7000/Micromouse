@@ -61,9 +61,9 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
-const unsigned int ENC_MODE_RELOAD = 3520UL;
-const unsigned int NUM_MODES = 8UL;
-const int REC_START = 3200;
+static const unsigned int ENC_MODE_RELOAD = 3520UL;
+static const unsigned int NUM_MODES = 8UL;
+static const int REC_START = 3200;
 
 enum State
 {
@@ -113,11 +113,8 @@ void HAL_SYSTICK_Callback(void)
         updateSpeedData();
         break;
       case 5:
-        if (!isTurning())
-        {
-          readReceivers();
-          speedProfile();
-        }
+        readReceivers();
+        speedProfile();
         break;
     }
   }
@@ -198,11 +195,13 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  print("%hd\r\n", who_am_i());
-  gyro_spi_init();
-  HAL_Delay(100); 
-  set_gyro_scale();
-  HAL_Delay(1000); 
+  // print("%hd\r\n", who_am_i());
+  // gyro_spi_init();
+  // HAL_Delay(100); 
+  // set_gyro_scale();
+  // HAL_Delay(1000); 
+  // calibrateGyro();
+  // HAL_Delay(1000);
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
@@ -248,7 +247,7 @@ int main(void)
         toggle(LED2);
         toggle(LED3);
         i++;
-        HAL_Delay(500);    // Wait for 2 seconds
+        HAL_Delay(500);
       }
       __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
       set(MODE);  // This MODE is the motor driver input
@@ -291,9 +290,7 @@ int main(void)
         break;
       case 5:
         moveUntilWall();
-        HAL_Delay(800);
-        turn();
-        HAL_Delay(800);
+        turnRight();
         // Search mode
         break;
       case 6:
