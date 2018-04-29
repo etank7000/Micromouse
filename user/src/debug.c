@@ -5,7 +5,7 @@
 #include "ir_sensor.h"
 #include "usart.h"
 
-#define DATA_SIZE 2001
+#define DATA_SIZE 1//2001
 
 static volatile int speedData[2][DATA_SIZE];
 static volatile int dataNum = 0;
@@ -13,18 +13,12 @@ static int angle = 0;
 static int baseGyroRef = 0;
 
 void printSensorValues(void) {
+  HAL_Delay(1);
   readReceivers();
-  /* print("LF: %d  LD: %d  LH: %d  RH: %d  RD: %d  RF: %d\t" */
-  /*       "lEnc: %lu  rEnc: %lu\r\n", */
-  /*       getRecLF(), getRecLD(), getRecLH(), getRecRH(), getRecRD(),
-   * getRecRF(), */
-  /*       getLeftEnc(), getRightEnc() */
-  /*       ); */
-  /* print("lEnc: %lu  rEnc: %lu\r\n", getLeftEnc(), getRightEnc()); */
-  // print("LF: %d  LD: %d  LH: %d  RH: %d  RD: %d  RF: %d\r\n",
-  //       getRecLF(), getRecLD(), getRecLH(), getRecRH(), getRecRD(),
-  //       getRecRF());
-  print("LD: %d  RD: %d\r\n", getRecLD(), getRecRD());
+  // print("lEnc: %lu  rEnc: %lu\r\n", getLeftEnc(), getRightEnc());
+  print("LF: %d  LD: %d  LH: %d  RH: %d  RD: %d  RF: %d\r\n",
+        getRecLF(), getRecLD(), getRecLH(), getRecRH(), getRecRD(),
+        getRecRF());
 }
 
 void calibrateGyro(void) {

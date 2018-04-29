@@ -23,6 +23,13 @@ void resetSpeedProfile(void);
  */
 void moveUntilWall(void);
 
+/**
+ * @brief Move forward one cell
+ * 
+ * @retval  None
+ */
+void moveForward(void);
+
 void turn(void);
 
 /**
@@ -34,6 +41,18 @@ void turnRight(void);
  * @brief Turn left 90 degrees.
  */
 void turnLeft(void);
+
+/**
+ * @brief Turn 180 degrees.
+ */
+void turnAround(void);
+
+/**
+ * @brief Stop the mouse at the center of the cell.
+ * 
+ * @retval  None
+ */
+void stop(void);
 
 /**
  * @brief Get current translational speed according to encoder feedback.

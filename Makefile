@@ -81,11 +81,14 @@ user/src/delay.c \
 user/src/encoder.c \
 user/src/ir_sensor.c \
 user/src/motor.c \
-user/src/maze_stack.c \
+user/src/stack.c \
 user/src/debug.c \
 user/src/controller.c \
 user/src/gyro.c \
-user/src/battery_checker.c
+user/src/battery_checker.c \
+user/src/maze.c \
+user/src/floodfill.c \
+user/src/straightpathfollower.c
 
 # ASM sources
 ASM_SOURCES =  \

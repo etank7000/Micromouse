@@ -1,17 +1,18 @@
-#include "maze_stack.h"
+#include "stack.h"
 
 #define MAX_SIZE 512
 
-static cell stack[MAX_SIZE];
+static Cell stack[MAX_SIZE];
 static int size = 0;
 
-int stack_push(cell v)
+int stack_push(unsigned short x, unsigned short y)
 {
   if (size >= MAX_SIZE)
   {
     return -1;
   }
-  stack[size++] = v;
+  Cell c = {x, y};
+  stack[size++] = c;
   return 0;
 }
 
@@ -25,7 +26,7 @@ int stack_pop(void)
   return 0;
 }
 
-cell stack_top(void)
+Cell stack_top(void)
 {
   return stack[size - 1];
 }

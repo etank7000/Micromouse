@@ -54,6 +54,8 @@
 #include "motor.h"
 #include "gyro.h"
 #include "battery_checker.h"
+#include "pathfinder.h"
+#include "maze.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -68,12 +70,15 @@ static const int REC_START = 3200;
 enum State
 {
   IDLE,
-  CHOOSING,
-  LOCKED,
-  RUNNING
+  CHOOSING,   // User is currently choosing the mode for the mouse
+  LOCKED,     // User locks in his mode choice (by pressing BOOT0 button)
+  RUNNING     // The mouse is running in one of the 8 operating modes
 };
 
+// Determines which mode the mouse operates in while in RUNNING State
 static volatile uint32_t g_modeNum = 0;
+
+// Determines what state the mouse is in
 static volatile enum State g_state = IDLE;
 
 /* USER CODE END PV */
@@ -95,6 +100,7 @@ static void chooseMode(void);
 // This is the 1ms systick interrupt.
 void HAL_SYSTICK_Callback(void)
 {
+  // User has locked in mode choice. Block front sensors to start running.
   if (g_state == LOCKED)
   {
     readReceivers();
@@ -103,7 +109,7 @@ void HAL_SYSTICK_Callback(void)
       g_state = IDLE;
     }
   }
-  else if (g_state == RUNNING)
+  else if (g_state == RUNNING)  // Systick part of mode operation
   {
     switch (g_modeNum)
     {
@@ -148,12 +154,43 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 // Rotate the left wheel to select among the 8 modes. The LEDs will light
 // up to correspond to the mode number. An unlit LED represents a binary 0
 // while a lit LED represents a binary 1. The value is read left to right.
-static void chooseMode(void)
+static inline void chooseMode(void)
 {
   g_modeNum = getLeftEnc() / (ENC_MODE_RELOAD / NUM_MODES);
   if (g_modeNum & 1) set(LED3); else reset(LED3);
   if (g_modeNum & 2) set(LED2); else reset(LED2);
   if (g_modeNum & 4) set(LED1); else reset(LED1);
+}
+
+// TODO: Comment back in after finish implementation of controller.c functions
+static inline void searchMaze(void)
+{
+#if 0
+  MouseMovement nextMove = getNextMovement();
+  switch (nextMove) 
+  {
+    case MoveForward:
+      moveForward();
+      break;
+    case TurnClockwise:
+      turnRight();
+      break;
+    case TurnCounterClockwise:
+      turnLeft();
+      break;
+    case TurnAround:
+      turnAround();
+      break;
+    case Wait:
+      break;
+    case Finish:
+      stop();
+      g_state = IDLE;
+      break;
+  }
+#endif
+  moveUntilWall();
+  turn();
 }
 
 /* USER CODE END 0 */
@@ -272,32 +309,28 @@ int main(void)
 
     switch (g_modeNum)
     {
-      case 0:
+      case 0: // Read and print IR sensor values
         printSensorValues();
         break;
-      case 1:
+      case 1: // Read and print gyro values
         printGyroValues();
         break;
       case 2:
         debugSpeedProfile();
         g_state = IDLE;
         break;
-      case 3:
+      case 3: // Test Turning
         turnRight();
         HAL_Delay(1500);
         turnLeft();
         HAL_Delay(1500);
         break;
-      case 5:
-        moveUntilWall();
-        turnRight();
-        // Search mode
+      case 5: // Search mode
+        searchMaze();
         break;
-      case 6:
-        //  Speed mode 1
+      case 6: // Speed mode 1
         break;
-      case 7:
-        // Speed mode 2
+      case 7: // Speed mode 2
         break;
     }
   }

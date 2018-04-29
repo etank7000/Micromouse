@@ -11,6 +11,9 @@ static const float PI = 3.14159;
 static const int STEPS_PER_REV = 3520;   // Encoder steps per revolution
 static const int CELL_WIDTH = 180;  // A cell has side length 180mm
 static const int MOUSE_WIDTH = 74;  // The mouse has a width of 74mm
+// Variable should be 5762 according to speed_to_counts calculation?
+// TODO: Determine what this variable should be (not tested yet)
+static const int CELL_ENC_COUNT = 5200; // Encoder counts per cell length
 
 // Speed constants
 static const float MOVE_SPEED = 0.5;   // m/s (or mm/ms)
@@ -23,11 +26,8 @@ static const float ACC_W = 0.005;   // Angular acceleration in mm/(ms)^2
 static const float DEC_W = 0.005;   // Angular deceleration in mm/(ms)^2
 
 // IR sensor threshold constants
-static const int FRONT_WALL = 950;//1900;
-static const int HAS_LEFT = 1100;
-static const int HAS_RIGHT = 1100;
-static const int LEFT_MID = 3600;
-static const int RIGHT_MID = 3600;
+static const int LEFT_MID = 3500;//3600;
+static const int RIGHT_MID = 3600;//3600;
 
 static int useSensorFeedback = 1;
 
@@ -46,8 +46,6 @@ static int targetSpeedW = 0;
 // Encoder variables
 static int leftEncChange = 0;
 static int rightEncChange = 0;
-static int leftEncCount = 0;
-static int rightEncCount = 0;
 static int encCount = 0;
 static int encCountPrev = 0;
 static int leftEncPrev = 0;
@@ -58,6 +56,9 @@ static float posErrorX = 0;
 static float prevPosErrorX = 0;
 static float posErrorW = 0;
 static float prevPosErrorW = 0;
+
+// TEST
+static int finished = 0;
 
 // Private function prototypes
 static float speed_to_counts(const float speed);
@@ -93,8 +94,6 @@ void resetSpeedProfile(void)
 
   leftEncChange = 0;
   rightEncChange = 0;
-  leftEncCount = 0;
-  rightEncCount = 0;
   encCount = 0;
   encCountPrev = 0;
   leftEncPrev = 0;
@@ -112,21 +111,34 @@ void resetSpeedProfile(void)
 
 void moveUntilWall(void)
 {
+  if (finished)
+    return;
   targetSpeedW = 0;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
   HAL_Delay(1);
-  while (getRecLF() < FRONT_WALL || getRecRF() < FRONT_WALL);
-  /* targetSpeedX = 0; */
-  /* while (leftEncChange != 0 || rightEncChange != 0); */
-  /* curSpeedX = 0; */
+  while (!frontWallDetected());
+}
+
+// TODO: Finish/check implementation
+void moveForward(void)
+{
+  targetSpeedW = 0;
+  targetSpeedX = speed_to_counts(MOVE_SPEED);
+  HAL_Delay(1);
+  encCount = 0;
+  while (encCount < CELL_ENC_COUNT);
 }
 
 void turn(void)
 {
-  if (getRecLH() < HAS_LEFT)
+  if (!leftWallDetected())
     turnLeft();
-  else if (getRecRH() < HAS_RIGHT)
+  else if (!rightWallDetected())
     turnRight();
+  else {
+    targetSpeedX = 0;
+    finished = 1;
+  }
 }
 
 void turnRight(void)
@@ -169,6 +181,19 @@ void turnLeft(void)
   useSensorFeedback = 1;
 }
 
+// TODO: Implement this method
+void turnAround(void)
+{
+
+}
+
+// TODO: Implement this method
+void stop(void)
+{
+  // Calculate when the mouse should start decelerating
+  // If front wall detected, can use IR sensors to align with front wall
+}
+
 float getEncSpeedX(void)
 {
   return (rightEncChange + leftEncChange) / 2.0f;
@@ -202,9 +227,7 @@ static void updateEncoderStatus(void)
   leftEncPrev = leftEnc;
   rightEncPrev = rightEnc;
 
-  leftEncCount += leftEncChange;
-  rightEncCount += rightEncChange;
-  encCount = (leftEncCount + rightEncCount) / 2;
+  encCount += (leftEncChange + rightEncChange) / 2;
 }
 
 static void updateCurrentSpeed(void)
@@ -242,9 +265,9 @@ static int getSensorError(void)
     return 0;
   int recLH = getRecLH();
   int recRH = getRecRH();
-  if (recLH > HAS_LEFT && recLH > LEFT_MID)
+  if (leftWallDetected() && recLH > LEFT_MID)
     return recLH - LEFT_MID;
-  else if (recRH > HAS_RIGHT && recRH > RIGHT_MID)
+  else if (rightWallDetected() && recRH > RIGHT_MID)
     return RIGHT_MID - recRH;
   return 0;
 }
@@ -255,7 +278,7 @@ static void calculateMotorPwm(void)
   int encFeedbackW = rightEncChange - leftEncChange;
 
   posErrorX += 2*curSpeedX - encFeedbackX;  // Integrate speed to get position
-  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 40;
+  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 100;
 
   int posPwmX = kpX * posErrorX + kdX * (posErrorX - prevPosErrorX);
   int posPwmW = kpW * posErrorW + kdW * (posErrorW - prevPosErrorW);

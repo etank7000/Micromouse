@@ -78,4 +78,22 @@ int32_t getRecLD();
  */
 int32_t getRecRD();
 
+/**
+ * @brief Determine if there is a wall in front of the mouse
+ * @return 1 if there is a wall in front of the mouse, 0 otherwise
+ */
+int32_t frontWallDetected(void);
+
+/**
+ * @brief Determine if there is a wall to the left of the mouse
+ * @return 1 if there is a wall to the left of the mouse, 0 otherwise
+ */
+int32_t leftWallDetected(void);
+
+/**
+ * @brief Determine if there is a wall to the right of the mouse
+ * @return 1 if there is a wall to the right of the mouse, 0 otherwise
+ */
+int32_t rightWallDetected(void);
+
 #endif  // IR_SENSOR_H

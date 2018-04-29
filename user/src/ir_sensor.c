@@ -9,6 +9,10 @@ static int32_t recRH = 0;
 static int32_t recLD = 0;
 static int32_t recRD = 0;
 
+static const int32_t HAS_FRONT = 950;
+static const int32_t HAS_LEFT = 1900;   // Diagonal sensor threshold
+static const int32_t HAS_RIGHT = 2600;  // Diagonal sensor
+
 void readReceivers(void)
 {
   recLF = readRecLF();
@@ -98,4 +102,19 @@ int32_t getRecLD()
 int32_t getRecRD()
 {
   return recRD;
+}
+
+int32_t frontWallDetected(void) 
+{
+  return recLF > HAS_FRONT && recRF > HAS_FRONT;
+}
+
+int32_t leftWallDetected(void)
+{
+  return recLH > HAS_LEFT;
+}
+
+int32_t rightWallDetected(void)
+{
+  return recRH > HAS_RIGHT;
 }
