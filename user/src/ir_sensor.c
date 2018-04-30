@@ -9,7 +9,8 @@ static int32_t recRH = 0;
 static int32_t recLD = 0;
 static int32_t recRD = 0;
 
-static const int32_t HAS_FRONT = 950;
+// static const int32_t FRONT_TURN = 900;
+static const int32_t HAS_FRONT = 666;
 static const int32_t HAS_LEFT = 1900;   // Diagonal sensor threshold
 static const int32_t HAS_RIGHT = 2600;  // Diagonal sensor
 

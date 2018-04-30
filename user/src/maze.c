@@ -3,6 +3,7 @@
 #include "dir.h"
 #include "pathfinder.h"
 #include "ir_sensor.h"
+#include "gpio.h"
 
 static BitVector256 wallsNS = {{0}};
 static BitVector256 wallsEW = {{0}};
@@ -18,13 +19,13 @@ static unsigned short mouseY = 0;
 static void setClosed(unsigned short x, unsigned short y, Dir d) {
   switch (d) {
     case NORTH:
-      return bitvector_clear(wallsNS, x, y+1);
+      return bitvector_clear(&wallsNS, x, y+1);
     case SOUTH:
-      return bitvector_clear(wallsNS, x, y);
+      return bitvector_clear(&wallsNS, x, y);
     case EAST:
-      return bitvector_clear(wallsEW, x+1, y);
+      return bitvector_clear(&wallsEW, x+1, y);
     case WEST:
-      return bitvector_clear(wallsEW, x, y);
+      return bitvector_clear(&wallsEW, x, y);
     case INVALID:
     default:
       return;
@@ -67,8 +68,9 @@ static inline void turnAround(void) {
 }
 
 static inline void updateWalls(void) {
-  if (frontWallDetected())
+  if (frontWallDetected()) {
     setClosed(mouseX, mouseY, heading);
+  }
   if (leftWallDetected())
     setClosed(mouseX, mouseY, counterClockwise(heading));
   if (rightWallDetected())
@@ -77,8 +79,8 @@ static inline void updateWalls(void) {
 
 void initializeMaze(void) {
   // Assume no walls
-  bitvector_setAll(wallsNS);
-  bitvector_setAll(wallsEW);
+  bitvector_setAll(&wallsNS);
+  bitvector_setAll(&wallsEW);
 
   // Close the borders of the maze
   for (int i = 0; i < MAZE_LEN; i++) {
@@ -87,20 +89,39 @@ void initializeMaze(void) {
 		setClosed(i, MAZE_LEN - 1, NORTH);
 		setClosed(MAZE_LEN - 1, i, EAST);
   }
+  
+  // print("\r\n");
+  // for (int y = MAZE_LEN - 1; y >= 0; y--) {
+  //   for (int x = 0; x < MAZE_LEN; x++) {
+  //     if (isOpen(x, y, SOUTH))
+  //       print("(");
+  //     else 
+  //       print("-");
+  //   }
+  //   print("\r\n");
+  //   for (int x = 0; x < MAZE_LEN; x++) {
+  //     if (isOpen(x, y, WEST))
+  //       print(")");
+  //     else 
+  //       print("|");
+  //   }
+  //   print("\r\n");
+  // }
 
   initializePathFinder();
 }
 
 int isOpen(unsigned short x, unsigned short y, Dir d) {
+  int r;
   switch (d) {
     case NORTH:
-      return bitvector_get(wallsNS, x, y+1);
+      return bitvector_get(&wallsNS, x, y+1);
     case SOUTH:
-      return bitvector_get(wallsNS, x, y);
+      return bitvector_get(&wallsNS, x, y);
     case EAST:
-      return bitvector_get(wallsEW, x+1, y);
+      return bitvector_get(&wallsEW, x+1, y);
     case WEST:
-      return bitvector_get(wallsEW, x, y);
+      return bitvector_get(&wallsEW, x, y);
     case INVALID:
     default:
       return 0;

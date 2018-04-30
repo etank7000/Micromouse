@@ -1,4 +1,5 @@
 #include "pathfinder.h"
+#include "gpio.h"
 
 #if defined PATHFINDER && PATHFINDER == STRAIGHTPATHFOLLOWER
 
@@ -7,7 +8,7 @@
 
 void initializePathFinder(void) {}
 
-MouseMovement nextMovement(unsigned x, unsigned y, Dir heading) {
+MouseMovement nextMovement(unsigned short x, unsigned short y, Dir heading) {
   if (!wallInFront()) {
     return MoveForward;
   } else if (!wallOnLeft()) {

@@ -118,6 +118,9 @@ void HAL_SYSTICK_Callback(void)
         speedProfile();
         updateSpeedData();
         break;
+      case 3:
+        speedProfile();
+        break;
       case 5:
         readReceivers();
         speedProfile();
@@ -165,12 +168,11 @@ static inline void chooseMode(void)
 // TODO: Comment back in after finish implementation of controller.c functions
 static inline void searchMaze(void)
 {
-#if 0
   MouseMovement nextMove = getNextMovement();
   switch (nextMove) 
   {
     case MoveForward:
-      moveForward();
+      moveForward(1.0f);
       break;
     case TurnClockwise:
       turnRight();
@@ -179,7 +181,11 @@ static inline void searchMaze(void)
       turnLeft();
       break;
     case TurnAround:
+      moveForward(0.36f);
+      stop();
       turnAround();
+      HAL_Delay(1000);
+      moveForward(0.50f);
       break;
     case Wait:
       break;
@@ -188,9 +194,8 @@ static inline void searchMaze(void)
       g_state = IDLE;
       break;
   }
-#endif
-  moveUntilWall();
-  turn();
+  // moveUntilWall();
+  // turn();
 }
 
 /* USER CODE END 0 */
@@ -286,13 +291,21 @@ int main(void)
         i++;
         HAL_Delay(500);
       }
+      reset(LED1);
+      reset(LED2);
+      reset(LED3);
       __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
       set(MODE);  // This MODE is the motor driver input
       HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
       HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
       resetLeftEnc();
       resetRightEnc();
+      HAL_Delay(2);
+      readReceivers();
+      HAL_Delay(2);
       g_state = RUNNING;
+      initializeMaze();
+      HAL_Delay(1);
     }
   }
 
@@ -320,9 +333,7 @@ int main(void)
         g_state = IDLE;
         break;
       case 3: // Test Turning
-        turnRight();
-        HAL_Delay(1500);
-        turnLeft();
+        turnAround();
         HAL_Delay(1500);
         break;
       case 5: // Search mode

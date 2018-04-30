@@ -13,7 +13,7 @@ static const int CELL_WIDTH = 180;  // A cell has side length 180mm
 static const int MOUSE_WIDTH = 74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 // TODO: Determine what this variable should be (not tested yet)
-static const int CELL_ENC_COUNT = 5200; // Encoder counts per cell length
+static const int CELL_ENC_COUNT = 5400; // Encoder counts per cell length
 
 // Speed constants
 static const float MOVE_SPEED = 0.5;   // m/s (or mm/ms)
@@ -26,7 +26,7 @@ static const float ACC_W = 0.005;   // Angular acceleration in mm/(ms)^2
 static const float DEC_W = 0.005;   // Angular deceleration in mm/(ms)^2
 
 // IR sensor threshold constants
-static const int LEFT_MID = 3500;//3600;
+static const int LEFT_MID = 3450;//3500;//3600;
 static const int RIGHT_MID = 3600;//3600;
 
 static int useSensorFeedback = 1;
@@ -111,26 +111,41 @@ void resetSpeedProfile(void)
 
 void moveUntilWall(void)
 {
+  encCount = 0;
   if (finished)
     return;
   targetSpeedW = 0;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
   HAL_Delay(1);
-  while (!frontWallDetected());
+  while (!frontWallDetected()) {
+    if (encCount > CELL_ENC_COUNT) {
+      encCount = 0;
+      toggle(LED3);
+    }
+  }
 }
 
 // TODO: Finish/check implementation
-void moveForward(void)
+void moveForward(float nCells)
 {
+  toggle(LED2);
+  static int firstCell = 1;
+  if (firstCell) {
+    firstCell = 0;
+    encCount = 0.20*CELL_ENC_COUNT;
+  } else {
+    encCount = 0;
+  }
   targetSpeedW = 0;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
   HAL_Delay(1);
-  encCount = 0;
-  while (encCount < CELL_ENC_COUNT);
+  int doneCount = nCells * CELL_ENC_COUNT;
+  while (encCount < doneCount);
 }
 
 void turn(void)
 {
+  set(LED3);
   if (!leftWallDetected())
     turnLeft();
   else if (!rightWallDetected())
@@ -139,6 +154,7 @@ void turn(void)
     targetSpeedX = 0;
     finished = 1;
   }
+  reset(LED3);
 }
 
 void turnRight(void)
@@ -181,10 +197,24 @@ void turnLeft(void)
   useSensorFeedback = 1;
 }
 
-// TODO: Implement this method
 void turnAround(void)
 {
+  static const float TURN_TIME = PI * CELL_WIDTH / (2 * MOVE_SPEED) * 0.90;
+  static const float AT = ACC_W * TURN_TIME;
+  static const float MAX_SPEED_W = 
+    (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
+  static const float TURN_TIME_1 = MAX_SPEED_W / ACC_W;
 
+  useSensorFeedback = 0;
+  unsigned int startTime = HAL_GetTick();
+
+  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+    targetSpeedW = -speed_to_counts(MAX_SPEED_W);
+
+  while (HAL_GetTick() - startTime < TURN_TIME)
+    targetSpeedW = 0;
+
+  useSensorFeedback = 1;
 }
 
 // TODO: Implement this method
@@ -192,6 +222,8 @@ void stop(void)
 {
   // Calculate when the mouse should start decelerating
   // If front wall detected, can use IR sensors to align with front wall
+  targetSpeedX = 0;
+  HAL_Delay(1000);
 }
 
 float getEncSpeedX(void)
@@ -278,7 +310,7 @@ static void calculateMotorPwm(void)
   int encFeedbackW = rightEncChange - leftEncChange;
 
   posErrorX += 2*curSpeedX - encFeedbackX;  // Integrate speed to get position
-  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 100;
+  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 50;
 
   int posPwmX = kpX * posErrorX + kdX * (posErrorX - prevPosErrorX);
   int posPwmW = kpW * posErrorW + kdW * (posErrorW - prevPosErrorW);

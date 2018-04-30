@@ -2,8 +2,10 @@
 #define PATHFINDER_H
 
 // Options for which pathfinding algorithm to use
-#define STRIAGHTPATHFOLLOWER 1
-#define FLOODFILL 2
+#define FLOODFILL 1
+#define STRAIGHTPATHFOLLOWER 2
+#define LEFTWALLFOLLOWER 3
+#define RIGHTWALLFOLLOWER 4
 
 // Change this value to choose the pathfinding algorithm
 #define PATHFINDER FLOODFILL

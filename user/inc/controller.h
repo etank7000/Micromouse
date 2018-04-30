@@ -24,11 +24,13 @@ void resetSpeedProfile(void);
 void moveUntilWall(void);
 
 /**
- * @brief Move forward one cell
+ * @brief Move forward nCells cell.
+ * 
+ * @param nCells the number of cells to move forward.
  * 
  * @retval  None
  */
-void moveForward(void);
+void moveForward(float nCells);
 
 void turn(void);
 
