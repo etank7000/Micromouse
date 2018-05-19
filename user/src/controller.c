@@ -26,8 +26,10 @@ static const float ACC_W = 0.005;   // Angular acceleration in mm/(ms)^2
 static const float DEC_W = 0.005;   // Angular deceleration in mm/(ms)^2
 
 // IR sensor threshold constants
-static const int LEFT_MID = 3450;//3500;//3600;
-static const int RIGHT_MID = 3600;//3600;
+static const int LEFT_MID = 3450;   // True mid: 3390
+static const int RIGHT_MID = 3600;  // True mid: 3550
+static const int LEFT_ADJUST = 3556;//3671;
+static const int RIGHT_ADJUST = 3576;//3644;
 
 static int useSensorFeedback = 1;
 
@@ -59,6 +61,9 @@ static float prevPosErrorW = 0;
 
 // TEST
 static int finished = 0;
+static int stop_flag = 0;   // To account for initial motor bias to left
+static int biasTime = 0;
+static int adjusting = 0;
 
 // Private function prototypes
 static float speed_to_counts(const float speed);
@@ -66,13 +71,18 @@ static float counts_to_speed(const float counts);
 static void updateEncoderStatus(void);
 static void updateCurrentSpeed(void);
 static int getSensorError(void);
+static void calculateAdjust(void);
 static void calculateMotorPwm(void);
 
 void speedProfile(void)
 {
   updateEncoderStatus();
   updateCurrentSpeed();
-  calculateMotorPwm();
+  if (adjusting) {
+    calculateAdjust();
+  } else {
+    calculateMotorPwm();
+  }
 }
 
 void resetSpeedProfile(void)
@@ -112,10 +122,19 @@ void resetSpeedProfile(void)
 void moveUntilWall(void)
 {
   encCount = 0;
+
+  // Left motor bias correction
+  if (targetSpeedX == 0)
+    stop_flag = 1;
+  targetSpeedX = speed_to_counts(MOVE_SPEED);
+  if (stop_flag) {
+    targetSpeedW = -2*targetSpeedX;
+    HAL_Delay(28);
+    stop_flag = 0;
+  }
+  targetSpeedW = 0;
   if (finished)
     return;
-  targetSpeedW = 0;
-  targetSpeedX = speed_to_counts(MOVE_SPEED);
   HAL_Delay(1);
   while (!frontWallDetected()) {
     if (encCount > CELL_ENC_COUNT) {
@@ -132,7 +151,7 @@ void moveForward(float nCells)
   static int firstCell = 1;
   if (firstCell) {
     firstCell = 0;
-    encCount = 0.20*CELL_ENC_COUNT;
+    encCount = 0.25*CELL_ENC_COUNT;
   } else {
     encCount = 0;
   }
@@ -197,6 +216,48 @@ void turnLeft(void)
   useSensorFeedback = 1;
 }
 
+void turnRightStill(void)
+{
+  static const float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
+  static const float AT = ACC_W * TURN_TIME;
+  static const float MAX_SPEED_W = 
+    (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
+  static const float TURN_TIME_1 = MAX_SPEED_W / ACC_W;
+
+  useSensorFeedback = 0;
+  unsigned int startTime = HAL_GetTick();
+
+  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+    targetSpeedW = -speed_to_counts(MAX_SPEED_W);
+
+  while (HAL_GetTick() - startTime < TURN_TIME)
+    targetSpeedW = 0;
+
+  HAL_Delay(1000);
+  useSensorFeedback = 1;
+}
+
+void turnLeftStill(void)
+{
+  static const float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
+  static const float AT = ACC_W * TURN_TIME;
+  static const float MAX_SPEED_W = 
+    (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
+  static const float TURN_TIME_1 = MAX_SPEED_W / ACC_W;
+
+  useSensorFeedback = 0;
+  unsigned int startTime = HAL_GetTick();
+
+  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+    targetSpeedW = speed_to_counts(MAX_SPEED_W);
+
+  while (HAL_GetTick() - startTime < TURN_TIME)
+    targetSpeedW = 0;
+
+  HAL_Delay(1000);
+  useSensorFeedback = 1;
+}
+
 void turnAround(void)
 {
   static const float TURN_TIME = PI * CELL_WIDTH / (2 * MOVE_SPEED) * 0.90;
@@ -214,6 +275,7 @@ void turnAround(void)
   while (HAL_GetTick() - startTime < TURN_TIME)
     targetSpeedW = 0;
 
+  HAL_Delay(1000);
   useSensorFeedback = 1;
 }
 
@@ -224,6 +286,15 @@ void stop(void)
   // If front wall detected, can use IR sensors to align with front wall
   targetSpeedX = 0;
   HAL_Delay(1000);
+  biasTime = 0;
+}
+
+void adjust(void) {
+  useSensorFeedback = 0;
+  adjusting = 1;
+  HAL_Delay(1000);
+  adjusting = 0;
+  HAL_Delay(100);
 }
 
 float getEncSpeedX(void)
@@ -304,13 +375,23 @@ static int getSensorError(void)
   return 0;
 }
 
+static void calculateAdjust(void) {
+  setLeftMotor((LEFT_ADJUST - getRecLF()) / 1.4);
+  setRightMotor((RIGHT_ADJUST - getRecRF()) / 1.4);
+}
+
+void testAdjust(void) {
+  setLeftMotor((LEFT_ADJUST - getRecLF()) / 1.4);
+  setRightMotor((RIGHT_ADJUST - getRecRF()) / 1.4);
+}
+
 static void calculateMotorPwm(void)
 {
   int encFeedbackX = rightEncChange + leftEncChange;
   int encFeedbackW = rightEncChange - leftEncChange;
 
   posErrorX += 2*curSpeedX - encFeedbackX;  // Integrate speed to get position
-  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 50;
+  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / 66;
 
   int posPwmX = kpX * posErrorX + kdX * (posErrorX - prevPosErrorX);
   int posPwmW = kpW * posErrorW + kdW * (posErrorW - prevPosErrorW);
@@ -318,6 +399,6 @@ static void calculateMotorPwm(void)
   prevPosErrorX = posErrorX;
   prevPosErrorW = posErrorW;
 
-  setLeftMotor(posPwmX - posPwmW);
+  setLeftMotor((posPwmX - posPwmW));
   setRightMotor(posPwmX + posPwmW);
 }

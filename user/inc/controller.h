@@ -35,14 +35,24 @@ void moveForward(float nCells);
 void turn(void);
 
 /**
- * @brief Turn right 90 degrees.
+ * @brief Turn right 90 degrees. Use for curve turn.
  */
 void turnRight(void);
 
 /**
- * @brief Turn left 90 degrees.
+ * @brief Turn left 90 degrees. Use for curve turn.
  */
 void turnLeft(void);
+
+/**
+ * @brief Turn right 90 degrees. Use for still turn.
+ */
+void turnRightStill(void);
+
+/**
+ * @brief Turn left 90 degrees. Use for still turn.
+ */
+void turnLeftStill(void);
 
 /**
  * @brief Turn 180 degrees.
@@ -55,6 +65,15 @@ void turnAround(void);
  * @retval  None
  */
 void stop(void);
+
+/**
+ * @brief Adjust the front sensors to a front wall when mouse stops.
+ * 
+ * @retval  None
+ */
+void adjust(void);
+
+void testAdjust(void);
 
 /**
  * @brief Get current translational speed according to encoder feedback.

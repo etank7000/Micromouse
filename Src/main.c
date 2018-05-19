@@ -119,11 +119,13 @@ void HAL_SYSTICK_Callback(void)
         updateSpeedData();
         break;
       case 3:
-        speedProfile();
-        break;
+      case 4:
       case 5:
         readReceivers();
         speedProfile();
+        break;
+      case 7:
+        readReceivers();
         break;
     }
   }
@@ -184,7 +186,6 @@ static inline void searchMaze(void)
       moveForward(0.36f);
       stop();
       turnAround();
-      HAL_Delay(1000);
       moveForward(0.50f);
       break;
     case Wait:
@@ -194,8 +195,6 @@ static inline void searchMaze(void)
       g_state = IDLE;
       break;
   }
-  // moveUntilWall();
-  // turn();
 }
 
 /* USER CODE END 0 */
@@ -336,12 +335,23 @@ int main(void)
         turnAround();
         HAL_Delay(1500);
         break;
+      case 4:
+        moveUntilWall();
+        moveForward(0.55);
+        stop();
+        adjust();
+        turnLeftStill();
+        adjust();
+        turnLeftStill();
+        // turnAround();
+        break;
       case 5: // Search mode
         searchMaze();
         break;
       case 6: // Speed mode 1
         break;
       case 7: // Speed mode 2
+        testAdjust();
         break;
     }
   }
