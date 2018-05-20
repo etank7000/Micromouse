@@ -20,7 +20,7 @@ static const float MOVE_SPEED = 0.5;   // m/s (or mm/ms)
 static const float MAX_SPEED = 1.0;    // m/s (or mm/ms)
 
 // Time constants
-static const uint32_t PAUSE_TIME = 300;    // ms
+static const uint32_t PAUSE_TIME = 250;    // ms
 static const uint32_t BIAS_TIME = 0;
 
 // Acceleration constants
@@ -34,14 +34,17 @@ static const int MOTOR_ADJUST_LIMIT = 420;
 static const float ADJUST_DIVIDER = 1.0f;
 
 // IR sensor constants
-static const int SENSOR_DIVIDER = 55;
-static const int LH_MID = 3500;   // True mid: 3419
-static const int RH_MID = 3300;  // True mid: 3207
+static const int SENSOR_DIVIDER = 90;
+static const int LH_PUSH = 3429;   // True mid: 3319
+static const int RH_PUSH = 3520;  // True mid: 3307
+static const int LH_PULL = 2800;
+static const int RH_PULL = 3000;
+static const float PULL_FACTOR = 1.2f;
 static const int LF_ADJUST = 3556;//3671;
 static const int RF_ADJUST = 3576;//3644;
 
 // Turn constants
-static const float TURN_AROUND_MULTIPLIER = 1.023f;
+static const float TURN_AROUND_MULTIPLIER = 1.030f;
 
 // PID constants
 static const float kpX = 2;
@@ -330,10 +333,14 @@ static int getSensorError(void) {
     return 0;
   int recLH = getRecLH();
   int recRH = getRecRH();
-  if (leftWallDetected() && recLH > LH_MID)
-    return recLH - LH_MID;
-  else if (rightWallDetected() && recRH > RH_MID)
-    return RH_MID - recRH;
+  if (leftWallDetected() && recLH > LH_PUSH)
+    return recLH - LH_PUSH;
+  else if (rightWallDetected() && recRH > RH_PUSH)
+    return RH_PUSH - recRH;
+  else if (leftWallDetected() && recLH < LH_PULL)
+    return (recLH - LH_PULL);
+  else if (rightWallDetected() && recRH < RH_PULL)
+    return (RH_PULL - recRH);
   return 0;
 }
 

@@ -121,6 +121,7 @@ void HAL_SYSTICK_Callback(void)
       case 3:
       case 4:
       case 5:
+      case 6:
         readReceivers();
         speedProfile();
         break;
@@ -167,7 +168,7 @@ static inline void chooseMode(void)
   if (g_modeNum & 4) set(LED1); else reset(LED1);
 }
 
-static inline void searchMaze(void)
+static inline void searchMaze(int doCurveTurn)
 {
   MouseMovement nextMove = getNextMovement();
   switch (nextMove) 
@@ -176,30 +177,42 @@ static inline void searchMaze(void)
       moveForward(1.0f);
       break;
     case TurnClockwise:
-      // moveForward(0.02f);
-      turn(RightTurn, CurveTurn);
-      // moveForward(0.02f);
-
-      // stopAtCellCenter();
-      // if (frontWallDetected()) {
-      //   adjust();
-      // }
-      // turn(RightTurn, InPlaceTurn);
-      // moveForward(0.53f);
-
+      if (doCurveTurn) {
+        moveForward(0.025f);
+        turn(RightTurn, CurveTurn);
+      } else {
+        stopAtCellCenter();
+        if (frontWallDetected()) {
+          adjust();
+        }
+        if (leftWallDetected()) {
+          turn(LeftTurn, InPlaceTurn);
+          adjust();
+          turnAround();
+        } else  {
+          turn(RightTurn, InPlaceTurn);
+        }
+        moveForward(0.52f);
+      }
       break;
     case TurnCounterClockwise:
-      // moveForward(0.02f);
-      turn(LeftTurn, CurveTurn);
-      // moveForward(0.02f);
-
-      // stopAtCellCenter();
-      // if (frontWallDetected()) {
-      //   adjust();
-      // }
-      // turn(LeftTurn, InPlaceTurn);
-      // moveForward(0.53f);
-
+      if (doCurveTurn) {
+        moveForward(0.025f);
+        turn(LeftTurn, CurveTurn);
+      } else {
+        stopAtCellCenter();
+        if (frontWallDetected()) {
+          adjust();
+        }
+        if (rightWallDetected()) {
+          turn(RightTurn, InPlaceTurn);
+          adjust();
+          turnAround();
+        } else {
+          turn(LeftTurn, InPlaceTurn);
+        }
+        moveForward(0.52f);
+      }
       break;
     case TurnAround:
       // moveForward(0.36f);
@@ -219,7 +232,7 @@ static inline void searchMaze(void)
       } else {
         turnAround();
       }
-      moveForward(0.53f);
+      moveForward(0.52f);
       break;
     case Wait:
       break;
@@ -374,15 +387,13 @@ int main(void)
         moveForward(0.55);
         stop();
         adjust();
-        turn(LeftTurn, InPlaceTurn);
-        adjust();
-        turn(LeftTurn, InPlaceTurn);
-        // turnAround();
+        turnAround();
         break;
       case 5: // Search mode
-        searchMaze();
+        searchMaze(1);
         break;
       case 6: // Speed mode 1
+        searchMaze(0);
         break;
       case 7: // Speed mode 2
         testAdjust();
