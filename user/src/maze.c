@@ -112,7 +112,6 @@ void initializeMaze(void) {
 }
 
 int isOpen(unsigned short x, unsigned short y, Dir d) {
-  int r;
   switch (d) {
     case NORTH:
       return bitvector_get(&wallsNS, x, y+1);

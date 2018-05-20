@@ -8,6 +8,16 @@
 
 #include "stm32f4xx_hal.h"
 
+typedef enum TurnDir {
+  LeftTurn,
+  RightTurn
+} TurnDir;
+
+typedef enum TurnMotion {
+  CurveTurn,
+  InPlaceTurn
+} TurnMotion;
+
 /**
  * @brief Controls mouse movement.
  */
@@ -32,27 +42,16 @@ void moveUntilWall(void);
  */
 void moveForward(float nCells);
 
-void turn(void);
-
 /**
- * @brief Turn right 90 degrees. Use for curve turn.
+ * @brief Turn either left or right 90 degrees.
+ * 
+ * @param turnDirection the direction to turn, either LeftTurn or RightTurn.
+ * @param turnMotion  the motion the mouse turns from, either CurveTurn 
+ *                    or InPlaceTurn.
+ * 
+ * @retval  None
  */
-void turnRight(void);
-
-/**
- * @brief Turn left 90 degrees. Use for curve turn.
- */
-void turnLeft(void);
-
-/**
- * @brief Turn right 90 degrees. Use for still turn.
- */
-void turnRightStill(void);
-
-/**
- * @brief Turn left 90 degrees. Use for still turn.
- */
-void turnLeftStill(void);
+void turn(TurnDir turnDirection, TurnMotion turnMotion);
 
 /**
  * @brief Turn 180 degrees.
@@ -60,14 +59,21 @@ void turnLeftStill(void);
 void turnAround(void);
 
 /**
- * @brief Stop the mouse at the center of the cell.
+ * @brief Stop the mouse by decelerating to zero speed.
  * 
  * @retval  None
  */
 void stop(void);
 
 /**
- * @brief Adjust the front sensors to a front wall when mouse stops.
+ * @brief Stop the mouse at the center of the cell.
+ * 
+ * @retval  None
+ */
+void stopAtCellCenter(void);
+
+/**
+ * @brief Adjust the front sensors to a wall in front.
  * 
  * @retval  None
  */

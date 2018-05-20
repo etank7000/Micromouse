@@ -167,7 +167,6 @@ static inline void chooseMode(void)
   if (g_modeNum & 4) set(LED1); else reset(LED1);
 }
 
-// TODO: Comment back in after finish implementation of controller.c functions
 static inline void searchMaze(void)
 {
   MouseMovement nextMove = getNextMovement();
@@ -177,21 +176,57 @@ static inline void searchMaze(void)
       moveForward(1.0f);
       break;
     case TurnClockwise:
-      turnRight();
+      // moveForward(0.02f);
+      turn(RightTurn, CurveTurn);
+      // moveForward(0.02f);
+
+      // stopAtCellCenter();
+      // if (frontWallDetected()) {
+      //   adjust();
+      // }
+      // turn(RightTurn, InPlaceTurn);
+      // moveForward(0.53f);
+
       break;
     case TurnCounterClockwise:
-      turnLeft();
+      // moveForward(0.02f);
+      turn(LeftTurn, CurveTurn);
+      // moveForward(0.02f);
+
+      // stopAtCellCenter();
+      // if (frontWallDetected()) {
+      //   adjust();
+      // }
+      // turn(LeftTurn, InPlaceTurn);
+      // moveForward(0.53f);
+
       break;
     case TurnAround:
-      moveForward(0.36f);
-      stop();
-      turnAround();
-      moveForward(0.50f);
+      // moveForward(0.36f);
+      // stop();
+      stopAtCellCenter();
+      if (frontWallDetected()) {
+        adjust();
+      }
+      if (rightWallDetected()) {
+        turn(RightTurn, InPlaceTurn);
+        adjust();
+        turn(RightTurn, InPlaceTurn);
+      } else if (leftWallDetected()) {
+        turn(LeftTurn, InPlaceTurn);
+        adjust();
+        turn(LeftTurn, InPlaceTurn);
+      } else {
+        turnAround();
+      }
+      moveForward(0.53f);
       break;
     case Wait:
       break;
     case Finish:
-      stop();
+      // moveForward(0.36f);
+      // stop();
+      stopAtCellCenter();
       g_state = IDLE;
       break;
   }
@@ -333,16 +368,15 @@ int main(void)
         break;
       case 3: // Test Turning
         turnAround();
-        HAL_Delay(1500);
         break;
       case 4:
         moveUntilWall();
         moveForward(0.55);
         stop();
         adjust();
-        turnLeftStill();
+        turn(LeftTurn, InPlaceTurn);
         adjust();
-        turnLeftStill();
+        turn(LeftTurn, InPlaceTurn);
         // turnAround();
         break;
       case 5: // Search mode

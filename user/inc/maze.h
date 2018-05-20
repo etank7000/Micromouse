@@ -5,7 +5,7 @@
 #include "dir.h"
 #include "pathfinder.h"
 
-#define MAZE_LEN 8
+#define MAZE_LEN 16
 
 /**
  * @brief Initialize the wall placement of the maze and initializes the pathfinder.
