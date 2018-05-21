@@ -28,6 +28,8 @@ void speedProfile(void);
  */
 void resetSpeedProfile(void);
 
+void setFirstCell(void);
+
 /**
  * @brief Move straight until the mouse sees a front wall.
  */

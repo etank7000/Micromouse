@@ -111,6 +111,12 @@ void initializeMaze(void) {
   initializePathFinder();
 }
 
+void resetMousePosition(void) {
+  mouseX = 0;
+  mouseY = 0;
+  heading = NORTH;
+}
+
 int isOpen(unsigned short x, unsigned short y, Dir d) {
   switch (d) {
     case NORTH:

@@ -14,6 +14,8 @@
  */
 void initializeMaze(void);
 
+void resetMousePosition(void);
+
 /**
  * @brief Determine if there is no wall in direction d of Cell (x, y).
  * 

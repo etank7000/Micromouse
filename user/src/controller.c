@@ -73,6 +73,7 @@ static float posErrorW = 0;
 static float prevPosErrorW = 0;
 
 // TEST
+static int firstCell = 1;
 static int useSensorFeedback = 1;
 static int finished = 0;
 static int stop_flag = 0;   // To account for initial motor bias to left
@@ -103,7 +104,6 @@ void resetSpeedProfile(void) {
   reset(EM_RF);
   reset(EM_H);
   reset(EM_D);
-  reset(MODE);
   setLeftMotor(0);
   setRightMotor(0);
   resetLeftEnc();
@@ -126,9 +126,18 @@ void resetSpeedProfile(void) {
   posErrorW = 0;
   prevPosErrorW = 0;
 
+  useSensorFeedback = 1;
+  finished = 0;
+  stop_flag = 0;
+  adjusting = 0;
+
   reset(LED1);
   reset(LED2);
   reset(LED3);
+}
+
+void setFirstCell(void) {
+  firstCell = 1;
 }
 
 void moveUntilWall(void) {
@@ -158,7 +167,6 @@ void moveUntilWall(void) {
 
 // TODO: Finish/check implementation
 void moveForward(float nCells) {
-  static int firstCell = 1;
   if (firstCell) {
     firstCell = 0;
     encCount = 0.25*CELL_ENC_COUNT;

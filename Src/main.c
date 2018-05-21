@@ -304,101 +304,112 @@ int main(void)
   /*   HAL_Delay(100); */
   /* } */
 
-  // Change the encoder autoreload value to wrap back to 0 when it reaches
-  // 3520. This is done for mode selection.
-  __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_MODE_RELOAD - 1UL);
+  int firstTime = 1;
 
-  // Use the left wheel to select a mode.
-  g_state = CHOOSING;
-  while (g_state == CHOOSING)
-  {
-    resetLeftEnc();
-    resetRightEnc();
-    // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
-    do
+  while (1) {
+
+    // Change the encoder autoreload value to wrap back to 0 when it reaches
+    // 3520. This is done for mode selection.
+    __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_MODE_RELOAD - 1UL);
+
+    // Use the left wheel to select a mode.
+    g_state = CHOOSING;
+    while (g_state == CHOOSING)
     {
-      chooseMode();
-    } while (g_state == CHOOSING);
-
-    // Can either press BOOT0 button again to choose another mode, or block the 
-    // left and right forward IR sensors to start running in desired mode.
-    while (g_state == LOCKED);  // Better alternative to polling?
-
-    // If g_state == IDLE then that means we blocked the IR sensors instead
-    // of pressing BOOT0 again. Prepare for running or debugging by
-    // setting up the motor driver and encoder.
-    if (g_state == IDLE)
-    {
-      int i = 0;
-      while (i < 6)
-      {
-        toggle(LED1);
-        toggle(LED2);
-        toggle(LED3);
-        i++;
-        HAL_Delay(500);
-      }
-      reset(LED1);
-      reset(LED2);
-      reset(LED3);
-      __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
-      set(MODE);  // This MODE is the motor driver input
-      HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
-      HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
       resetLeftEnc();
       resetRightEnc();
-      HAL_Delay(2);
-      readReceivers();
-      HAL_Delay(2);
-      g_state = RUNNING;
-      initializeMaze();
-      HAL_Delay(1);
+      // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
+      do
+      {
+        chooseMode();
+      } while (g_state == CHOOSING);
+
+      // Can either press BOOT0 button again to choose another mode, or block the 
+      // left and right forward IR sensors to start running in desired mode.
+      while (g_state == LOCKED);  // Better alternative to polling?
+
+      // If g_state == IDLE then that means we blocked the IR sensors instead
+      // of pressing BOOT0 again. Prepare for running or debugging by
+      // setting up the motor driver and encoder.
+      if (g_state == IDLE)
+      {
+        int i = 0;
+        while (i < 6)
+        {
+          toggle(LED1);
+          toggle(LED2);
+          toggle(LED3);
+          i++;
+          HAL_Delay(500);
+        }
+        reset(LED1);
+        reset(LED2);
+        reset(LED3);
+        __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
+        set(MODE);  // This MODE is the motor driver input
+        if (firstTime) {
+          HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+          HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+          initializeMaze();
+          firstTime = 0;
+        }
+        resetMousePosition();
+        setFirstCell();
+        resetLeftEnc();
+        resetRightEnc();
+        HAL_Delay(2);
+        readReceivers();
+        HAL_Delay(2);
+        g_state = RUNNING;
+        HAL_Delay(1);
+      }
     }
-  }
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (g_state == RUNNING)
-  {
+    while (g_state == RUNNING)
+    {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 
-    switch (g_modeNum)
-    {
-      case 0: // Read and print IR sensor values
-        printSensorValues();
-        break;
-      case 1: // Read and print gyro values
-        printGyroValues();
-        break;
-      case 2:
-        debugSpeedProfile();
-        g_state = IDLE;
-        break;
-      case 3: // Test Turning
-        turnAround();
-        break;
-      case 4:
-        moveUntilWall();
-        moveForward(0.55);
-        stop();
-        adjust();
-        turnAround();
-        break;
-      case 5: // Search mode
-        searchMaze(1);
-        break;
-      case 6: // Speed mode 1
-        searchMaze(0);
-        break;
-      case 7: // Speed mode 2
-        testAdjust();
-        break;
+      switch (g_modeNum)
+      {
+        case 0: // Read and print IR sensor values
+          printSensorValues();
+          break;
+        case 1: // Read and print gyro values
+          printGyroValues();
+          break;
+        case 2:
+          debugSpeedProfile();
+          g_state = IDLE;
+          break;
+        case 3: // Test Turning
+          turnAround();
+          break;
+        case 4:
+          moveUntilWall();
+          moveForward(0.55);
+          stop();
+          adjust();
+          turnAround();
+          break;
+        case 5: // Search mode
+          searchMaze(1);
+          break;
+        case 6: // Speed mode 1
+          searchMaze(0);
+          break;
+        case 7: // Speed mode 2
+          testAdjust();
+          break;
+      }
     }
+    resetSpeedProfile();
   }
 
   // Reaching this point means we are done with the main routine. Proceed to
