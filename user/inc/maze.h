@@ -5,7 +5,7 @@
 #include "dir.h"
 #include "pathfinder.h"
 
-#define MAZE_LEN 16
+#define MAZE_LEN 16 
 
 /**
  * @brief Initialize the wall placement of the maze and initializes the pathfinder.
@@ -14,6 +14,15 @@
  */
 void initializeMaze(void);
 
+void saveMazeInFlash(void);
+
+int readMazeFromFlash(void);
+
+/**
+ * @brief Set the mouse position to (0, 0) and set its heading to NORTH.
+ * 
+ * @retval  None
+ */
 void resetMousePosition(void);
 
 /**

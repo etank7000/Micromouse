@@ -5,6 +5,9 @@
 #include "ir_sensor.h"
 #include "gpio.h"
 
+#include "stm32f4xx_hal.h"
+#include "main.h"
+
 static BitVector256 wallsNS = {{0}};
 static BitVector256 wallsEW = {{0}};
 static Dir heading = NORTH;
@@ -109,6 +112,25 @@ void initializeMaze(void) {
   // }
 
   initializePathFinder();
+}
+
+void saveMazeInFlash(void) {
+  set(LED1);
+  int weed = 420;
+  HAL_FLASH_Unlock();
+  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR
+    | FLASH_FLAG_PGAERR | FLASH_FLAG_PGSERR);
+  FLASH_Erase_Sector(FLASH_SECTOR_3, FLASH_VOLTAGE_RANGE_3);
+  if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, 0x0800C000, weed) != HAL_OK) {
+    HAL_FLASH_Lock();
+    return;
+  }
+  HAL_FLASH_Lock();
+  reset(LED1);
+}
+
+int readMazeFromFlash(void) {
+  return *(int*)(0x0800C000);
 }
 
 void resetMousePosition(void) {

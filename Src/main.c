@@ -66,6 +66,10 @@
 static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
+static const int LF_TURN = 901; // Threshold for starting curve turn
+static const int RF_TURN = 1001;
+
+static int curveTurnCounter = 0;
 
 enum State
 {
@@ -145,8 +149,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
           g_state = LOCKED;
           break;
         case LOCKED:
-          g_state = CHOOSING;
-          break;
+          // g_state = CHOOSING;
+          // break;
         case RUNNING:
         case IDLE:
           break;
@@ -177,46 +181,61 @@ static inline void searchMaze(int doCurveTurn)
       moveForward(1.0f);
       break;
     case TurnClockwise:
-      if (doCurveTurn) {
-        moveForward(0.025f);
+      if (doCurveTurn && curveTurnCounter <= 3) {
+        curveTurnCounter++;
+        // moveForward(0.025f); // with 180 mm
+        if (frontWallDetected()) {
+          while (getRecLF() < LF_TURN && getRecRF() < RF_TURN);
+        } else {
+          moveForward(0.18f);
+        }
         turn(RightTurn, CurveTurn);
+        moveForward(0.12f);
       } else {
+        curveTurnCounter = 0;
         stopAtCellCenter();
         if (frontWallDetected()) {
           adjust();
         }
-        if (leftWallDetected()) {
-          turn(LeftTurn, InPlaceTurn);
-          adjust();
-          turnAround();
-        } else  {
-          turn(RightTurn, InPlaceTurn);
-        }
+        turn(RightTurn, InPlaceTurn);
+        // if (leftWallDetected()) {
+        //   turn(LeftTurn, InPlaceTurn);
+        //   adjust();
+        //   turnAround();
+        // } else  {
+        //   turn(RightTurn, InPlaceTurn);
+        // }
         moveForward(0.52f);
       }
       break;
     case TurnCounterClockwise:
-      if (doCurveTurn) {
-        moveForward(0.025f);
+      if (doCurveTurn && curveTurnCounter <= 3) {
+        curveTurnCounter++;
+        if (frontWallDetected()) {
+          while (getRecLF() < LF_TURN && getRecRF() < RF_TURN);
+        } else {
+          moveForward(0.18f);
+        }
         turn(LeftTurn, CurveTurn);
+        moveForward(0.12f);
       } else {
+        curveTurnCounter = 0;
         stopAtCellCenter();
         if (frontWallDetected()) {
           adjust();
         }
-        if (rightWallDetected()) {
-          turn(RightTurn, InPlaceTurn);
-          adjust();
-          turnAround();
-        } else {
-          turn(LeftTurn, InPlaceTurn);
-        }
+        turn(LeftTurn, InPlaceTurn);
+        // if (rightWallDetected()) {
+        //   turn(RightTurn, InPlaceTurn);
+        //   adjust();
+        //   turnAround();
+        // } else {
+        //   turn(LeftTurn, InPlaceTurn);
+        // }
         moveForward(0.52f);
       }
       break;
     case TurnAround:
-      // moveForward(0.36f);
-      // stop();
       stopAtCellCenter();
       if (frontWallDetected()) {
         adjust();
@@ -237,8 +256,6 @@ static inline void searchMaze(int doCurveTurn)
     case Wait:
       break;
     case Finish:
-      // moveForward(0.36f);
-      // stop();
       stopAtCellCenter();
       g_state = IDLE;
       break;
@@ -304,7 +321,17 @@ int main(void)
   /*   HAL_Delay(100); */
   /* } */
 
+  // int n = readMazeFromFlash();
+  // print("Before saving: %d\r\n", n);
+  // saveMazeInFlash();
+  // n = readMazeFromFlash();
+  // print("After saving: %d\r\n", n);
+  // while (1);
+
   int firstTime = 1;
+  set(MODE);  // This MODE is the motor driver input
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 
   while (1) {
 
@@ -327,44 +354,37 @@ int main(void)
       // Can either press BOOT0 button again to choose another mode, or block the 
       // left and right forward IR sensors to start running in desired mode.
       while (g_state == LOCKED);  // Better alternative to polling?
-
-      // If g_state == IDLE then that means we blocked the IR sensors instead
-      // of pressing BOOT0 again. Prepare for running or debugging by
-      // setting up the motor driver and encoder.
-      if (g_state == IDLE)
-      {
-        int i = 0;
-        while (i < 6)
-        {
-          toggle(LED1);
-          toggle(LED2);
-          toggle(LED3);
-          i++;
-          HAL_Delay(500);
-        }
-        reset(LED1);
-        reset(LED2);
-        reset(LED3);
-        __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
-        set(MODE);  // This MODE is the motor driver input
-        if (firstTime) {
-          HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
-          HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
-          initializeMaze();
-          firstTime = 0;
-        }
-        resetMousePosition();
-        setFirstCell();
-        resetLeftEnc();
-        resetRightEnc();
-        HAL_Delay(2);
-        readReceivers();
-        HAL_Delay(2);
-        g_state = RUNNING;
-        HAL_Delay(1);
-      }
     }
 
+    // Reaching here means we blocked the IR sensors.
+    // Prepare for running or debugging by
+    // setting up the motor driver and encoder.
+    int i = 0;
+    while (i < 6)
+    {
+      toggle(LED1);
+      toggle(LED2);
+      toggle(LED3);
+      i++;
+      HAL_Delay(500);
+    }
+    reset(LED1);
+    reset(LED2);
+    reset(LED3);
+    __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
+    if (firstTime) {
+      initializeMaze();
+      firstTime = 0;
+    }
+    resetMousePosition();
+    setFirstCell();
+    resetLeftEnc();
+    resetRightEnc();
+    HAL_Delay(2);
+    readReceivers();
+    HAL_Delay(2);
+    g_state = RUNNING;
+    HAL_Delay(1);
 
   /* USER CODE END 2 */
 
@@ -389,7 +409,9 @@ int main(void)
           g_state = IDLE;
           break;
         case 3: // Test Turning
-          turnAround();
+          // turnAround();
+          turn(LeftTurn, InPlaceTurn);
+          turn(RightTurn, InPlaceTurn);
           break;
         case 4:
           moveUntilWall();
