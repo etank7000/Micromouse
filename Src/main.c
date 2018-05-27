@@ -1,61 +1,63 @@
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  ** This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
-  *
-  * COPYRIGHT(c) 2018 STMicroelectronics
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ ** This notice applies to any and all portions of this file
+ * that are not between comment pairs USER CODE BEGIN and
+ * USER CODE END. Other portions of this file, whether
+ * inserted by the user or by software development tools
+ * are owned by their respective copyright owners.
+ *
+ * COPYRIGHT(c) 2018 STMicroelectronics
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *modification, are permitted provided that the following conditions are met:
+ *   1. Redistributions of source code must retain the above copyright notice,
+ *      this list of conditions and the following disclaimer.
+ *   2. Redistributions in binary form must reproduce the above copyright
+ *notice, this list of conditions and the following disclaimer in the
+ *documentation and/or other materials provided with the distribution.
+ *   3. Neither the name of STMicroelectronics nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software
+ *      without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ *LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ *SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *POSSIBILITY OF SUCH DAMAGE.
+ *
+ ******************************************************************************
+ */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32f4xx_hal.h"
 #include "adc.h"
+#include "gpio.h"
 #include "spi.h"
+#include "stm32f4xx_hal.h"
 #include "tim.h"
 #include "usart.h"
-#include "gpio.h"
 
 /* USER CODE BEGIN Includes */
 #include <limits.h>
 
-#include "ir_sensor.h"
-#include "encoder.h"
+#include "battery_checker.h"
 #include "controller.h"
 #include "debug.h"
-#include "motor.h"
+#include "encoder.h"
 #include "gyro.h"
-#include "battery_checker.h"
-#include "pathfinder.h"
+#include "ir_sensor.h"
 #include "maze.h"
+#include "motor.h"
+#include "pathfinder.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -67,12 +69,11 @@ static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
 
-enum State
-{
+enum State {
   IDLE,
-  CHOOSING,   // User is currently choosing the mode for the mouse
-  LOCKED,     // User locks in his mode choice (by pressing BOOT0 button)
-  RUNNING     // The mouse is running in one of the 8 operating modes
+  CHOOSING, // User is currently choosing the mode for the mouse
+  LOCKED,   // User locks in his mode choice (by pressing BOOT0 button)
+  RUNNING   // The mouse is running in one of the 8 operating modes
 };
 
 // Determines which mode the mouse operates in while in RUNNING State
@@ -98,60 +99,52 @@ static void chooseMode(void);
 /* USER CODE BEGIN 0 */
 
 // This is the 1ms systick interrupt.
-void HAL_SYSTICK_Callback(void)
-{
+void HAL_SYSTICK_Callback(void) {
   // User has locked in mode choice. Block front sensors to start running.
-  if (g_state == LOCKED)
-  {
+  if (g_state == LOCKED) {
     readReceivers();
-    if (getRecLF() > REC_START && getRecRF() > REC_START)
-    {
+    if (getRecLF() > REC_START && getRecRF() > REC_START) {
       g_state = IDLE;
     }
-  }
-  else if (g_state == RUNNING)  // Systick part of mode operation
+  } else if (g_state == RUNNING) // Systick part of mode operation
   {
-    switch (g_modeNum)
-    {
-      case 2:
-        readReceivers();
-        speedProfile();
-        updateSpeedData();
-        break;
-      case 3:
-      case 4:
-      case 5:
-      case 6:
-        readReceivers();
-        speedProfile();
-        break;
-      case 7:
-        readReceivers();
-        break;
+    switch (g_modeNum) {
+    case 2:
+      readReceivers();
+      speedProfile();
+      updateSpeedData();
+      break;
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+      readReceivers();
+      speedProfile();
+      break;
+    case 7:
+      readReceivers();
+      break;
     }
   }
 }
 
 // This function gets called when the BOOT0 button is pressed
 // or when the INT signal from the gyro is received.
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-  switch (GPIO_Pin)
-  {
-    case BOOT0_Pin:
-      switch (g_state)
-      {
-        case CHOOSING:
-          g_state = LOCKED;
-          break;
-        case LOCKED:
-          g_state = CHOOSING;
-          break;
-        case RUNNING:
-        case IDLE:
-          break;
-      }
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+  switch (GPIO_Pin) {
+  case BOOT0_Pin:
+    switch (g_state) {
+    case CHOOSING:
+      g_state = LOCKED;
       break;
+    case LOCKED:
+      g_state = CHOOSING;
+      break;
+    case RUNNING:
+    case IDLE:
+      break;
+    }
+    break;
     /* case INT_Pin: */
     /*   break; */
   }
@@ -160,63 +153,52 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 // Rotate the left wheel to select among the 8 modes. The LEDs will light
 // up to correspond to the mode number. An unlit LED represents a binary 0
 // while a lit LED represents a binary 1. The value is read left to right.
-static inline void chooseMode(void)
-{
+static inline void chooseMode(void) {
   g_modeNum = getLeftEnc() / (ENC_MODE_RELOAD / NUM_MODES);
-  if (g_modeNum & 1) set(LED3); else reset(LED3);
-  if (g_modeNum & 2) set(LED2); else reset(LED2);
-  if (g_modeNum & 4) set(LED1); else reset(LED1);
+  if (g_modeNum & 1)
+    set(LED3);
+  else
+    reset(LED3);
+  if (g_modeNum & 2)
+    set(LED2);
+  else
+    reset(LED2);
+  if (g_modeNum & 4)
+    set(LED1);
+  else
+    reset(LED1);
 }
 
-static inline void searchMaze(int doCurveTurn)
-{
+static inline void searchMaze(int doCurveTurn) {
   MouseMovement nextMove = getNextMovement();
-  switch (nextMove) 
-  {
-    case MoveForward:
-      moveForward(1.0f);
-      break;
-    case TurnClockwise:
-      if (doCurveTurn) {
-        moveForward(0.025f);
-        turn(RightTurn, CurveTurn);
-      } else {
-        stopAtCellCenter();
-        if (frontWallDetected()) {
-          adjust();
-        }
-        if (leftWallDetected()) {
-          turn(LeftTurn, InPlaceTurn);
-          adjust();
-          turnAround();
-        } else  {
-          turn(RightTurn, InPlaceTurn);
-        }
-        moveForward(0.52f);
+  switch (nextMove) {
+  case MoveForward:
+    moveForward(1.0f);
+    break;
+  case TurnClockwise:
+    if (doCurveTurn) {
+      moveForward(0.025f);
+      turn(RightTurn, CurveTurn);
+    } else {
+      stopAtCellCenter();
+      if (frontWallDetected()) {
+        adjust();
       }
-      break;
-    case TurnCounterClockwise:
-      if (doCurveTurn) {
-        moveForward(0.025f);
-        turn(LeftTurn, CurveTurn);
+      if (leftWallDetected()) {
+        turn(LeftTurn, InPlaceTurn);
+        adjust();
+        turnAround();
       } else {
-        stopAtCellCenter();
-        if (frontWallDetected()) {
-          adjust();
-        }
-        if (rightWallDetected()) {
-          turn(RightTurn, InPlaceTurn);
-          adjust();
-          turnAround();
-        } else {
-          turn(LeftTurn, InPlaceTurn);
-        }
-        moveForward(0.52f);
+        turn(RightTurn, InPlaceTurn);
       }
-      break;
-    case TurnAround:
-      // moveForward(0.36f);
-      // stop();
+      moveForward(0.52f);
+    }
+    break;
+  case TurnCounterClockwise:
+    if (doCurveTurn) {
+      moveForward(0.025f);
+      turn(LeftTurn, CurveTurn);
+    } else {
       stopAtCellCenter();
       if (frontWallDetected()) {
         adjust();
@@ -224,43 +206,61 @@ static inline void searchMaze(int doCurveTurn)
       if (rightWallDetected()) {
         turn(RightTurn, InPlaceTurn);
         adjust();
-        turn(RightTurn, InPlaceTurn);
-      } else if (leftWallDetected()) {
-        turn(LeftTurn, InPlaceTurn);
-        adjust();
-        turn(LeftTurn, InPlaceTurn);
-      } else {
         turnAround();
+      } else {
+        turn(LeftTurn, InPlaceTurn);
       }
       moveForward(0.52f);
-      break;
-    case Wait:
-      break;
-    case Finish:
-      // moveForward(0.36f);
-      // stop();
-      stopAtCellCenter();
-      g_state = IDLE;
-      break;
+    }
+    break;
+  case TurnAround:
+    // moveForward(0.36f);
+    // stop();
+    stopAtCellCenter();
+    if (frontWallDetected()) {
+      adjust();
+    }
+    if (rightWallDetected()) {
+      turn(RightTurn, InPlaceTurn);
+      adjust();
+      turn(RightTurn, InPlaceTurn);
+    } else if (leftWallDetected()) {
+      turn(LeftTurn, InPlaceTurn);
+      adjust();
+      turn(LeftTurn, InPlaceTurn);
+    } else {
+      turnAround();
+    }
+    moveForward(0.52f);
+    break;
+  case Wait:
+    break;
+  case Finish:
+    // moveForward(0.36f);
+    // stop();
+    stopAtCellCenter();
+    g_state = IDLE;
+    break;
   }
 }
 
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  *
-  * @retval None
-  */
-int main(void)
-{
+ * @brief  The application entry point.
+ *
+ * @retval None
+ */
+int main(void) {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration----------------------------------------------------------*/
+  /* MCU
+   * Configuration----------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick.
+   */
   HAL_Init();
 
   /* USER CODE BEGIN Init */
@@ -284,11 +284,11 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  // print("%hd\r\n", who_am_i());
-  // gyro_spi_init();
-  // HAL_Delay(100); 
-  // set_gyro_scale();
-  // HAL_Delay(1000); 
+  print("%hd\r\n", who_am_i());
+  gyro_spi_init();
+  HAL_Delay(100);
+  set_gyro_scale();
+  HAL_Delay(1000);
   // calibrateGyro();
   // HAL_Delay(1000);
 
@@ -314,28 +314,26 @@ int main(void)
 
     // Use the left wheel to select a mode.
     g_state = CHOOSING;
-    while (g_state == CHOOSING)
-    {
+    while (g_state == CHOOSING) {
       resetLeftEnc();
       resetRightEnc();
-      // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
-      do
-      {
+      // Turn left wheel to choose the mode. Press BOOT0 button to lock in
+      // choice.
+      do {
         chooseMode();
       } while (g_state == CHOOSING);
 
-      // Can either press BOOT0 button again to choose another mode, or block the 
-      // left and right forward IR sensors to start running in desired mode.
-      while (g_state == LOCKED);  // Better alternative to polling?
+      // Can either press BOOT0 button again to choose another mode, or block
+      // the left and right forward IR sensors to start running in desired mode.
+      while (g_state == LOCKED)
+        ; // Better alternative to polling?
 
       // If g_state == IDLE then that means we blocked the IR sensors instead
       // of pressing BOOT0 again. Prepare for running or debugging by
       // setting up the motor driver and encoder.
-      if (g_state == IDLE)
-      {
+      if (g_state == IDLE) {
         int i = 0;
-        while (i < 6)
-        {
+        while (i < 6) {
           toggle(LED1);
           toggle(LED2);
           toggle(LED3);
@@ -346,7 +344,7 @@ int main(void)
         reset(LED2);
         reset(LED3);
         __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
-        set(MODE);  // This MODE is the motor driver input
+        set(MODE); // This MODE is the motor driver input
         if (firstTime) {
           HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
           HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
@@ -365,48 +363,48 @@ int main(void)
       }
     }
 
+    calibrateGyro();
+    HAL_Delay(1000);
 
-  /* USER CODE END 2 */
+    /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-    while (g_state == RUNNING)
-    {
-  /* USER CODE END WHILE */
+    /* Infinite loop */
+    /* USER CODE BEGIN WHILE */
+    while (g_state == RUNNING) {
+      /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+      /* USER CODE BEGIN 3 */
 
-      switch (g_modeNum)
-      {
-        case 0: // Read and print IR sensor values
-          printSensorValues();
-          break;
-        case 1: // Read and print gyro values
-          printGyroValues();
-          break;
-        case 2:
-          debugSpeedProfile();
-          g_state = IDLE;
-          break;
-        case 3: // Test Turning
-          turnAround();
-          break;
-        case 4:
-          moveUntilWall();
-          moveForward(0.55);
-          stop();
-          adjust();
-          turnAround();
-          break;
-        case 5: // Search mode
-          searchMaze(1);
-          break;
-        case 6: // Speed mode 1
-          searchMaze(0);
-          break;
-        case 7: // Speed mode 2
-          testAdjust();
-          break;
+      switch (g_modeNum) {
+      case 0: // Read and print IR sensor values
+        printSensorValues();
+        break;
+      case 1: // Read and print gyro values
+        printGyroValues();
+        break;
+      case 2:
+        debugSpeedProfile();
+        g_state = IDLE;
+        break;
+      case 3: // Test Turning
+        turnAround();
+        break;
+      case 4:
+        moveUntilWall();
+        moveForward(0.55);
+        stop();
+        adjust();
+        turnAround();
+        break;
+      case 5: // Search mode
+        searchMaze(1);
+        break;
+      case 6: // Speed mode 1
+        searchMaze(0);
+        break;
+      case 7: // Speed mode 2
+        testAdjust();
+        break;
       }
     }
     resetSpeedProfile();
@@ -414,33 +412,30 @@ int main(void)
 
   // Reaching this point means we are done with the main routine. Proceed to
   // enter a low power state.
-  while (1)
-  {
+  while (1) {
     resetSpeedProfile();
     HAL_PWR_EnterSTANDBYMode();
   }
   /* USER CODE END 3 */
-
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
 
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
 
-    /**Configure the main internal regulator output voltage 
-    */
+  /**Configure the main internal regulator output voltage
+   */
   __HAL_RCC_PWR_CLK_ENABLE();
 
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
+  /**Initializes the CPU, AHB and APB busses clocks
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = 16;
@@ -450,31 +445,29 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
     _Error_Handler(__FILE__, __LINE__);
   }
 
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  /**Initializes the CPU, AHB and APB busses clocks
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
+                                RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
-  {
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
     _Error_Handler(__FILE__, __LINE__);
   }
 
-    /**Configure the Systick interrupt time 
-    */
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+  /**Configure the Systick interrupt time
+   */
+  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
 
-    /**Configure the Systick 
-    */
+  /**Configure the Systick
+   */
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
   /* SysTick_IRQn interrupt configuration */
@@ -486,49 +479,47 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @param  file: The file name as string.
-  * @param  line: The line in file as a number.
-  * @retval None
-  */
-void _Error_Handler(char *file, int line)
-{
+ * @brief  This function is executed in case of error occurrence.
+ * @param  file: The file name as string.
+ * @param  line: The line in file as a number.
+ * @retval None
+ */
+void _Error_Handler(char *file, int line) {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   g_state = IDLE;
   resetSpeedProfile();
   print("%s: line %d\r\n", file, line);
-  while(1) 
-  {
+  while (1) {
     toggle(LED1);
     HAL_Delay(1000);
   }
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t* file, uint32_t line)
-{ 
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
+void assert_failed(uint8_t *file, uint32_t line) {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-    ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* User can add his own implementation to report the file name and line
+    number, ex: printf("Wrong parameters value: file %s on line %d\r\n", file,
+    line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
