@@ -7,12 +7,18 @@
 #include "stack.h"
 #include <stdlib.h>
 
-static const unsigned short INFINITE = 256;
+static const unsigned short INFINITE = MAZE_LEN * MAZE_LEN;
 
 static unsigned short distances[MAZE_LEN][MAZE_LEN] = {0};
-static unsigned short toCenterDistance[MAZE_LEN][MAZE_LEN] = {0};
-static unsigned short toStartDistance[MAZE_LEN][MAZE_LEN] = {0};
 static int headingToCenter = 1;
+
+static void initializeDistances(void);
+static void setDistances(unsigned short targetX, unsigned short targetY);
+static void setDistance(unsigned short x, unsigned short y, unsigned short val);
+static unsigned short getDistance(unsigned short x, unsigned short y, Dir d);
+static unsigned short findMinDistanceOfNeighbors(unsigned short x, unsigned short y);
+static int atCenter(unsigned short x, unsigned short y);
+static void runFloodFill(unsigned short x, unsigned short y);
 
 /**
  * @brief Initialize the manhattan distance of each cell from the
@@ -31,35 +37,32 @@ static void initializeDistances(void) {
     }
   }
 
-  // Distances to go to the center
-  for (unsigned short y = 0; y < MAZE_LEN / 2; y++) {
-    for (unsigned short x = 0; x < MAZE_LEN / 2; x++) {
-      toCenterDistance[y][x] = toCenterDistance[y][MAZE_LEN - x - 1] =
-          toCenterDistance[MAZE_LEN - y - 1][x] =
-              toCenterDistance[MAZE_LEN - y - 1][MAZE_LEN - x - 1] =
-                  MAZE_LEN - 2 - y - x;
+  for (unsigned short y = 0; y < MAZE_LEN; y++) {
+    for (unsigned short x = 0; x < MAZE_LEN; x++) {
+      runFloodFill(x, y);
+    }
+  }
+}
+
+/**
+ * @brief Initialize the manhattan distance of each cell according to
+ *        some target cell.
+ * 
+ * @param targetX The x coordinate of the target cell.
+ * @param targetY The y coordinate of the target cell.
+ * 
+ * @retval  None
+ */
+static void setDistances(unsigned short targetX, unsigned short targetY) {
+  for (int y = 0; y < MAZE_LEN; y++) {
+    for (int x = 0; x < MAZE_LEN; x++) {
+      distances[y][x] = abs(y - targetY) + abs(x - targetX);
     }
   }
 
-  // ReversedDistances are initialized so that it
-  for (unsigned short i = 0; i < MAZE_LEN / 2; i++) {
-    for (unsigned short j = 0; j < MAZE_LEN / 2; j++) {
-      toStartDistance[MAZE_LEN - 1 - j][i] = abs(0 - j) + abs(0 - i);
-    }
-  }
-  for (unsigned short i = MAZE_LEN / 2; i < MAZE_LEN; i++) {
-    for (unsigned short j = 0; j < MAZE_LEN / 2; j++) {
-      toStartDistance[MAZE_LEN - 1 - j][i] = abs(0 - j) + abs(0 - i);
-    }
-  }
-  for (unsigned short i = 0; i < MAZE_LEN / 2; i++) {
-    for (unsigned short j = MAZE_LEN / 2; j < MAZE_LEN; j++) {
-      toStartDistance[MAZE_LEN - 1 - j][i] = abs(0 - j) + abs(0 - i);
-    }
-  }
-  for (unsigned short i = MAZE_LEN / 2; i < MAZE_LEN; i++) {
-    for (unsigned short j = MAZE_LEN / 2; j < MAZE_LEN; j++) {
-      toStartDistance[MAZE_LEN - 1 - j][i] = abs(0 - j) + abs(0 - i);
+  for (int y = 0; y < MAZE_LEN; y++) {
+    for (int x = 0; x < MAZE_LEN; x++) {
+      runFloodFill(x, y);
     }
   }
 }
@@ -98,13 +101,13 @@ static unsigned short getDistance(unsigned short x, unsigned short y, Dir d) {
     return INFINITE;
   switch (d) {
   case NORTH:
-    return distances[y + 1][x];
+    return y + 1 < MAZE_LEN ? distances[y + 1][x] : INFINITE;
   case SOUTH:
-    return distances[y - 1][x];
+    return y > 0 ? distances[y - 1][x] : INFINITE;
   case EAST:
-    return distances[y][x + 1];
+    return x + 1 < MAZE_LEN ? distances[y][x + 1] : INFINITE;
   case WEST:
-    return distances[y][x - 1];
+    return x > 0 ? distances[y][x - 1] : INFINITE;
   case INVALID:
     return distances[y][x];
   default:
@@ -170,45 +173,29 @@ static void runFloodFill(unsigned short x, unsigned short y) {
     if (curDist > minDist || minDist >= INFINITE)
       continue;
     setDistance(cur.x, cur.y, minDist + 1);
-    if (isOpen(x, y, NORTH))
-      stack_push(x, y + 1);
-    if (isOpen(x, y, EAST))
-      stack_push(x + 1, y);
-    if (isOpen(x, y, SOUTH))
-      stack_push(x, y - 1);
-    if (isOpen(x, y, WEST))
-      stack_push(x - 1, y);
-  }
-}
-
-void switchDistances(int goingToCenter) {
-  if (goingToCenter) {
-    for (unsigned short i = 0; i < MAZE_LEN; i++) {
-      for (unsigned short j = 0; i < MAZE_LEN; j++) {
-        toStartDistance[i][j] = distances[i][j];
-        distances[i][j] = toCenterDistance[i][j];
-      }
-    }
-  } else {
-    for (unsigned short i = 0; i < MAZE_LEN; i++) {
-      for (unsigned short j = 0; i < MAZE_LEN; j++) {
-        toCenterDistance[i][j] = distances[i][j];
-        distances[i][j] = toStartDistance[i][j];
-      }
-    }
+    if (isOpen(cur.x, cur.y, NORTH))
+      stack_push(cur.x, cur.y + 1);
+    if (isOpen(cur.x, cur.y, EAST))
+      stack_push(cur.x + 1, cur.y);
+    if (isOpen(cur.x, cur.y, SOUTH))
+      stack_push(cur.x, cur.y - 1);
+    if (isOpen(cur.x, cur.y, WEST))
+      stack_push(cur.x - 1, cur.y);
   }
 }
 
 void initializePathFinder(void) { initializeDistances(); }
 
 MouseMovement nextMovement(unsigned short x, unsigned short y, Dir heading) {
-  if (atCenter(x, y)) {
+  unsigned short curDistTemp = getDistance(x, y, INVALID);
+  if (curDistTemp == 0) {
     if (headingToCenter) {
       headingToCenter = 0;
-      switchDistances(headingToCenter);
+      setDistances(0, 0);
     } else {
       headingToCenter = 1;
-      switchDistances(headingToCenter)
+      initializeDistances();
+      return Finish;
     }
   }
   // if (atCenter(x, y)) {
@@ -220,12 +207,12 @@ MouseMovement nextMovement(unsigned short x, unsigned short y, Dir heading) {
 
   if (!wallInFront() && getDistance(x, y, heading) < curDist) {
     return MoveForward;
-  } else if (!wallOnLeft() &&
-             getDistance(x, y, counterClockwise(heading)) < curDist) {
-    return TurnCounterClockwise;
   } else if (!wallOnRight() &&
              getDistance(x, y, clockwise(heading)) < curDist) {
     return TurnClockwise;
+  } else if (!wallOnLeft() &&
+             getDistance(x, y, counterClockwise(heading)) < curDist) {
+    return TurnCounterClockwise;
   } else if (getDistance(x, y, opposite(heading)) < curDist) {
     return TurnAround;
   }

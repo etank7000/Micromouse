@@ -7,10 +7,10 @@
 
 // Conversion constants
 static const int DIAMETER = 37;//35;    // Wheel diameter in millimeters
-static const float PI = 3.14159;
+static const float PI = 3.14159265;
 static const int STEPS_PER_REV = 3520;   // Encoder steps per revolution
-static const int CELL_WIDTH = 180;  // A cell has side length 180mm
-static const int MOUSE_WIDTH = 74;//74;  // The mouse has a width of 74mm
+static const int CELL_WIDTH = 140;  // A cell has side length 180mm
+static const int MOUSE_WIDTH = 69;//74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 // TODO: Determine what this variable should be (not tested yet)
 static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
@@ -20,7 +20,7 @@ static const float MOVE_SPEED = 0.5;   // m/s (or mm/ms)
 static const float MAX_SPEED = 1.0;    // m/s (or mm/ms)
 
 // Time constants
-static const uint32_t PAUSE_TIME = 250;    // ms
+static const uint32_t PAUSE_TIME = 230;    // ms
 static const uint32_t BIAS_TIME = 0;
 
 // Acceleration constants
@@ -30,18 +30,19 @@ static const float ACC_W = 0.005;   // Angular acceleration in mm/(ms)^2
 static const float DEC_W = 0.005;   // Angular deceleration in mm/(ms)^2
 
 // Adjuster constants
-static const int MOTOR_ADJUST_LIMIT = 420;
+static const int MOTOR_ADJUST_LIMIT = 210;
 static const float ADJUST_DIVIDER = 1.0f;
 
 // IR sensor constants
 static const int SENSOR_DIVIDER = 90;
-static const int LH_PUSH = 3429;   // True mid: 3319
-static const int RH_PUSH = 3520;  // True mid: 3307
-static const int LH_PULL = 2800;
-static const int RH_PULL = 3000;
+static const int LH_PUSH = 3425;   // True mid: 3303
+static const int RH_PUSH = 3240;  // True mid: 3117
+static const int LH_PULL = 2700;
+static const int RH_PULL = 2700;
 static const float PULL_FACTOR = 1.2f;
 static const int LF_ADJUST = 3556;//3671;
 static const int RF_ADJUST = 3576;//3644;
+// LF: 900, RF: 1000 start to curve turn?
 
 // Turn constants
 static const float TURN_AROUND_MULTIPLIER = 1.030f;
@@ -145,14 +146,14 @@ void moveUntilWall(void) {
   useSensorFeedback = 1;
 
   // Left motor bias correction
-  if (targetSpeedX == 0)
-    stop_flag = 1;
+  // if (targetSpeedX == 0)
+  //   stop_flag = 1;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
-  if (stop_flag) {
-    targetSpeedW = -targetSpeedX;
-    HAL_Delay(BIAS_TIME);
-    stop_flag = 0;
-  }
+  // if (stop_flag) {
+  //   targetSpeedW = -targetSpeedX;
+  //   HAL_Delay(BIAS_TIME);
+  //   stop_flag = 0;
+  // }
   targetSpeedW = 0;
   if (finished)
     return;
@@ -173,29 +174,27 @@ void moveForward(float nCells) {
   } else {
     encCount = 0;
   }
-  toggle(LED2);
+  toggle(LED3);
   useSensorFeedback = 1;
 
   // Left motor bias correction
-  if (targetSpeedX == 0)
-    stop_flag = 1;
+  // if (targetSpeedX == 0)
+  //   stop_flag = 1;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
-  if (stop_flag) {
-    targetSpeedW = -1.8*targetSpeedX;
-    HAL_Delay(BIAS_TIME);
-    stop_flag = 0;
-  }
+  // if (stop_flag) {
+  //   targetSpeedW = -1.8*targetSpeedX;
+  //   HAL_Delay(BIAS_TIME);
+  //   stop_flag = 0;
+  // }
 
   targetSpeedW = 0;
-  HAL_Delay(1);
+  // HAL_Delay(1);
   int doneCount = nCells * CELL_ENC_COUNT;
   while (encCount < doneCount);
 }
 
 void turn(TurnDir turnDirection, TurnMotion turnMotion) {
   float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
-  if (turnMotion == CurveTurn)
-    TURN_TIME *= 1.00f;
   float AT = ACC_W * TURN_TIME;
   float MAX_SPEED_W = 
     (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
@@ -219,7 +218,7 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion) {
 
   if (turnMotion == InPlaceTurn)
     HAL_Delay(PAUSE_TIME);
-  toggle(LED3);
+  // toggle(LED3);
 }
 
 void turnAround(void) {
@@ -343,12 +342,12 @@ static int getSensorError(void) {
   int recRH = getRecRH();
   if (leftWallDetected() && recLH > LH_PUSH)
     return recLH - LH_PUSH;
-  else if (rightWallDetected() && recRH > RH_PUSH)
+  if (rightWallDetected() && recRH > RH_PUSH)
     return RH_PUSH - recRH;
-  else if (leftWallDetected() && recLH < LH_PULL)
-    return (recLH - LH_PULL);
-  else if (rightWallDetected() && recRH < RH_PULL)
-    return (RH_PULL - recRH);
+  // if (leftWallDetected() && recLH < LH_PULL)
+  //   return (recLH - LH_PULL);
+  // if (rightWallDetected() && recRH < RH_PULL)
+  //   return (RH_PULL - recRH);
   return 0;
 }
 
