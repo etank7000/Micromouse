@@ -14,9 +14,11 @@
  */
 void initializeMaze(void);
 
+void printMaze(void);
+
 void saveMazeInFlash(void);
 
-int readMazeFromFlash(void);
+void readMazeFromFlash(void);
 
 /**
  * @brief Set the mouse position to (0, 0) and set its heading to NORTH.

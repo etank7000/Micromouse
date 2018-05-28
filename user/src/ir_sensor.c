@@ -11,7 +11,7 @@ static int32_t recRD = 0;
 
 // static const int32_t FRONT_TURN = 900;
 static const int32_t HAS_FRONT = 460;
-static const int32_t HAS_LEFT = 1900;   // Diagonal sensor threshold
+static const int32_t HAS_LEFT = 1700;   // Diagonal sensor threshold
 static const int32_t HAS_RIGHT = 2000;  // Diagonal sensor
 
 void readReceivers(void)

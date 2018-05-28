@@ -190,6 +190,7 @@ MouseMovement nextMovement(unsigned short x, unsigned short y, Dir heading) {
   unsigned short curDistTemp = getDistance(x, y, INVALID);
   if (curDistTemp == 0) {
     if (headingToCenter) {
+      // saveMazeInFlash();
       headingToCenter = 0;
       setDistances(0, 0);
     } else {

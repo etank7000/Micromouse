@@ -114,23 +114,57 @@ void initializeMaze(void) {
   initializePathFinder();
 }
 
+void printMaze(void) {
+  int n;
+  print("\r\n");
+  for (int y = MAZE_LEN - 1; y >= 0; y--) {
+    for (int x = 0; x < MAZE_LEN; x++) {
+      n = !isOpen(x, y, NORTH) + !isOpen(x, y, EAST) * 2
+          + !isOpen(x, y, SOUTH) * 4 + !isOpen(x, y, WEST) * 8;
+      // n = isOpen(x, y, NORTH);
+      print("%2d ", n);
+    }
+    print("\r\n");
+  }
+}
+
 void saveMazeInFlash(void) {
   set(LED1);
-  int weed = 420;
+  HAL_Delay(1000);
   HAL_FLASH_Unlock();
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR
     | FLASH_FLAG_PGAERR | FLASH_FLAG_PGSERR);
   FLASH_Erase_Sector(FLASH_SECTOR_3, FLASH_VOLTAGE_RANGE_3);
-  if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, 0x0800C000, weed) != HAL_OK) {
-    HAL_FLASH_Lock();
-    return;
+  // if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, 0x0800C000, weed) != HAL_OK) {
+  //   HAL_FLASH_Lock();
+  //   return;
+  // }
+  int vecLen = VECTOR_SIZE*VECTOR_SIZE / (8 * sizeof(uint16_t));
+  for (int i = 0; i < vecLen; i++) {
+    if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD,
+              0x0800C000 + 2*i, wallsEW.vector[i]) != HAL_OK) {
+                        Error_Handler();
+                      }
   }
+  for (int i = 0; i < vecLen; i++) {
+    if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, 
+              0x0800C000 + 2*(i + vecLen), wallsNS.vector[i]) != HAL_OK) {
+                Error_Handler();
+              }
+  }
+
   HAL_FLASH_Lock();
   reset(LED1);
 }
 
-int readMazeFromFlash(void) {
-  return *(int*)(0x0800C000);
+void readMazeFromFlash(void) {
+  int vecLen = VECTOR_SIZE*VECTOR_SIZE / (8 * sizeof(uint16_t));
+  for (int i = 0; i < vecLen; i++) {
+    wallsEW.vector[i] = *(uint16_t *)(0x0800C000 + 2 * i);
+  }
+  for (int i = 0; i < vecLen; i++) {
+    wallsNS.vector[i] = *(uint16_t *)(0x0800C000 + 2 * (i + vecLen));
+  }
 }
 
 void resetMousePosition(void) {

@@ -63,6 +63,7 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+static const unsigned int ENC_FLASH_RELOAD = 880UL;
 static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
@@ -74,9 +75,11 @@ static int curveTurnCounter = 0;
 enum State
 {
   IDLE,
-  CHOOSING,   // User is currently choosing the mode for the mouse
+  CHOOSING_OPTION,  // User chooses an option for the mouse
+  CHOOSING_MODE,   // User is currently choosing the mode for the mouse
   LOCKED,     // User locks in his mode choice (by pressing BOOT0 button)
-  RUNNING     // The mouse is running in one of the 8 operating modes
+  RUNNING,    // The mouse is running in one of the 8 operating modes
+  CRASH
 };
 
 // Determines which mode the mouse operates in while in RUNNING State
@@ -84,6 +87,8 @@ static volatile uint32_t g_modeNum = 0;
 
 // Determines what state the mouse is in
 static volatile enum State g_state = IDLE;
+
+static volatile uint32_t g_readWriteFlash = 0;
 
 /* USER CODE END PV */
 
@@ -117,20 +122,17 @@ void HAL_SYSTICK_Callback(void)
   {
     switch (g_modeNum)
     {
-      case 2:
+      case 1:
         readReceivers();
-        speedProfile();
-        updateSpeedData();
         break;
+      case 2:
       case 3:
       case 4:
       case 5:
       case 6:
-        readReceivers();
-        speedProfile();
-        break;
       case 7:
         readReceivers();
+        speedProfile();
         break;
     }
   }
@@ -145,20 +147,32 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     case BOOT0_Pin:
       switch (g_state)
       {
-        case CHOOSING:
+        case CHOOSING_OPTION:
+          g_state = IDLE;
+          break;
+        case CHOOSING_MODE:
           g_state = LOCKED;
           break;
         case LOCKED:
-          // g_state = CHOOSING;
+          // g_state = CHOOSING_MODE;
           // break;
         case RUNNING:
+          g_state = CRASH;
+          break;
         case IDLE:
+        case CRASH:
           break;
       }
       break;
     /* case INT_Pin: */
     /*   break; */
   }
+}
+
+static inline void chooseFlash(void) 
+{
+  g_readWriteFlash = getLeftEnc() / (ENC_FLASH_RELOAD / 2UL);
+  if (g_readWriteFlash & 1) set (LED3); else reset(LED3);
 }
 
 // Rotate the left wheel to select among the 8 modes. The LEDs will light
@@ -172,7 +186,7 @@ static inline void chooseMode(void)
   if (g_modeNum & 4) set(LED1); else reset(LED1);
 }
 
-static inline void searchMaze(int doCurveTurn)
+static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
 {
   MouseMovement nextMove = getNextMovement();
   switch (nextMove) 
@@ -183,7 +197,6 @@ static inline void searchMaze(int doCurveTurn)
     case TurnClockwise:
       if (doCurveTurn && curveTurnCounter <= 3) {
         curveTurnCounter++;
-        // moveForward(0.025f); // with 180 mm
         if (frontWallDetected()) {
           while (getRecLF() < LF_TURN && getRecRF() < RF_TURN);
         } else {
@@ -197,14 +210,19 @@ static inline void searchMaze(int doCurveTurn)
         if (frontWallDetected()) {
           adjust();
         }
-        turn(RightTurn, InPlaceTurn);
-        // if (leftWallDetected()) {
-        //   turn(LeftTurn, InPlaceTurn);
-        //   adjust();
-        //   turnAround();
-        // } else  {
-        //   turn(RightTurn, InPlaceTurn);
-        // }
+
+        if (!doExtraAdjust) {
+          turn(RightTurn, InPlaceTurn);
+        } else {
+          if (leftWallDetected()) {
+            turn(LeftTurn, InPlaceTurn);
+            adjust();
+            turnAround();
+          } else  {
+            turn(RightTurn, InPlaceTurn);
+          }
+        }
+
         moveForward(0.52f);
       }
       break;
@@ -224,14 +242,19 @@ static inline void searchMaze(int doCurveTurn)
         if (frontWallDetected()) {
           adjust();
         }
-        turn(LeftTurn, InPlaceTurn);
-        // if (rightWallDetected()) {
-        //   turn(RightTurn, InPlaceTurn);
-        //   adjust();
-        //   turnAround();
-        // } else {
-        //   turn(LeftTurn, InPlaceTurn);
-        // }
+
+        if (!doExtraAdjust) {
+          turn(LeftTurn, InPlaceTurn);
+        } else {
+          if (rightWallDetected()) {
+            turn(RightTurn, InPlaceTurn);
+            adjust();
+            turnAround();
+          } else {
+            turn(LeftTurn, InPlaceTurn);
+          }
+        }
+
         moveForward(0.52f);
       }
       break;
@@ -321,12 +344,15 @@ int main(void)
   /*   HAL_Delay(100); */
   /* } */
 
-  // int n = readMazeFromFlash();
-  // print("Before saving: %d\r\n", n);
+  // initializeMaze();
+  // printMaze();
   // saveMazeInFlash();
-  // n = readMazeFromFlash();
-  // print("After saving: %d\r\n", n);
-  // while (1);
+  // HAL_Delay(1000);
+  // readMazeFromFlash();
+  // printMaze();
+  // while (1) {
+  //   // print("stuck in while loop\r\n");
+  // }
 
   int firstTime = 1;
   set(MODE);  // This MODE is the motor driver input
@@ -334,31 +360,34 @@ int main(void)
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 
   while (1) {
+    __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_FLASH_RELOAD - 1UL);
+    resetLeftEnc();
+    resetRightEnc();
+    g_state = CHOOSING_OPTION;
+    while (g_state == CHOOSING_OPTION)
+      chooseFlash();
+    
+    if (g_readWriteFlash)
+      readMazeFromFlash();
+
+    HAL_Delay(500);
 
     // Change the encoder autoreload value to wrap back to 0 when it reaches
     // 3520. This is done for mode selection.
     __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_MODE_RELOAD - 1UL);
+    resetLeftEnc();
+    resetRightEnc();
 
     // Use the left wheel to select a mode.
-    g_state = CHOOSING;
-    while (g_state == CHOOSING)
-    {
-      resetLeftEnc();
-      resetRightEnc();
-      // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
-      do
-      {
-        chooseMode();
-      } while (g_state == CHOOSING);
+    // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
+    g_state = CHOOSING_MODE;
+    while (g_state == CHOOSING_MODE)
+      chooseMode();
 
-      // Can either press BOOT0 button again to choose another mode, or block the 
-      // left and right forward IR sensors to start running in desired mode.
-      while (g_state == LOCKED);  // Better alternative to polling?
-    }
+    while (g_state == LOCKED);  // Better alternative to polling?
 
-    // Reaching here means we blocked the IR sensors.
-    // Prepare for running or debugging by
-    // setting up the motor driver and encoder.
+    // Reaching here means we blocked the IR sensors. Prepare for running or 
+    // debugging by setting up the motor driver and encoder.
     int i = 0;
     while (i < 6)
     {
@@ -373,7 +402,10 @@ int main(void)
     reset(LED3);
     __HAL_TIM_SET_AUTORELOAD(&htim2, ULONG_MAX);
     if (firstTime) {
-      initializeMaze();
+      if (!g_readWriteFlash)
+        initializeMaze();
+      else
+        initializePathFinder();
       firstTime = 0;
     }
     resetMousePosition();
@@ -401,37 +433,50 @@ int main(void)
         case 0: // Read and print IR sensor values
           printSensorValues();
           break;
-        case 1: // Read and print gyro values
-          printGyroValues();
+        case 1:
+          // debugSpeedProfile();
+          // g_state = IDLE;
+
+          testAdjust();
           break;
-        case 2:
-          debugSpeedProfile();
-          g_state = IDLE;
-          break;
-        case 3: // Test Turning
+        case 2: // Test Turning
           // turnAround();
-          turn(LeftTurn, InPlaceTurn);
+
+          // turn(LeftTurn, InPlaceTurn);
+          // HAL_Delay(730);
           turn(RightTurn, InPlaceTurn);
+          HAL_Delay(730);
+
+          // moveForward(0.18f);
+          // turn(LeftTurn, CurveTurn);
+          // moveForward(0.12f);
           break;
-        case 4:
+        case 3:
           moveUntilWall();
           moveForward(0.55);
           stop();
           adjust();
           turnAround();
           break;
+        case 4:
+          searchMaze(1, 1);
+          break;
         case 5: // Search mode
-          searchMaze(1);
+          searchMaze(1, 0);
           break;
         case 6: // Speed mode 1
-          searchMaze(0);
+          searchMaze(0, 0);
           break;
         case 7: // Speed mode 2
-          testAdjust();
+          searchMaze(0, 1);
           break;
       }
     }
     resetSpeedProfile();
+    if (g_state != CRASH) {
+      saveMazeInFlash();
+      HAL_Delay(100);
+    }
   }
 
   // Reaching this point means we are done with the main routine. Proceed to

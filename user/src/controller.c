@@ -37,10 +37,10 @@ static const float ADJUST_DIVIDER = 1.0f;
 static const int SENSOR_DIVIDER = 90;
 static const int LH_PUSH = 3425;   // True mid: 3303
 static const int RH_PUSH = 3240;  // True mid: 3117
-static const int LH_PULL = 2700;
-static const int RH_PULL = 2700;
+static const int LH_PULL = 2300;
+static const int RH_PULL = 2300;
 static const float PULL_FACTOR = 1.2f;
-static const int LF_ADJUST = 3556;//3671;
+static const int LF_ADJUST = 3433;//3671;
 static const int RF_ADJUST = 3576;//3644;
 // LF: 900, RF: 1000 start to curve turn?
 
@@ -195,6 +195,8 @@ void moveForward(float nCells) {
 
 void turn(TurnDir turnDirection, TurnMotion turnMotion) {
   float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
+  if (turnMotion == CurveTurn)
+    TURN_TIME *= 0.996f;
   float AT = ACC_W * TURN_TIME;
   float MAX_SPEED_W = 
     (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
