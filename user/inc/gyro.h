@@ -1,8 +1,9 @@
 #ifndef GYRO_H
 #define GYRO_H
 
-#include "stm32f4xx_hal.h"
 #include "main.h"
+#include "stm32f4xx_hal.h"
+
 
 // MPU6000 registers
 #define MPUREG_XG_OFFS_TC 0x00
@@ -61,6 +62,7 @@
 #define MPUREG_FIFO_COUNTL 0x73
 #define MPUREG_FIFO_R_W 0x74
 #define MPUREG_WHOAMI 0x75
+#define MPUREG_INTERRUPT_STATUS 0x3A
 
 // Configuration bits MPU6000
 #define BIT_SLEEP 0x40
@@ -69,29 +71,29 @@
 #define MPU_CLK_SEL_PLLGYROX 0x01
 #define MPU_CLK_SEL_PLLGYROZ 0x03
 #define MPU_EXT_SYNC_GYROX 0x02
-#define BITS_FS_250DPS              0x00
-#define BITS_FS_500DPS              0x08
-#define BITS_FS_1000DPS             0x10
-#define BITS_FS_2000DPS             0x18
-#define BITS_FS_2G                  0x00
-#define BITS_FS_4G                  0x08
-#define BITS_FS_8G                  0x10
-#define BITS_FS_16G                 0x18
-#define BITS_FS_MASK                0x18
-#define BITS_DLPF_CFG_256HZ_NOLPF2  0x00
-#define BITS_DLPF_CFG_188HZ         0x01
-#define BITS_DLPF_CFG_98HZ          0x02
-#define BITS_DLPF_CFG_42HZ          0x03
-#define BITS_DLPF_CFG_20HZ          0x04
-#define BITS_DLPF_CFG_10HZ          0x05
-#define BITS_DLPF_CFG_5HZ           0x06
-#define BITS_DLPF_CFG_2100HZ_NOLPF  0x07
-#define BITS_DLPF_CFG_MASK          0x07
-#define BIT_INT_ANYRD_2CLEAR        0x10
-#define BIT_RAW_RDY_EN              0x01
-#define BIT_I2C_IF_DIS              0x10
+#define BITS_FS_250DPS 0x00
+#define BITS_FS_500DPS 0x08
+#define BITS_FS_1000DPS 0x10
+#define BITS_FS_2000DPS 0x18
+#define BITS_FS_2G 0x00
+#define BITS_FS_4G 0x08
+#define BITS_FS_8G 0x10
+#define BITS_FS_16G 0x18
+#define BITS_FS_MASK 0x18
+#define BITS_DLPF_CFG_256HZ_NOLPF2 0x00
+#define BITS_DLPF_CFG_188HZ 0x01
+#define BITS_DLPF_CFG_98HZ 0x02
+#define BITS_DLPF_CFG_42HZ 0x03
+#define BITS_DLPF_CFG_20HZ 0x04
+#define BITS_DLPF_CFG_10HZ 0x05
+#define BITS_DLPF_CFG_5HZ 0x06
+#define BITS_DLPF_CFG_2100HZ_NOLPF 0x07
+#define BITS_DLPF_CFG_MASK 0x07
+#define BIT_INT_ANYRD_2CLEAR 0x10
+#define BIT_RAW_RDY_EN 0x01
+#define BIT_I2C_IF_DIS 0x10
 
-#define READ_FLAG   0x80
+#define READ_FLAG 0x80
 
 /**
  * @brief Initializes the gyroscope for SPI.
@@ -111,4 +113,4 @@ float readGyro(void);
 
 uint8_t who_am_i(void);
 
-#endif  //GYRO_H
+#endif // GYRO_H
