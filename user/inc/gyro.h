@@ -4,7 +4,6 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 
-
 // MPU6000 registers
 #define MPUREG_XG_OFFS_TC 0x00
 #define MPUREG_YG_OFFS_TC 0x01
@@ -98,19 +97,43 @@
 /**
  * @brief Initializes the gyroscope for SPI.
  */
-void gyro_spi_init(void);
+void gyroSPIInit(void);
 
 /**
  * @brief Set the right range for the gyroscopes.
  */
-void set_gyro_scale(void);
+void setGyroScale(void);
 
 /**
- * @brief Read the gyroscope x-axis rotation.
- * @retval 16-bit value of x-axis gyroscope register.
+ * @brief Read the gyroscope z-axis rotation.
+ * @retval 16-bit value of z-axis gyroscope register.
  */
-float readGyro(void);
+int16_t readGyro(void);
 
-uint8_t who_am_i(void);
+/**
+ * @brief Read the who_am_i register of the gyro and print to the terminal
+ */
+void gyroWHOAMI(void);
+
+/**
+ * @brief Calibrate the gyro adn set the reference value
+ */
+void calibrateGyro(void);
+
+/**
+ * @brief Update the gyro angle every systick
+ */
+void updateGyroAngle(void);
+
+/**
+ * @brief Reset the gyro angle to 0 (to get rid of drift, used right before a turn)
+ */
+void resetGyroAngle(void);
+
+/**
+ * @breif Read the gyro angle 
+ * @retval 16-bit value of the angle of the gyroscope
+ */
+int32_t getGyroAngle(void);
 
 #endif // GYRO_H

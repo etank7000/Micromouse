@@ -3,7 +3,14 @@
 #include "spi.h"
 #include "usart.h"
 
-void gyro_spi_init(void) {
+#define GYRO_CALIB_COUNT 25
+
+static int32_t gyro_angle = 0;
+static int16_t gyro_z_ref = 0;
+static int16_t prev_gyro_z = 0;
+
+void gyroSPIInit(void)
+{
   uint8_t pAddr;
   uint8_t pData;
   uint8_t buf[2];
@@ -105,46 +112,58 @@ void gyro_spi_init(void) {
   // HAL_Delay(10);
 }
 
-void set_gyro_scale(void) {
+void setGyroScale(void)
+{
   uint8_t buf[2];
 
   buf[0] = MPUREG_GYRO_CONFIG;
-  buf[1] = BITS_FS_1000DPS;
+  // buf[1] = BITS_FS_1000DPS;
+  buf[1] = BITS_FS_2000DPS;
   reset(SS1);
   HAL_SPI_Transmit(&hspi2, buf, sizeof(buf), 100);
   set(SS1);
   HAL_Delay(10);
 }
 
-float readGyro(void) {
+int16_t readGyro(void)
+{
   uint8_t pAddr = MPUREG_GYRO_ZOUT_H | READ_FLAG;
-  int16_t bit_data;
-  float data;
+  int16_t bit_data = 0;
+  float data = 0;
   uint8_t responseH = 0, responseL = 0;
 
-  uint8_t interruptStatusAddr = MPUREG_INTERRUPT_STATUS | READ_FLAG;
-  uint8_t interrupt_data = 0;
-
   reset(SS1);
-
-  // while (interrupt_data & 0x1 != 1) {
-  //   HAL_SPI_Transmit(&hspi2, &interruptStatusAddr,
-  //   sizeof(interruptStatusAddr),
-  //                    100);
-  //   HAL_SPI_Receive(&hspi2, &interrupt_data, sizeof(interrupt_data), 100);
-  // }
 
   HAL_SPI_Transmit(&hspi2, &pAddr, sizeof(pAddr), 100);
   int count_delay = 0;
   for (; count_delay < 1; count_delay++)
-    ;
+  {
+  }
   // HAL_SPI_Receive(&hspi2, &bit_data, sizeof(bit_data), 100);
   HAL_SPI_Receive(&hspi2, &responseH, sizeof(responseH), 100);
-  HAL_SPI_Receive(&hspi2, &responseL, sizeof(responseL), 100);
-  bit_data = ((int16_t)responseH << 8) | responseL;
+  for (; count_delay < 4; count_delay++)
+  {
+  }
 
-  data = (float)bit_data;
-  data = data / 32.8;
+  pAddr = MPUREG_GYRO_ZOUT_L | READ_FLAG;
+  HAL_SPI_Transmit(&hspi2, &pAddr, sizeof(pAddr), 100);
+  for (; count_delay < 1; count_delay++)
+  {
+  }
+  HAL_SPI_Receive(&hspi2, &responseL, sizeof(responseL), 100);
+  for (; count_delay < 4; count_delay++)
+  {
+  }
+
+  int16_t resH = (int16_t)responseH;
+  bit_data = (resH << 8) | responseL;
+
+  // data = (float)bit_data;
+  // data = (float)bit_data / 32.8;
+  // data = data / 32.8;
+
+  // print("Data: %d ", (int)data);
+  // data = data / 16.4;
 
   // From the data sheet:
   // https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf
@@ -153,30 +172,64 @@ float readGyro(void) {
   set(SS1);
 
   /* return bit_data; */
-  return data;
+  return bit_data;
 }
 
-uint8_t who_am_i(void) {
-  // Who am I?
-  uint8_t pAddr = MPUREG_WHOAMI | READ_FLAG;
-  uint8_t pData = 0;
+void gyroWHOAMI(void)
+{
+  uint8_t pAddr;
+  uint8_t pData;
+
+  pAddr = MPUREG_WHOAMI | READ_FLAG;
+  pData = 0;
+
   reset(SS1);
-
-  uint8_t interruptStatusAddr = MPUREG_INTERRUPT_STATUS | READ_FLAG;
-  uint8_t interrupt_data = 0;
-
-  // while (interrupt_data & 0x1 != 1) {
-  //   HAL_SPI_Transmit(&hspi2, &interruptStatusAddr,
-  //   sizeof(interruptStatusAddr),
-  //                    100);
-  //   HAL_SPI_Receive(&hspi2, &interrupt_data, sizeof(interrupt_data), 100);
-  // }
-
   HAL_SPI_Transmit(&hspi2, &pAddr, sizeof(pAddr), 100);
   int count_delay = 0;
+
   for (; count_delay < 1; count_delay++)
     ;
   HAL_SPI_Receive(&hspi2, &pData, sizeof(pData), 100);
   set(SS1);
-  return pData;
+
+  print("WHO AM I: %hd\r\n", pData);
+}
+
+void calibrateGyro(void)
+{
+  for (int i = 0; i < GYRO_CALIB_COUNT; i++)
+  {
+    gyro_z_ref += readGyro();
+    // Gyro can only at max output at 1000 Hz, so wait 2 ms here for calibration
+    HAL_Delay(2);
+  }
+
+  gyro_z_ref /= GYRO_CALIB_COUNT;
+}
+
+void updateGyroAngle(void)
+{
+  // since we can't do floats, the angle will be multiplied by 1000
+  int16_t outz = 0;
+
+  outz = readGyro();
+  float diff = (outz - gyro_z_ref) / 16.4 * 0.001;
+
+  // divide by 16.4, divide by 1000 since 1 ms = 1/1000 s, 2 since area of trapezoid
+  // 1/(16.4*1000*2) = .000030488 -> 0.0000305
+  float diff2 = 1 * (outz + prev_gyro_z - 2 * gyro_z_ref) * 0.0000305;
+
+  // Constant to multiply to make the gyro get 90 degree turns accurately!
+  gyro_angle += (diff * 1000);
+  prev_gyro_z = outz;
+}
+
+void resetGyroAngle(void)
+{
+  gyro_angle = 0;
+}
+
+int32_t getGyroAngle(void)
+{
+  return gyro_angle;
 }
