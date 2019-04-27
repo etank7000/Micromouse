@@ -27,7 +27,8 @@ void printAngleValues(void)
 {
   HAL_Delay(1);
   updateGyroAngle();
-  print("Angle: %d  \r\n", getGyroAngle());
+  int gyro_angle = (int)(getGyroAngle() * 1000);
+  print("Angle: %d  \r\n", gyro_angle);
 }
 
 void calibrateGyroTest(void)

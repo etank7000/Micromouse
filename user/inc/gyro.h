@@ -132,8 +132,14 @@ void resetGyroAngle(void);
 
 /**
  * @breif Read the gyro angle 
- * @retval 16-bit value of the angle of the gyroscope
+ * @retval float value of the angle of the gyroscope
  */
-int32_t getGyroAngle(void);
+float getGyroAngle(void);
+
+/**
+ * @breif Read the gyro out z 
+ * @retval 16-bit value of the outz of the gyroscope
+ */
+int16_t getGyroOutZ(void);
 
 #endif // GYRO_H

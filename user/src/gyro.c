@@ -3,11 +3,12 @@
 #include "spi.h"
 #include "usart.h"
 
-#define GYRO_CALIB_COUNT 25
+#define GYRO_CALIB_COUNT 150
 
-static int32_t gyro_angle = 0;
-static int16_t gyro_z_ref = 0;
-static int16_t prev_gyro_z = 0;
+static float gyro_angle = 0;
+static int32_t gyro_z_ref = 0;
+static int16_t prev_gyro_z[2] = {0};
+static int prev_time = 0;
 
 void gyroSPIInit(void)
 {
@@ -129,7 +130,6 @@ int16_t readGyro(void)
 {
   uint8_t pAddr = MPUREG_GYRO_ZOUT_H | READ_FLAG;
   int16_t bit_data = 0;
-  float data = 0;
   uint8_t responseH = 0, responseL = 0;
 
   reset(SS1);
@@ -158,6 +158,10 @@ int16_t readGyro(void)
   int16_t resH = (int16_t)responseH;
   bit_data = (resH << 8) | responseL;
 
+  set(SS1);
+
+  /* return bit_data; */
+  return bit_data;
   // data = (float)bit_data;
   // data = (float)bit_data / 32.8;
   // data = data / 32.8;
@@ -169,10 +173,6 @@ int16_t readGyro(void)
   // https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf
   // page 12
   // data = (((int32_t)bit_data) * 10000 - (191942));
-  set(SS1);
-
-  /* return bit_data; */
-  return bit_data;
 }
 
 void gyroWHOAMI(void)
@@ -205,6 +205,8 @@ void calibrateGyro(void)
   }
 
   gyro_z_ref /= GYRO_CALIB_COUNT;
+  prev_gyro_z[1] = gyro_z_ref;
+  prev_gyro_z[0] = gyro_z_ref;
 }
 
 void updateGyroAngle(void)
@@ -213,15 +215,20 @@ void updateGyroAngle(void)
   int16_t outz = 0;
 
   outz = readGyro();
-  float diff = (outz - gyro_z_ref) / 16.4 * 0.001;
+  // float diff = (outz - gyro_z_ref) / 16.4 * 0.001;    // <--- so this doesnt really work
 
   // divide by 16.4, divide by 1000 since 1 ms = 1/1000 s, 2 since area of trapezoid
   // 1/(16.4*1000*2) = .000030488 -> 0.0000305
-  float diff2 = 1 * (outz + prev_gyro_z - 2 * gyro_z_ref) * 0.0000305;
+  int curr_time = HAL_GetTick();
+  // float diff2 = (curr_time- prev_time) * (outz + prev_gyro_z - 2 * gyro_z_ref) * 0.000505;
+  // float diff2 = 0.57 * (curr_time - prev_time) * (outz + prev_gyro_z[1] + prev_gyro_z[0] - 3 * gyro_z_ref) / 3 / 16.4 / 1000;
+  float diff2 = (curr_time - prev_time) * (outz + prev_gyro_z[1] + prev_gyro_z[0] - 3 * gyro_z_ref) / 3 / 16.4 / 1000;
+  // float diff2 = (curr_time - prev_time) * (outz - gyro_z_ref) * 0.000030488;
 
-  // Constant to multiply to make the gyro get 90 degree turns accurately!
-  gyro_angle += (diff * 1000);
-  prev_gyro_z = outz;
+  gyro_angle += (diff2);
+  prev_gyro_z[1] = prev_gyro_z[0];
+  prev_gyro_z[0] = outz;
+  prev_time = curr_time;
 }
 
 void resetGyroAngle(void)
@@ -229,7 +236,12 @@ void resetGyroAngle(void)
   gyro_angle = 0;
 }
 
-int32_t getGyroAngle(void)
+float getGyroAngle(void)
 {
   return gyro_angle;
+}
+
+int16_t getGyroOutZ(void)
+{
+  return prev_gyro_z[0];
 }

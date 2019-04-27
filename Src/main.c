@@ -374,7 +374,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   gyroSPIInit();
-  HAL_Delay(100);
+  HAL_Delay(1000);
   setGyroScale();
   HAL_Delay(1000);
   calibrateGyro();
