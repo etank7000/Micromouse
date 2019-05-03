@@ -75,7 +75,7 @@ static int curveTurnCounter = 0;
 enum State
 {
   IDLE,
-  CHOOSING_OPTION, // User chooses an option for the mouse
+  CHOOSING_FLASH, // User chooses an option for the mouse
   CHOOSING_MODE,   // User is currently choosing the mode for the mouse
   LOCKED,          // User locks in his mode choice (by pressing BOOT0 button)
   RUNNING,         // The mouse is running in one of the 8 operating modes
@@ -141,7 +141,6 @@ void HAL_SYSTICK_Callback(void)
 }
 
 // This function gets called when the BOOT0 button is pressed
-// This function gets called when the BOOT0 button is pressed
 // or when the INT signal from the gyro is received.
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -150,7 +149,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   case BOOT0_Pin:
     switch (g_state)
     {
-    case CHOOSING_OPTION:
+    case CHOOSING_FLASH:
       g_state = IDLE;
       break;
     case CHOOSING_MODE:
@@ -172,6 +171,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
+// Rotate the left wheel to select among 2 modes. Binary 1 indicates
+// choice to read maze from flash.
 static inline void chooseFlash(void)
 {
   g_readWriteFlash = getLeftEnc() / (ENC_FLASH_RELOAD / 2UL);
@@ -412,8 +413,11 @@ int main(void)
     __HAL_TIM_SET_AUTORELOAD(&htim2, ENC_FLASH_RELOAD - 1UL);
     resetLeftEnc();
     resetRightEnc();
-    g_state = CHOOSING_OPTION;
-    while (g_state == CHOOSING_OPTION)
+    g_state = CHOOSING_FLASH;
+    // Turn left wheel to choose whether to read the maze currently saved
+    // in flash memory. Binary 1 indicates read maze from flash.
+    // Press BOOT0 button to lock in choice.
+    while (g_state == CHOOSING_FLASH) // Exit this loop by pressing BOOT0 button.
       chooseFlash();
 
     if (g_readWriteFlash)
@@ -430,17 +434,18 @@ int main(void)
     // Use the left wheel to select a mode.
     // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
     g_state = CHOOSING_MODE;
-    while (g_state == CHOOSING_MODE)
+    while (g_state == CHOOSING_MODE)  // Exit this loop by pressing BOOT0 button.
       chooseMode();
 
     while (g_state == LOCKED)
-      ; // Better alternative to polling?
+      ; // Block the front IR sensors to exit this loop.
 
     // Reaching here means we blocked the IR sensors. Prepare for running or
     // debugging by setting up the motor driver and encoder.
     int i = 0;
     float gyro_val = 0;
     uint8_t who_am_i_reg = 0;
+    // All LEDs will blink 3 times to indicate that the mouse will start running.
     while (i < 6)
     {
       toggle(LED1);
@@ -532,21 +537,24 @@ int main(void)
         adjust();
         turnAround();
         break;
-      case 4:
+      case 4:   // Run the maze with curve turns and extra adjusts
         searchMaze(1, 1);
         break;
-      case 5: // Search mode
+      case 5:   // Run the maze with curve turns but without extra adjusts
         searchMaze(1, 0);
         break;
-      case 6: // Speed mode 1
+      case 6:   // Run the maze with in place turns and without extra adjusts
         searchMaze(0, 0);
         break;
-      case 7: // Speed mode 2
+      case 7:   // Run the maze with in place turns and extra adjusts
         searchMaze(0, 1);
         break;
       }
     }
     resetSpeedProfile();
+    // Right now there is no check for whether the mouse has crashed,
+    // so the maze will always be saved in flash after the mouse thinks
+    // it has reached back to the start.
     if (g_state != CRASH)
     {
       saveMazeInFlash();
