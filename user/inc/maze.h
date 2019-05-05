@@ -5,8 +5,6 @@
 #include "dir.h"
 #include "pathfinder.h"
 
-#define MAZE_LEN 16 
-
 /**
  * @brief Initialize the wall placement of the maze and initializes the pathfinder.
  * 
@@ -66,4 +64,8 @@ int wallOnRight(void);
  */
 MouseMovement getNextMovement(void);
 
-#endif  // MAZE_H
+unsigned short getMouseX(void);
+
+unsigned short getMouseY(void);
+
+#endif // MAZE_H

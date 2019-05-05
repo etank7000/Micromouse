@@ -11,8 +11,16 @@ static int32_t recRD = 0;
 
 // static const int32_t FRONT_TURN = 900;
 static const int32_t HAS_FRONT = 460;
-static const int32_t HAS_LEFT = 1700;   // Diagonal sensor threshold
-static const int32_t HAS_RIGHT = 2000;  // Diagonal sensor
+// OLD VALUE
+// static const int32_t HAS_FRONT = 460;
+
+static const int32_t HAS_LEFT = 1700; // Diagonal sensor threshold  // 1700 is good
+// OLD VALUE
+// static const int32_t HAS_LEFT = 1700;  // Diagonal sensor threshold
+
+static const int32_t HAS_RIGHT = 1700; // Diagonal sensor   // 1750 is good
+// OLD VALUE
+// static const int32_t HAS_RIGHT = 2000; // Diagonal sensor
 
 void readReceivers(void)
 {
@@ -26,27 +34,32 @@ void readReceivers(void)
   uint32_t start = micros();
 
   set(EM_LF);
-  while (micros() - start < 60);
+  while (micros() - start < 60)
+    ;
   recLF = readRecLF() - recLF;
   reset(EM_LF);
   if (recLF < 0)
   {
     recLF = 0;
   }
-  while (micros() - start < 140);
+  while (micros() - start < 140)
+    ;
 
   set(EM_RF);
-  while (micros() - start < 200);
+  while (micros() - start < 200)
+    ;
   recRF = readRecRF() - recRF;
   reset(EM_RF);
   if (recRF < 0)
   {
     recRF = 0;
   }
-  while (micros() - start < 280);
+  while (micros() - start < 280)
+    ;
 
   set(EM_H);
-  while (micros() - start < 340);
+  while (micros() - start < 340)
+    ;
   recLH = readRecLH() - recLH;
   recRH = readRecRH() - recRH;
   reset(EM_H);
@@ -58,10 +71,12 @@ void readReceivers(void)
   {
     recRH = 0;
   }
-  while (micros() - start < 420);
+  while (micros() - start < 420)
+    ;
 
   set(EM_D);
-  while (micros() - start < 480);
+  while (micros() - start < 480)
+    ;
   recLD = readRecLD() - recLD;
   recRD = readRecRD() - recRD;
   reset(EM_D);
@@ -105,9 +120,10 @@ int32_t getRecRD()
   return recRD;
 }
 
-int32_t frontWallDetected(void) 
+int32_t frontWallDetected(void)
 {
-  return recLF > HAS_FRONT && recRF > HAS_FRONT;
+  return recLF > HAS_FRONT || recRF > HAS_FRONT;
+  // return recLF > HAS_FRONT && recRF > HAS_FRONT;
 }
 
 int32_t leftWallDetected(void)

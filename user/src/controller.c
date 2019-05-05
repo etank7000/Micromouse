@@ -6,46 +6,63 @@
 #include <math.h>
 
 // Conversion constants
-static const int DIAMETER = 37;//35;    // Wheel diameter in millimeters
+static const int DIAMETER = 37; //35;    // Wheel diameter in millimeters
 static const float PI = 3.14159265;
-static const int STEPS_PER_REV = 3520;   // Encoder steps per revolution
-static const int CELL_WIDTH = 140;  // A cell has side length 180mm
-static const int MOUSE_WIDTH = 69;//74;  // The mouse has a width of 74mm
+static const int STEPS_PER_REV = 3520; // Encoder steps per revolution
+static const int CELL_WIDTH = 140;     // A cell has side length 180mm
+static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 // TODO: Determine what this variable should be (not tested yet)
 static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
+// OLD VALUE
+// static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
 // Speed constants
-static const float MOVE_SPEED = 0.5;   // m/s (or mm/ms)
-static const float MAX_SPEED = 1.0;    // m/s (or mm/ms)
+static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
+static const float MAX_SPEED = 0.55; // m/s (or mm/ms), 1.0 is old
 
 // Time constants
-static const uint32_t PAUSE_TIME = 230;    // ms
+static const uint32_t PAUSE_TIME = 228; // ms
 static const uint32_t BIAS_TIME = 0;
 
 // Acceleration constants
-static const float ACC_X = 0.005;   // Translational acceleration in mm/(ms)^2
-static const float DEC_X = 0.005;   // Translational deceleration in mm/(ms)^2
-static const float ACC_W = 0.005;   // Angular acceleration in mm/(ms)^2
-static const float DEC_W = 0.005;   // Angular deceleration in mm/(ms)^2
+static const float ACC_X = 0.005; // Translational acceleration in mm/(ms)^2
+static const float DEC_X = 0.005; // Translational deceleration in mm/(ms)^2
+static const float ACC_W = 0.005; // Angular acceleration in mm/(ms)^2
+static const float DEC_W = 0.005; // Angular deceleration in mm/(ms)^2
 
 // Adjuster constants
 static const int MOTOR_ADJUST_LIMIT = 210;
-static const float ADJUST_DIVIDER = 1.0f;
+static const float ADJUST_DIVIDER = 1.01f;
 
 // IR sensor constants
 static const int SENSOR_DIVIDER = 90;
-static const int LH_PUSH = 3425;   // True mid: 3303
-static const int RH_PUSH = 3240;  // True mid: 3117
+static const int LH_PUSH = 3120; // True mid: 2990
+static const int RH_PUSH = 3020; // True mid: 2330
+
+// // OLD VALUES
+// static const int LH_PUSH = 3425; // True mid: 3303
+// static const int RH_PUSH = 3240; // True mid: 3117
+
+// LH/RH pull aren't really used anywhere
 static const int LH_PULL = 2300;
 static const int RH_PULL = 2300;
+
 static const float PULL_FACTOR = 1.2f;
-static const int LF_ADJUST = 3433;//3671;
-static const int RF_ADJUST = 3576;//3644;
+
+static const int LF_ADJUST = 3400; //3671;
+static const int RF_ADJUST = 3400; //3644;
+
+static const float ENCODER_CENTER = 0.47; // default is 0.55
+
+// OLD VALUES
+// static const int LF_ADJUST = 3433; //3671;
+// static const int RF_ADJUST = 3576; //3644;
 // LF: 900, RF: 1000 start to curve turn?
 
 // Turn constants
-static const float TURN_AROUND_MULTIPLIER = 1.030f;
+static const float TURN_AROUND_MULTIPLIER = 1.025f;
+static const float TURN_CONST_TIME = 0.900f;
 
 // PID constants
 static const float kpX = 2;
@@ -54,8 +71,8 @@ static const float kpW = 1;
 static const float kdW = 12;
 
 // Speed variables
-static float curSpeedX = 0;   // Ideal current translational speed in counts/ms
-static float curSpeedW = 0;   // Ideal current angular speed in counts/ms
+static float curSpeedX = 0; // Ideal current translational speed in counts/ms
+static float curSpeedW = 0; // Ideal current angular speed in counts/ms
 static int targetSpeedX = 0;
 static int targetSpeedW = 0;
 
@@ -77,7 +94,7 @@ static float prevPosErrorW = 0;
 static int firstCell = 1;
 static int useSensorFeedback = 1;
 static int finished = 0;
-static int stop_flag = 0;   // To account for initial motor bias to left
+static int stop_flag = 0; // To account for initial motor bias to left
 static int adjusting = 0;
 
 // Private function prototypes
@@ -90,17 +107,22 @@ static int getSensorError(void);
 static void calculateAdjust(void);
 static void calculateMotorPwm(void);
 
-void speedProfile(void) {
+void speedProfile(void)
+{
   updateEncoderStatus();
   updateCurrentSpeed();
-  if (adjusting) {
+  if (adjusting)
+  {
     calculateAdjust();
-  } else {
+  }
+  else
+  {
     calculateMotorPwm();
   }
 }
 
-void resetSpeedProfile(void) {
+void resetSpeedProfile(void)
+{
   reset(EM_LF);
   reset(EM_RF);
   reset(EM_H);
@@ -137,11 +159,13 @@ void resetSpeedProfile(void) {
   reset(LED3);
 }
 
-void setFirstCell(void) {
+void setFirstCell(void)
+{
   firstCell = 1;
 }
 
-void moveUntilWall(void) {
+void moveUntilWall(void)
+{
   encCount = 0;
   useSensorFeedback = 1;
 
@@ -158,8 +182,10 @@ void moveUntilWall(void) {
   if (finished)
     return;
   HAL_Delay(1);
-  while (!frontWallDetected()) {
-    if (encCount > CELL_ENC_COUNT) {
+  while (!frontWallDetected())
+  {
+    if (encCount > CELL_ENC_COUNT)
+    {
       encCount = 0;
       toggle(LED3);
     }
@@ -167,11 +193,15 @@ void moveUntilWall(void) {
 }
 
 // TODO: Finish/check implementation
-void moveForward(float nCells) {
-  if (firstCell) {
+void moveForward(float nCells)
+{
+  if (firstCell)
+  {
     firstCell = 0;
-    encCount = 0.25*CELL_ENC_COUNT;
-  } else {
+    encCount = 0.25 * CELL_ENC_COUNT;
+  }
+  else
+  {
     encCount = 0;
   }
   toggle(LED3);
@@ -190,16 +220,18 @@ void moveForward(float nCells) {
   targetSpeedW = 0;
   // HAL_Delay(1);
   int doneCount = nCells * CELL_ENC_COUNT;
-  while (encCount < doneCount);
+  while (encCount < doneCount)
+    ;
 }
 
-void turn(TurnDir turnDirection, TurnMotion turnMotion) {
+void turn(TurnDir turnDirection, TurnMotion turnMotion)
+{
   float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
   if (turnMotion == CurveTurn)
-    TURN_TIME *= 0.996f;
+    TURN_TIME *= TURN_CONST_TIME;
   float AT = ACC_W * TURN_TIME;
-  float MAX_SPEED_W = 
-    (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
+  float MAX_SPEED_W =
+      (AT - sqrtf(AT * AT - 4 * AT * MOVE_SPEED * MOUSE_WIDTH / CELL_WIDTH)) / 2;
   float TURN_TIME_1 = MAX_SPEED_W / ACC_W;
 
   toggle(LED3);
@@ -223,11 +255,12 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion) {
   // toggle(LED3);
 }
 
-void turnAround(void) {
+void turnAround(void)
+{
   static const float TURN_TIME = PI * CELL_WIDTH / (2 * MOVE_SPEED) * TURN_AROUND_MULTIPLIER;
   static const float AT = ACC_W * TURN_TIME;
-  static const float MAX_SPEED_W = 
-    (AT - sqrtf(AT*AT - 4*AT*MOVE_SPEED*MOUSE_WIDTH/CELL_WIDTH)) / 2;
+  static const float MAX_SPEED_W =
+      (AT - sqrtf(AT * AT - 4 * AT * MOVE_SPEED * MOUSE_WIDTH / CELL_WIDTH)) / 2;
   static const float TURN_TIME_1 = MAX_SPEED_W / ACC_W;
 
   useSensorFeedback = 0;
@@ -244,54 +277,63 @@ void turnAround(void) {
 }
 
 // TODO: Implement this method
-void stop(void) {
+void stop(void)
+{
   // Calculate when the mouse should start decelerating
   // If front wall detected, can use IR sensors to align with front wall
   targetSpeedX = 0;
   HAL_Delay(PAUSE_TIME);
 }
 
-void stopAtCellCenter(void) {
+void stopAtCellCenter(void)
+{
   useSensorFeedback = 1;
   encCount = 0;
   targetSpeedW = 0;
   targetSpeedX = speed_to_counts(MOVE_SPEED);
-  while (decelerationRequired(0.55*CELL_ENC_COUNT - encCount, curSpeedX, 0) 
-        < speed_to_counts(DEC_X));
+  while (decelerationRequired(ENCODER_CENTER * CELL_ENC_COUNT - encCount, curSpeedX, 0) < speed_to_counts(DEC_X))
+    ;
   targetSpeedX = 0;
   HAL_Delay(PAUSE_TIME);
 }
 
-void adjust(void) {
+void adjust(void)
+{
   useSensorFeedback = 0;
   adjusting = 1;
   HAL_Delay(PAUSE_TIME);
   adjusting = 0;
 }
 
-float getEncSpeedX(void) {
+float getEncSpeedX(void)
+{
   return (rightEncChange + leftEncChange) / 2.0f;
 }
 
-float getCurSpeedX(void) {
+float getCurSpeedX(void)
+{
   return curSpeedX;
 }
 
-void testAdjust(void) {
+void testAdjust(void)
+{
   calculateAdjust();
 }
 
 // Convert from mm/ms to encoder counts per millisecond.
-static float speed_to_counts(const float speed) {
+static float speed_to_counts(const float speed)
+{
   return speed / (DIAMETER * PI) * STEPS_PER_REV;
 }
 
 // Convert from encoder counts per millisecond to mm/ms.
-static float counts_to_speed(const float counts) {
+static float counts_to_speed(const float counts)
+{
   return counts * (DIAMETER * PI) / STEPS_PER_REV;
 }
 
-static void updateEncoderStatus(void) {
+static void updateEncoderStatus(void)
+{
   int leftEnc = getLeftEnc();
   int rightEnc = getRightEnc();
 
@@ -304,7 +346,8 @@ static void updateEncoderStatus(void) {
   encCount += (leftEncChange + rightEncChange) / 2;
 }
 
-static void updateCurrentSpeed(void) {
+static void updateCurrentSpeed(void)
+{
   if (curSpeedX < targetSpeedX)
   {
     curSpeedX += speed_to_counts(ACC_X);
@@ -333,11 +376,13 @@ static void updateCurrentSpeed(void) {
 }
 
 // All units in encoder counts or encoder counts per ms
-static float decelerationRequired(int distanceLeft, float initialSpeed, float finalSpeed) {
-  return fabsf((finalSpeed*finalSpeed - initialSpeed*initialSpeed) / (2 * distanceLeft));
+static float decelerationRequired(int distanceLeft, float initialSpeed, float finalSpeed)
+{
+  return fabsf((finalSpeed * finalSpeed - initialSpeed * initialSpeed) / (2 * distanceLeft));
 }
 
-static int getSensorError(void) {
+static int getSensorError(void)
+{
   if (!useSensorFeedback)
     return 0;
   int recLH = getRecLH();
@@ -353,7 +398,8 @@ static int getSensorError(void) {
   return 0;
 }
 
-static void calculateAdjust(void) {
+static void calculateAdjust(void)
+{
   int leftAdjuster = (LF_ADJUST - getRecLF()) / ADJUST_DIVIDER;
   int rightAdjuster = (RF_ADJUST - getRecRF()) / ADJUST_DIVIDER;
   if (leftAdjuster > MOTOR_ADJUST_LIMIT)
@@ -364,12 +410,14 @@ static void calculateAdjust(void) {
   setRightMotor(rightAdjuster);
 }
 
-static void calculateMotorPwm(void) {
+static void calculateMotorPwm(void)
+{
   int encFeedbackX = rightEncChange + leftEncChange;
   int encFeedbackW = rightEncChange - leftEncChange;
 
-  posErrorX += 2*curSpeedX - encFeedbackX;  // Integrate speed to get position
-  posErrorW += 2*curSpeedW - encFeedbackW - getSensorError() / SENSOR_DIVIDER;
+  posErrorX += 2 * curSpeedX - encFeedbackX; // Integrate speed to get position
+  // posErrorW += 2 * curSpeedW - encFeedbackW;
+  posErrorW += 2 * curSpeedW - encFeedbackW - getSensorError() / SENSOR_DIVIDER;
 
   int posPwmX = kpX * posErrorX + kdX * (posErrorX - prevPosErrorX);
   int posPwmW = kpW * posErrorW + kdW * (posErrorW - prevPosErrorW);

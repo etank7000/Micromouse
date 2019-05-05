@@ -76,9 +76,9 @@ enum State
 {
   IDLE,
   CHOOSING_FLASH, // User chooses an option for the mouse
-  CHOOSING_MODE,   // User is currently choosing the mode for the mouse
-  LOCKED,          // User locks in his mode choice (by pressing BOOT0 button)
-  RUNNING,         // The mouse is running in one of the 8 operating modes
+  CHOOSING_MODE,  // User is currently choosing the mode for the mouse
+  LOCKED,         // User locks in his mode choice (by pressing BOOT0 button)
+  RUNNING,        // The mouse is running in one of the 8 operating modes
   CRASH
 };
 
@@ -123,10 +123,13 @@ void HAL_SYSTICK_Callback(void)
   {
     switch (g_modeNum)
     {
-    case 1:
+      // Case 0 is meant to print out values, the other cases will actually move the mouse
+      // due to the call to speedProfile()
+    case 0:
       readReceivers();
       updateGyroAngle();
       break;
+    case 1:
     case 2:
     case 3:
     case 4:
@@ -205,6 +208,10 @@ static inline void chooseMode(void)
 static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
 {
   MouseMovement nextMove = getNextMovement();
+
+  if (getMouseX() == 3 && getMouseY() == 2)
+    toggle(LED2);
+  // print("MouseX: %hu, MouseY: %hu \r\n", getMouseX(), getMouseY());
   switch (nextMove)
   {
   case MoveForward:
@@ -434,7 +441,7 @@ int main(void)
     // Use the left wheel to select a mode.
     // Turn left wheel to choose the mode. Press BOOT0 button to lock in choice.
     g_state = CHOOSING_MODE;
-    while (g_state == CHOOSING_MODE)  // Exit this loop by pressing BOOT0 button.
+    while (g_state == CHOOSING_MODE) // Exit this loop by pressing BOOT0 button.
       chooseMode();
 
     while (g_state == LOCKED)
@@ -489,11 +496,19 @@ int main(void)
       switch (g_modeNum)
       {
       case 0: // Read and print IR sensor values
-        // printSensorValues();
-        printAngleValues();
+        printSensorValues();
+        // printAngleValues();
         break;
       case 1:
         // debugSpeedProfile();
+        moveForward(1.0);
+        stop();
+        // turnAround();
+        HAL_Delay(1000);
+        // moveForward(1.0);
+        // HAL_Delay(100);
+        // moveForward(1.0);
+        // HAL_Delay(100);
         // g_state = IDLE;
 
         // for (int i = 0; i < 15; i++)
@@ -508,9 +523,9 @@ int main(void)
         // who_am_i();
         // HAL_Delay(100);
         // calibrateGyro();
-        HAL_Delay(100);
-        printGyroValues();
-        HAL_Delay(100);
+        // HAL_Delay(100);
+        // printGyroValues();
+        // HAL_Delay(100);
         // turn(RightTurn, InPlaceTurn);
         // HAL_Delay(100);
         // printGyroValues();
@@ -537,16 +552,16 @@ int main(void)
         adjust();
         turnAround();
         break;
-      case 4:   // Run the maze with curve turns and extra adjusts
+      case 4: // Run the maze with curve turns and extra adjusts
         searchMaze(1, 1);
         break;
-      case 5:   // Run the maze with curve turns but without extra adjusts
+      case 5: // Run the maze with curve turns but without extra adjusts
         searchMaze(1, 0);
         break;
-      case 6:   // Run the maze with in place turns and without extra adjusts
+      case 6: // Run the maze with in place turns and without extra adjusts
         searchMaze(0, 0);
         break;
-      case 7:   // Run the maze with in place turns and extra adjusts
+      case 7: // Run the maze with in place turns and extra adjusts
         searchMaze(0, 1);
         break;
       }
