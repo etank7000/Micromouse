@@ -12,6 +12,7 @@ static const int STEPS_PER_REV = 3520; // Encoder steps per revolution
 static const int CELL_WIDTH = 140;     // A cell has side length 180mm
 static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
+
 // TODO: Determine what this variable should be (not tested yet)
 static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 // OLD VALUE
@@ -19,7 +20,7 @@ static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
 // Speed constants
 static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
-static const float MAX_SPEED = 0.55; // m/s (or mm/ms), 1.0 is old
+static const float MAX_SPEED = 1.0;  // m/s (or mm/ms), 1.0 is old
 
 // Time constants
 static const uint32_t PAUSE_TIME = 228; // ms
@@ -37,8 +38,8 @@ static const float ADJUST_DIVIDER = 1.01f;
 
 // IR sensor constants
 static const int SENSOR_DIVIDER = 90;
-static const int LH_PUSH = 3120; // True mid: 2990
-static const int RH_PUSH = 3020; // True mid: 2330
+static const int LH_PUSH = 3310; // True mid: 2990
+static const int RH_PUSH = 3315; // True mid: 2330
 
 // // OLD VALUES
 // static const int LH_PUSH = 3425; // True mid: 3303
@@ -50,8 +51,8 @@ static const int RH_PULL = 2300;
 
 static const float PULL_FACTOR = 1.2f;
 
-static const int LF_ADJUST = 3400; //3671;
-static const int RF_ADJUST = 3400; //3644;
+static const int LF_ADJUST = 3350; //3671;
+static const int RF_ADJUST = 3350; //3644;
 
 static const float ENCODER_CENTER = 0.47; // default is 0.55
 
@@ -62,7 +63,7 @@ static const float ENCODER_CENTER = 0.47; // default is 0.55
 
 // Turn constants
 static const float TURN_AROUND_MULTIPLIER = 1.025f;
-static const float TURN_CONST_TIME = 0.900f;
+static const float TURN_CONST_TIME = 0.85f;
 
 // PID constants
 static const float kpX = 2;
