@@ -67,6 +67,10 @@ static const unsigned int ENC_FLASH_RELOAD = 880UL;
 static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
+
+// static const int LF_TURN = 700; // Threshold for starting curve turn
+// static const int RF_TURN = 700;
+// OLD VALUES:
 static const int LF_TURN = 901; // Threshold for starting curve turn
 static const int RF_TURN = 1001;
 
@@ -137,6 +141,7 @@ void HAL_SYSTICK_Callback(void)
     case 6:
     case 7:
       readReceivers();
+      updateGyroAngle();
       speedProfile();
       break;
     }
@@ -209,8 +214,8 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
 {
   MouseMovement nextMove = getNextMovement();
 
-  if (getMouseX() == 3 && getMouseY() == 2)
-    toggle(LED2);
+  // if (getMouseX() == 3 && getMouseY() == 2)
+  //   toggle(LED2);
   // print("MouseX: %hu, MouseY: %hu \r\n", getMouseX(), getMouseY());
   switch (nextMove)
   {
@@ -223,11 +228,13 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       curveTurnCounter++;
       if (frontWallDetected())
       {
+        toggle(LED2);
         while (getRecLF() < LF_TURN && getRecRF() < RF_TURN)
           ;
       }
       else
       {
+        toggle(LED1);
         moveForward(0.18f);
       }
       turn(RightTurn, CurveTurn);
@@ -256,6 +263,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         }
         else
         {
+
           turn(RightTurn, InPlaceTurn);
         }
       }
@@ -276,7 +284,9 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       {
         moveForward(0.18f);
       }
+
       turn(LeftTurn, CurveTurn);
+
       moveForward(0.12f);
     }
     else
@@ -290,18 +300,22 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
 
       if (!doExtraAdjust)
       {
+
         turn(LeftTurn, InPlaceTurn);
       }
       else
       {
         if (rightWallDetected())
         {
+
           turn(RightTurn, InPlaceTurn);
+
           adjust();
           turnAround();
         }
         else
         {
+
           turn(LeftTurn, InPlaceTurn);
         }
       }
@@ -317,18 +331,25 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
     }
     if (rightWallDetected())
     {
+
       turn(RightTurn, InPlaceTurn);
+
       adjust();
+
       turn(RightTurn, InPlaceTurn);
     }
     else if (leftWallDetected())
     {
+
       turn(LeftTurn, InPlaceTurn);
+
       adjust();
+
       turn(LeftTurn, InPlaceTurn);
     }
     else
     {
+
       turnAround();
     }
     moveForward(0.52f);
@@ -496,8 +517,8 @@ int main(void)
       switch (g_modeNum)
       {
       case 0: // Read and print IR sensor values
-        printSensorValues();
-        // printAngleValues();
+        // printSensorValues();
+        printAngleValues();
         break;
       case 1:
         // debugSpeedProfile();
@@ -538,7 +559,11 @@ int main(void)
 
         // turn(LeftTurn, InPlaceTurn);
         // HAL_Delay(730);
-        turn(RightTurn, InPlaceTurn);
+
+        turn(LeftTurn, InPlaceTurn);
+
+        // moveForward(0.2f);
+        // turn(RightTurn, CurveTurn);
         HAL_Delay(730);
 
         // moveForward(0.18f);

@@ -15,8 +15,8 @@ static Dir heading = NORTH;
 static unsigned short mouseX = 0;
 static unsigned short mouseY = 0;
 
-// STOPSHIP: Change this value based on the maze size
-#define MAZE_LEN 16
+// // STOPSHIP: Change this value based on the maze size
+// #define MAZE_LEN 16
 
 /**
  * @brief Place a wall in direction d of the cell at location (x, y)

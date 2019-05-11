@@ -4,6 +4,7 @@
 #include "motor.h"
 #include "gpio.h"
 #include <math.h>
+#include "gyro.h"
 
 // Conversion constants
 static const int DIAMETER = 37; //35;    // Wheel diameter in millimeters
@@ -63,7 +64,9 @@ static const float ENCODER_CENTER = 0.47; // default is 0.55
 
 // Turn constants
 static const float TURN_AROUND_MULTIPLIER = 1.025f;
-static const float TURN_CONST_TIME = 0.85f;
+static const float TURN_CONST_TIME = 0.996f;
+// OLD VALUE
+// static const float TURN_CONST_TIME = 0.996f;
 
 // PID constants
 static const float kpX = 2;
@@ -227,6 +230,7 @@ void moveForward(float nCells)
 
 void turn(TurnDir turnDirection, TurnMotion turnMotion)
 {
+
   float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
   if (turnMotion == CurveTurn)
     TURN_TIME *= TURN_CONST_TIME;
@@ -245,14 +249,47 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
   useSensorFeedback = 0;
   unsigned int startTime = HAL_GetTick();
 
-  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
-    targetSpeedW = maxSpeedW;
+  resetGyroAngle();
+  if (turnDirection == RightTurn)
+  {
+    while (fabsf(getGyroAngle()) <= 62.5)
+    {
+      targetSpeedW = maxSpeedW;
+    }
+    while (fabsf(getGyroAngle()) <= 96.5)
+    {
+      targetSpeedW = 0;
+    }
+  }
 
-  while (HAL_GetTick() - startTime < TURN_TIME)
-    targetSpeedW = 0;
+  if (turnDirection == LeftTurn)
+  {
+    while (fabsf(getGyroAngle()) <= 62)
+    {
+      targetSpeedW = maxSpeedW;
+    }
+    while (fabsf(getGyroAngle()) <= 90.2)
+    {
+      targetSpeedW = 0;
+    }
+  }
+  resetGyroAngle();
 
-  if (turnMotion == InPlaceTurn)
-    HAL_Delay(PAUSE_TIME);
+  // while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  // {
+  //   if (abs(getGyroAngle()) >= 50)
+  //     toggle(LED1);
+  //   targetSpeedW = maxSpeedW;
+  // }
+
+  // while (HAL_GetTick() - startTime < TURN_TIME)
+  // {
+
+  //   targetSpeedW = 0;
+  // }
+
+  // if (turnMotion == InPlaceTurn)
+  //   HAL_Delay(PAUSE_TIME);
   // toggle(LED3);
 }
 

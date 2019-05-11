@@ -7,8 +7,8 @@
 #include "stack.h"
 #include <stdlib.h>
 
-// STOPSHIP: Change this value based on the maze size
-#define MAZE_LEN 16
+// // STOPSHIP: Change this value based on the maze size
+// #define MAZE_LEN 16
 
 static const unsigned short INFINITE = MAZE_LEN * MAZE_LEN;
 

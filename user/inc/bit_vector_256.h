@@ -4,34 +4,42 @@
 #include <stdint.h>
 #include <string.h>
 
+// STOPSHIP: Change this value based on the maze size, also run
+// make clean after changing this
 #define VECTOR_SIZE 16
 
-typedef struct BitVector256 {
-  uint16_t vector[(VECTOR_SIZE*VECTOR_SIZE) / (8 * sizeof(uint16_t))];
+typedef struct BitVector256
+{
+  uint16_t vector[(VECTOR_SIZE * VECTOR_SIZE) / (8 * sizeof(uint16_t))];
 } BitVector256;
 
-inline void bitvector_set(BitVector256* v, unsigned x, unsigned y) {
+inline void bitvector_set(BitVector256 *v, unsigned x, unsigned y)
+{
   if (x < VECTOR_SIZE && y < VECTOR_SIZE)
-    v->vector[x] |= 1<<y;
+    v->vector[x] |= 1 << y;
 }
 
-inline void bitvector_clear(BitVector256* v, unsigned x, unsigned y) {
+inline void bitvector_clear(BitVector256 *v, unsigned x, unsigned y)
+{
   if (x < VECTOR_SIZE && y < VECTOR_SIZE)
-    v->vector[x] &= ~(1<<y);
+    v->vector[x] &= ~(1 << y);
 }
 
-inline int bitvector_get(BitVector256* v, unsigned x, unsigned y) {
+inline int bitvector_get(BitVector256 *v, unsigned x, unsigned y)
+{
   if (x < VECTOR_SIZE && y < VECTOR_SIZE)
-    return (v->vector[x] & 1<<y) != 0;
+    return (v->vector[x] & 1 << y) != 0;
   return 0;
 }
 
-inline void bitvector_clearAll(BitVector256* v) {
+inline void bitvector_clearAll(BitVector256 *v)
+{
   memset(v->vector, 0, sizeof(v->vector));
 }
 
-inline void bitvector_setAll(BitVector256* v) {
+inline void bitvector_setAll(BitVector256 *v)
+{
   memset(v->vector, ~0, sizeof(v->vector));
 }
 
-#endif  // BIT_VECTOR_256
+#endif // BIT_VECTOR_256

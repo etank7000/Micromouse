@@ -10,7 +10,7 @@ static int32_t recLD = 0;
 static int32_t recRD = 0;
 
 // static const int32_t FRONT_TURN = 900;
-static const int32_t HAS_FRONT = 460;
+static const int32_t HAS_FRONT = 500;
 // OLD VALUE
 // static const int32_t HAS_FRONT = 460;
 
