@@ -15,7 +15,7 @@ static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 
 // TODO: Determine what this variable should be (not tested yet)
-static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
+static const int CELL_ENC_COUNT = 5260; // Encoder counts per cell length
 // OLD VALUE
 // static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
@@ -63,7 +63,9 @@ static const float ENCODER_CENTER = 0.47; // default is 0.55
 // LF: 900, RF: 1000 start to curve turn?
 
 // Turn constants
-static const float TURN_AROUND_MULTIPLIER = 1.025f;
+static const float TURN_AROUND_MULTIPLIER = 1.024f;
+// OLD VALUE
+// static const float TURN_AROUND_MULTIPLIER = 1.025f;
 static const float TURN_CONST_TIME = 0.996f;
 // OLD VALUE
 // static const float TURN_CONST_TIME = 0.996f;
@@ -252,11 +254,11 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
   resetGyroAngle();
   if (turnDirection == RightTurn)
   {
-    while (fabsf(getGyroAngle()) <= 62.5)
+    while (fabsf(getGyroAngle()) <= 62)
     {
       targetSpeedW = maxSpeedW;
     }
-    while (fabsf(getGyroAngle()) <= 96.5)
+    while (fabsf(getGyroAngle()) <= 94)
     {
       targetSpeedW = 0;
     }
@@ -264,11 +266,11 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
 
   if (turnDirection == LeftTurn)
   {
-    while (fabsf(getGyroAngle()) <= 62)
+    while (fabsf(getGyroAngle()) <= 61.5)
     {
       targetSpeedW = maxSpeedW;
     }
-    while (fabsf(getGyroAngle()) <= 90.2)
+    while (fabsf(getGyroAngle()) <= 85)
     {
       targetSpeedW = 0;
     }
@@ -277,8 +279,6 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
 
   // while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
   // {
-  //   if (abs(getGyroAngle()) >= 50)
-  //     toggle(LED1);
   //   targetSpeedW = maxSpeedW;
   // }
 
@@ -304,11 +304,22 @@ void turnAround(void)
   useSensorFeedback = 0;
   unsigned int startTime = HAL_GetTick();
 
-  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  resetGyroAngle();
+  while (fabsf(getGyroAngle()) <= 163)
+  {
     targetSpeedW = -speed_to_counts(MAX_SPEED_W);
-
-  while (HAL_GetTick() - startTime < TURN_TIME)
+  }
+  while (fabsf(getGyroAngle()) <= 180)
+  {
     targetSpeedW = 0;
+  }
+  resetGyroAngle();
+
+  // while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  //   targetSpeedW = -speed_to_counts(MAX_SPEED_W);
+
+  // while (HAL_GetTick() - startTime < TURN_TIME)
+  //   targetSpeedW = 0;
 
   HAL_Delay(PAUSE_TIME);
   useSensorFeedback = 1;

@@ -7,7 +7,7 @@
 
 static float gyro_angle = 0;
 static int32_t gyro_z_ref = 0;
-static int16_t prev_gyro_z[2] = {0};
+static int32_t prev_gyro_z[2] = {0};
 static int prev_time = 0;
 
 void gyroSPIInit(void)

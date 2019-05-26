@@ -68,11 +68,11 @@ static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
 
-// static const int LF_TURN = 700; // Threshold for starting curve turn
-// static const int RF_TURN = 700;
+static const int LF_TURN = 500; // Threshold for starting curve turn
+static const int RF_TURN = 500;
 // OLD VALUES:
-static const int LF_TURN = 901; // Threshold for starting curve turn
-static const int RF_TURN = 1001;
+// static const int LF_TURN = 901; // Threshold for starting curve turn
+// static const int RF_TURN = 1001;
 
 static int curveTurnCounter = 0;
 
@@ -230,15 +230,19 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       {
         toggle(LED2);
         while (getRecLF() < LF_TURN && getRecRF() < RF_TURN)
-          ;
+        {
+        }
+        // ;
       }
       else
       {
         toggle(LED1);
-        moveForward(0.18f);
+        moveForward(0.19f);
+        // moveForward(0.18f);
       }
       turn(RightTurn, CurveTurn);
-      moveForward(0.12f);
+      moveForward(0.1f);
+      // moveForward(0.12f);
     }
     else
     {
@@ -278,16 +282,20 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       if (frontWallDetected())
       {
         while (getRecLF() < LF_TURN && getRecRF() < RF_TURN)
-          ;
+        {
+        }
+        // ;
       }
       else
       {
-        moveForward(0.18f);
+        moveForward(0.19f);
+        // moveForward(0.18f);
       }
 
       turn(LeftTurn, CurveTurn);
 
-      moveForward(0.12f);
+      moveForward(0.1f);
+      // moveForward(0.12f);
     }
     else
     {
@@ -522,10 +530,10 @@ int main(void)
         break;
       case 1:
         // debugSpeedProfile();
-        moveForward(1.0);
-        stop();
+        // moveForward(1.0);
+        // stop();
         // turnAround();
-        HAL_Delay(1000);
+        // HAL_Delay(1000);
         // moveForward(1.0);
         // HAL_Delay(100);
         // moveForward(1.0);
@@ -553,6 +561,8 @@ int main(void)
         // HAL_Delay(1000);
 
         // testAdjust();
+        turn(RightTurn, InPlaceTurn);
+        HAL_Delay(730);
         break;
       case 2: // Test Turning
         // turnAround();
@@ -571,11 +581,12 @@ int main(void)
         // moveForward(0.12f);
         break;
       case 3:
-        moveUntilWall();
-        moveForward(0.55);
-        stop();
-        adjust();
+        //   moveUntilWall();
+        //   moveForward(0.55);
+        //   stop();
+        //   adjust();
         turnAround();
+        HAL_Delay(730);
         break;
       case 4: // Run the maze with curve turns and extra adjusts
         searchMaze(1, 1);

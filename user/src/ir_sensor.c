@@ -122,8 +122,8 @@ int32_t getRecRD()
 
 int32_t frontWallDetected(void)
 {
-  return recLF > HAS_FRONT || recRF > HAS_FRONT;
-  // return recLF > HAS_FRONT && recRF > HAS_FRONT;
+  // return recLF > HAS_FRONT || recRF > HAS_FRONT;
+  return recLF > HAS_FRONT && recRF > HAS_FRONT;
 }
 
 int32_t leftWallDetected(void)
