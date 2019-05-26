@@ -3,7 +3,7 @@
 #include "spi.h"
 #include "usart.h"
 
-#define GYRO_CALIB_COUNT 150
+#define GYRO_CALIB_COUNT 75
 
 static float gyro_angle = 0;
 static int32_t gyro_z_ref = 0;

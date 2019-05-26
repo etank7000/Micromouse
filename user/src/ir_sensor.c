@@ -9,17 +9,21 @@ static int32_t recRH = 0;
 static int32_t recLD = 0;
 static int32_t recRD = 0;
 
+/*
+* These IR thresholds should be calculated from 
+*/
+
 // static const int32_t FRONT_TURN = 900;
-static const int32_t HAS_FRONT = 460;
+static const int32_t HAS_FRONT = 250;
 // static const int32_t HAS_FRONT = 500;
 // OLD VALUE
 // static const int32_t HAS_FRONT = 460;
 
-static const int32_t HAS_LEFT = 1600; // Diagonal sensor threshold  // 1700 is good
+static const int32_t HAS_LEFT = 1350; // Diagonal sensor threshold  // 1700 is good
 // OLD VALUE
 // static const int32_t HAS_LEFT = 1700;  // Diagonal sensor threshold
 
-static const int32_t HAS_RIGHT = 1600; // Diagonal sensor   // 1750 is good
+static const int32_t HAS_RIGHT = 1300; // Diagonal sensor   // 1750 is good
 // static const int32_t HAS_RIGHT = 1700; // Diagonal sensor   // 1750 is good
 // OLD VALUE
 // static const int32_t HAS_RIGHT = 2000; // Diagonal sensor

@@ -68,6 +68,8 @@ static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
 
+static const float MOVE_AFTER_TURN = 0.52f;
+
 static const int LF_TURN = 875; // Threshold for starting curve turn
 static const int RF_TURN = 875;
 // OLD VALUES:
@@ -273,7 +275,8 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
       }
 
       // moveForward(0.51f);
-      moveForward(0.52f);
+      // moveForward(0.52f);
+      moveForward(MOVE_AFTER_TURN);
     }
     break;
   case TurnCounterClockwise:
@@ -330,7 +333,8 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
       }
 
       // moveForward(0.51f);
-      moveForward(0.52f);
+      // moveForward(0.52f);
+      moveForward(MOVE_AFTER_TURN);
     }
     break;
   case TurnAround:
@@ -362,8 +366,9 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
 
       turnAround();
     }
-    moveForward(0.52f);
+    // moveForward(0.52f);
     // moveForward(0.51f);
+    moveForward(MOVE_AFTER_TURN);
     break;
   case Wait:
     break;
@@ -528,8 +533,8 @@ int main(void)
       switch (g_modeNum)
       {
       case 0: // Read and print IR sensor values
-        // printSensorValues();
-        printAngleValues();
+        printSensorValues();
+        // printAngleValues();
         break;
       case 1:
         // debugSpeedProfile();

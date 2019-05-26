@@ -65,7 +65,7 @@ static const float ENCODER_CENTER = 0.47; // default is 0.55
 // LF: 900, RF: 1000 start to curve turn?
 
 // Turn constants
-static const float TURN_AROUND_MULTIPLIER = 1.024f;
+static const float TURN_AROUND_MULTIPLIER = 1.029f;
 // OLD VALUE
 // static const float TURN_AROUND_MULTIPLIER = 1.025f;
 static const float TURN_CONST_TIME = 0.996f;
