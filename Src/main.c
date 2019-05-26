@@ -68,8 +68,8 @@ static const unsigned int ENC_MODE_RELOAD = 3520UL;
 static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
 
-static const int LF_TURN = 500; // Threshold for starting curve turn
-static const int RF_TURN = 500;
+static const int LF_TURN = 875; // Threshold for starting curve turn
+static const int RF_TURN = 875;
 // OLD VALUES:
 // static const int LF_TURN = 901; // Threshold for starting curve turn
 // static const int RF_TURN = 1001;
@@ -272,6 +272,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         }
       }
 
+      // moveForward(0.51f);
       moveForward(0.52f);
     }
     break;
@@ -328,6 +329,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         }
       }
 
+      // moveForward(0.51f);
       moveForward(0.52f);
     }
     break;
@@ -361,6 +363,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       turnAround();
     }
     moveForward(0.52f);
+    // moveForward(0.51f);
     break;
   case Wait:
     break;

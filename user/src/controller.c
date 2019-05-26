@@ -15,16 +15,18 @@ static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 
 // TODO: Determine what this variable should be (not tested yet)
-static const int CELL_ENC_COUNT = 5260; // Encoder counts per cell length
+static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 // OLD VALUE
 // static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
 // Speed constants
+// static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
 static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
 static const float MAX_SPEED = 1.0;  // m/s (or mm/ms), 1.0 is old
 
 // Time constants
-static const uint32_t PAUSE_TIME = 228; // ms
+static const uint32_t PAUSE_TIME = 150; // ms
+// static const uint32_t PAUSE_TIME = 228; // ms
 static const uint32_t BIAS_TIME = 0;
 
 // Acceleration constants
@@ -67,6 +69,7 @@ static const float TURN_AROUND_MULTIPLIER = 1.024f;
 // OLD VALUE
 // static const float TURN_AROUND_MULTIPLIER = 1.025f;
 static const float TURN_CONST_TIME = 0.996f;
+static const float TURN_CONST_TIME_2 = 0.9f;
 // OLD VALUE
 // static const float TURN_CONST_TIME = 0.996f;
 
@@ -251,46 +254,59 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
   useSensorFeedback = 0;
   unsigned int startTime = HAL_GetTick();
 
-  resetGyroAngle();
-  if (turnDirection == RightTurn)
-  {
-    while (fabsf(getGyroAngle()) <= 62)
-    {
-      targetSpeedW = maxSpeedW;
-    }
-    while (fabsf(getGyroAngle()) <= 94)
-    {
-      targetSpeedW = 0;
-    }
-  }
-
-  if (turnDirection == LeftTurn)
-  {
-    while (fabsf(getGyroAngle()) <= 61.5)
-    {
-      targetSpeedW = maxSpeedW;
-    }
-    while (fabsf(getGyroAngle()) <= 85)
-    {
-      targetSpeedW = 0;
-    }
-  }
-  resetGyroAngle();
-
-  // while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
-  // {
-  //   targetSpeedW = maxSpeedW;
-  // }
-
-  // while (HAL_GetTick() - startTime < TURN_TIME)
-  // {
-
-  //   targetSpeedW = 0;
-  // }
-
   // if (turnMotion == InPlaceTurn)
-  //   HAL_Delay(PAUSE_TIME);
-  // toggle(LED3);
+  // {
+  //   resetGyroAngle();
+  //   if (turnDirection == RightTurn)
+  //   {
+  //     while (fabsf(getGyroAngle()) <= 62)
+  //     {
+  //       targetSpeedW = maxSpeedW;
+  //     }
+  //     while (fabsf(getGyroAngle()) <= 92)
+  //     {
+  //       targetSpeedW = 0;
+  //     }
+  //   }
+
+  //   if (turnDirection == LeftTurn)
+  //   {
+  //     while (fabsf(getGyroAngle()) <= 61.5)
+  //     {
+  //       targetSpeedW = maxSpeedW;
+  //     }
+  //     while (fabsf(getGyroAngle()) <= 84)
+  //     {
+  //       targetSpeedW = 0;
+  //     }
+  //   }
+  //   resetGyroAngle();
+  // }
+  // else
+  // {
+  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  {
+    targetSpeedW = maxSpeedW;
+  }
+  if (turnMotion == InPlaceTurn)
+  {
+    while (HAL_GetTick() - startTime < TURN_TIME * TURN_CONST_TIME_2)
+    {
+      targetSpeedW = 0;
+    }
+  }
+  else
+  {
+    while (HAL_GetTick() - startTime < TURN_TIME)
+    {
+      targetSpeedW = 0;
+    }
+  }
+
+  if (turnMotion == InPlaceTurn)
+    HAL_Delay(PAUSE_TIME);
+  toggle(LED3);
+  // }
 }
 
 void turnAround(void)
@@ -304,22 +320,22 @@ void turnAround(void)
   useSensorFeedback = 0;
   unsigned int startTime = HAL_GetTick();
 
-  resetGyroAngle();
-  while (fabsf(getGyroAngle()) <= 163)
-  {
-    targetSpeedW = -speed_to_counts(MAX_SPEED_W);
-  }
-  while (fabsf(getGyroAngle()) <= 180)
-  {
-    targetSpeedW = 0;
-  }
-  resetGyroAngle();
-
-  // while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  // resetGyroAngle();
+  // while (fabsf(getGyroAngle()) <= 164)
+  // {
   //   targetSpeedW = -speed_to_counts(MAX_SPEED_W);
-
-  // while (HAL_GetTick() - startTime < TURN_TIME)
+  // }
+  // while (fabsf(getGyroAngle()) <= 180)
+  // {
   //   targetSpeedW = 0;
+  // }
+  // resetGyroAngle();
+
+  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+    targetSpeedW = -speed_to_counts(MAX_SPEED_W);
+
+  while (HAL_GetTick() - startTime < TURN_TIME)
+    targetSpeedW = 0;
 
   HAL_Delay(PAUSE_TIME);
   useSensorFeedback = 1;
