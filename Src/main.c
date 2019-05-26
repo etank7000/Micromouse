@@ -210,7 +210,7 @@ static inline void chooseMode(void)
     reset(LED1);
 }
 
-static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
+static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
 {
   MouseMovement nextMove = getNextMovement();
 
@@ -240,7 +240,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         moveForward(0.19f);
         // moveForward(0.18f);
       }
-      turn(RightTurn, CurveTurn);
+      turn(RightTurn, CurveTurn, useGyro);
       moveForward(0.1f);
       // moveForward(0.12f);
     }
@@ -255,20 +255,20 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
 
       if (!doExtraAdjust)
       {
-        turn(RightTurn, InPlaceTurn);
+        turn(RightTurn, InPlaceTurn, useGyro);
       }
       else
       {
         if (leftWallDetected())
         {
-          turn(LeftTurn, InPlaceTurn);
+          turn(LeftTurn, InPlaceTurn, useGyro);
           adjust();
           turnAround();
         }
         else
         {
 
-          turn(RightTurn, InPlaceTurn);
+          turn(RightTurn, InPlaceTurn, useGyro);
         }
       }
 
@@ -293,7 +293,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         // moveForward(0.18f);
       }
 
-      turn(LeftTurn, CurveTurn);
+      turn(LeftTurn, CurveTurn, useGyro);
 
       moveForward(0.1f);
       // moveForward(0.12f);
@@ -310,14 +310,14 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
       if (!doExtraAdjust)
       {
 
-        turn(LeftTurn, InPlaceTurn);
+        turn(LeftTurn, InPlaceTurn, useGyro);
       }
       else
       {
         if (rightWallDetected())
         {
 
-          turn(RightTurn, InPlaceTurn);
+          turn(RightTurn, InPlaceTurn, useGyro);
 
           adjust();
           turnAround();
@@ -325,7 +325,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
         else
         {
 
-          turn(LeftTurn, InPlaceTurn);
+          turn(LeftTurn, InPlaceTurn, useGyro);
         }
       }
 
@@ -342,20 +342,20 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust)
     if (rightWallDetected())
     {
 
-      turn(RightTurn, InPlaceTurn);
+      turn(RightTurn, InPlaceTurn, useGyro);
 
       adjust();
 
-      turn(RightTurn, InPlaceTurn);
+      turn(RightTurn, InPlaceTurn, useGyro);
     }
     else if (leftWallDetected())
     {
 
-      turn(LeftTurn, InPlaceTurn);
+      turn(LeftTurn, InPlaceTurn, useGyro);
 
       adjust();
 
-      turn(LeftTurn, InPlaceTurn);
+      turn(LeftTurn, InPlaceTurn, useGyro);
     }
     else
     {
@@ -558,13 +558,13 @@ int main(void)
         // HAL_Delay(100);
         // printGyroValues();
         // HAL_Delay(100);
-        // turn(RightTurn, InPlaceTurn);
+        // turn(RightTurn, InPlaceTurn, 0);
         // HAL_Delay(100);
         // printGyroValues();
         // HAL_Delay(1000);
 
         // testAdjust();
-        turn(RightTurn, InPlaceTurn);
+        turn(RightTurn, InPlaceTurn, 1);
         HAL_Delay(730);
         break;
       case 2: // Test Turning
@@ -573,7 +573,7 @@ int main(void)
         // turn(LeftTurn, InPlaceTurn);
         // HAL_Delay(730);
 
-        turn(LeftTurn, InPlaceTurn);
+        turn(LeftTurn, InPlaceTurn, 1);
 
         // moveForward(0.2f);
         // turn(RightTurn, CurveTurn);
@@ -591,17 +591,33 @@ int main(void)
         turnAround();
         HAL_Delay(730);
         break;
-      case 4: // Run the maze with curve turns and extra adjusts
-        searchMaze(1, 1);
+      case 4:
+        // Run the maze with curve turns and extra adjusts
+        // searchMaze(1, 1);
+
+        // Run the maze with in place turns, no adjust, no gyro
+        searchMaze(0, 0, 0);
         break;
-      case 5: // Run the maze with curve turns but without extra adjusts
-        searchMaze(1, 0);
+      case 5:
+        // Run the maze with curve turns but without extra adjusts
+        // searchMaze(1, 0);
+
+        // Run the maze with in place turns, no adjust, use gyro
+        searchMaze(0, 0, 1);
         break;
-      case 6: // Run the maze with in place turns and without extra adjusts
-        searchMaze(0, 0);
+      case 6:
+        // Run the maze with in place turns and without extra adjusts
+        //   searchMaze(0, 0);
+
+        // Run the maze with in place turns, adjust, no gyro
+        searchMaze(0, 1, 0);
         break;
-      case 7: // Run the maze with in place turns and extra adjusts
-        searchMaze(0, 1);
+      case 7:
+        // Run the maze with in place turns and extra adjusts
+        // searchMaze(0, 1);
+
+        // Run the maze with in place turns, adjust, and gyro
+        searchMaze(0, 1, 1);
         break;
       }
     }

@@ -8,12 +8,14 @@
 
 #include "stm32f4xx_hal.h"
 
-typedef enum TurnDir {
+typedef enum TurnDir
+{
   LeftTurn,
   RightTurn
 } TurnDir;
 
-typedef enum TurnMotion {
+typedef enum TurnMotion
+{
   CurveTurn,
   InPlaceTurn
 } TurnMotion;
@@ -50,10 +52,10 @@ void moveForward(float nCells);
  * @param turnDirection the direction to turn, either LeftTurn or RightTurn.
  * @param turnMotion  the motion the mouse turns from, either CurveTurn 
  *                    or InPlaceTurn.
- * 
+ * @param useGyro   Whether to use the gyro to turn or not
  * @retval  None
  */
-void turn(TurnDir turnDirection, TurnMotion turnMotion);
+void turn(TurnDir turnDirection, TurnMotion turnMotion, int useGyro);
 
 /**
  * @brief Turn 180 degrees.
@@ -93,4 +95,4 @@ float getEncSpeedX(void);
  */
 float getCurSpeedX(void);
 
-#endif  // CONTROLLER_H
+#endif // CONTROLLER_H

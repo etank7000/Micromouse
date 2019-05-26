@@ -25,7 +25,7 @@ static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
 static const float MAX_SPEED = 1.0;  // m/s (or mm/ms), 1.0 is old
 
 // Time constants
-static const uint32_t PAUSE_TIME = 150; // ms
+static const uint32_t PAUSE_TIME = 228; // ms
 // static const uint32_t PAUSE_TIME = 228; // ms
 static const uint32_t BIAS_TIME = 0;
 
@@ -233,7 +233,7 @@ void moveForward(float nCells)
     ;
 }
 
-void turn(TurnDir turnDirection, TurnMotion turnMotion)
+void turn(TurnDir turnDirection, TurnMotion turnMotion, int useGyro)
 {
 
   float TURN_TIME = PI * CELL_WIDTH / (4 * MOVE_SPEED);
@@ -254,59 +254,65 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion)
   useSensorFeedback = 0;
   unsigned int startTime = HAL_GetTick();
 
-  // if (turnMotion == InPlaceTurn)
-  // {
-  //   resetGyroAngle();
-  //   if (turnDirection == RightTurn)
-  //   {
-  //     while (fabsf(getGyroAngle()) <= 62)
-  //     {
-  //       targetSpeedW = maxSpeedW;
-  //     }
-  //     while (fabsf(getGyroAngle()) <= 92)
-  //     {
-  //       targetSpeedW = 0;
-  //     }
-  //   }
-
-  //   if (turnDirection == LeftTurn)
-  //   {
-  //     while (fabsf(getGyroAngle()) <= 61.5)
-  //     {
-  //       targetSpeedW = maxSpeedW;
-  //     }
-  //     while (fabsf(getGyroAngle()) <= 84)
-  //     {
-  //       targetSpeedW = 0;
-  //     }
-  //   }
-  //   resetGyroAngle();
-  // }
-  // else
-  // {
-  while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
+  if (useGyro == 1)
   {
-    targetSpeedW = maxSpeedW;
-  }
-  if (turnMotion == InPlaceTurn)
-  {
-    while (HAL_GetTick() - startTime < TURN_TIME * TURN_CONST_TIME_2)
+    if (turnMotion == InPlaceTurn)
     {
-      targetSpeedW = 0;
+      resetGyroAngle();
+      if (turnDirection == RightTurn)
+      {
+        while (fabsf(getGyroAngle()) <= 62)
+        {
+          targetSpeedW = maxSpeedW;
+        }
+        while (fabsf(getGyroAngle()) <= 92)
+        {
+          targetSpeedW = 0;
+        }
+      }
+
+      if (turnDirection == LeftTurn)
+      {
+        while (fabsf(getGyroAngle()) <= 61.5)
+        {
+          targetSpeedW = maxSpeedW;
+        }
+        while (fabsf(getGyroAngle()) <= 84)
+        {
+          targetSpeedW = 0;
+        }
+      }
+      resetGyroAngle();
     }
   }
+
   else
   {
-    while (HAL_GetTick() - startTime < TURN_TIME)
+    while (HAL_GetTick() - startTime < TURN_TIME - TURN_TIME_1)
     {
-      targetSpeedW = 0;
+      targetSpeedW = maxSpeedW;
+    }
+    if (turnMotion == InPlaceTurn)
+    {
+      while (HAL_GetTick() - startTime < TURN_TIME * TURN_CONST_TIME_2)
+      {
+        targetSpeedW = 0;
+      }
+    }
+    else
+    {
+      while (HAL_GetTick() - startTime < TURN_TIME)
+      {
+        targetSpeedW = 0;
+      }
     }
   }
 
   if (turnMotion == InPlaceTurn)
+  {
     HAL_Delay(PAUSE_TIME);
+  }
   toggle(LED3);
-  // }
 }
 
 void turnAround(void)
