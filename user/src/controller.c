@@ -15,7 +15,7 @@ static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 
 // TODO: Determine what this variable should be (not tested yet)
-static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
+static const int CELL_ENC_COUNT = 5260; // Encoder counts per cell length
 // OLD VALUE
 // static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
@@ -25,7 +25,7 @@ static const float MOVE_SPEED = 0.5; // m/s (or mm/ms)
 static const float MAX_SPEED = 1.0;  // m/s (or mm/ms), 1.0 is old
 
 // Time constants
-static const uint32_t PAUSE_TIME = 228; // ms
+static const uint32_t PAUSE_TIME = 180; // ms
 // static const uint32_t PAUSE_TIME = 228; // ms
 static const uint32_t BIAS_TIME = 0;
 
@@ -40,9 +40,15 @@ static const int MOTOR_ADJUST_LIMIT = 210;
 static const float ADJUST_DIVIDER = 1.01f;
 
 // IR sensor constants
-static const int SENSOR_DIVIDER = 90;
-static const int LH_PUSH = 3310; // True mid: 2990
-static const int RH_PUSH = 3315; // True mid: 2330
+static const int SENSOR_DIVIDER = 98;
+
+// OLD VALUES
+// static const int SENSOR_DIVIDER = 90;   // increase for less correction, decrease for more correction
+static const int LH_PUSH = 3320; // True mid: 2990
+static const int RH_PUSH = 3320; // True mid: 2330
+// OLD VALUES:
+// static const int LH_PUSH = 3310; // True mid: 2990
+// static const int RH_PUSH = 3315; // True mid: 2330
 
 // // OLD VALUES
 // static const int LH_PUSH = 3425; // True mid: 3303
@@ -69,9 +75,11 @@ static const float TURN_AROUND_MULTIPLIER = 1.029f;
 // OLD VALUE
 // static const float TURN_AROUND_MULTIPLIER = 1.025f;
 static const float TURN_CONST_TIME = 0.996f;
-static const float TURN_CONST_TIME_2 = 0.9f;
 // OLD VALUE
 // static const float TURN_CONST_TIME = 0.996f;
+static const float TURN_INPLACE_CONST_TIME = 0.9f;
+// This value controls how much to curve turn
+static const float TURN_CURVE_CONST_TIME = 0.84f;
 
 // PID constants
 static const float kpX = 2;
@@ -261,7 +269,7 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion, int useGyro)
       resetGyroAngle();
       if (turnDirection == RightTurn)
       {
-        while (fabsf(getGyroAngle()) <= 62)
+        while (fabsf(getGyroAngle()) <= 62.3)
         {
           targetSpeedW = maxSpeedW;
         }
@@ -273,7 +281,7 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion, int useGyro)
 
       if (turnDirection == LeftTurn)
       {
-        while (fabsf(getGyroAngle()) <= 61.5)
+        while (fabsf(getGyroAngle()) <= 60.5)
         {
           targetSpeedW = maxSpeedW;
         }
@@ -294,14 +302,14 @@ void turn(TurnDir turnDirection, TurnMotion turnMotion, int useGyro)
     }
     if (turnMotion == InPlaceTurn)
     {
-      while (HAL_GetTick() - startTime < TURN_TIME * TURN_CONST_TIME_2)
+      while (HAL_GetTick() - startTime < TURN_TIME * TURN_INPLACE_CONST_TIME)
       {
         targetSpeedW = 0;
       }
     }
     else
     {
-      while (HAL_GetTick() - startTime < TURN_TIME)
+      while (HAL_GetTick() - startTime < TURN_TIME * TURN_CURVE_CONST_TIME)
       {
         targetSpeedW = 0;
       }

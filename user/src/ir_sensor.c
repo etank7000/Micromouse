@@ -19,11 +19,11 @@ static const int32_t HAS_FRONT = 250;
 // OLD VALUE
 // static const int32_t HAS_FRONT = 460;
 
-static const int32_t HAS_LEFT = 1350; // Diagonal sensor threshold  // 1700 is good
+static const int32_t HAS_LEFT = 1200; // Diagonal sensor threshold  // 1700 is good
 // OLD VALUE
 // static const int32_t HAS_LEFT = 1700;  // Diagonal sensor threshold
 
-static const int32_t HAS_RIGHT = 1300; // Diagonal sensor   // 1750 is good
+static const int32_t HAS_RIGHT = 1200; // Diagonal sensor   // 1750 is good
 // static const int32_t HAS_RIGHT = 1700; // Diagonal sensor   // 1750 is good
 // OLD VALUE
 // static const int32_t HAS_RIGHT = 2000; // Diagonal sensor

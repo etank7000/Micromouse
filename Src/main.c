@@ -70,8 +70,8 @@ static const int REC_START = 3200;
 
 static const float MOVE_AFTER_TURN = 0.52f;
 
-static const int LF_TURN = 875; // Threshold for starting curve turn
-static const int RF_TURN = 875;
+static const int LF_TURN = 800; // Threshold for starting curve turn
+static const int RF_TURN = 800;
 // OLD VALUES:
 // static const int LF_TURN = 901; // Threshold for starting curve turn
 // static const int RF_TURN = 1001;
@@ -239,11 +239,11 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
       else
       {
         toggle(LED1);
-        moveForward(0.19f);
-        // moveForward(0.18f);
+        // moveForward(0.19f);
+        moveForward(0.20f);
       }
       turn(RightTurn, CurveTurn, useGyro);
-      moveForward(0.1f);
+      moveForward(0.12f);
       // moveForward(0.12f);
     }
     else
@@ -292,13 +292,13 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
       }
       else
       {
-        moveForward(0.19f);
-        // moveForward(0.18f);
+        // moveForward(0.19f);
+        moveForward(0.20f);
       }
 
       turn(LeftTurn, CurveTurn, useGyro);
 
-      moveForward(0.1f);
+      moveForward(0.12f);
       // moveForward(0.12f);
     }
     else
@@ -573,28 +573,19 @@ int main(void)
         HAL_Delay(730);
         break;
       case 2: // Test Turning
-        // turnAround();
-
-        // turn(LeftTurn, InPlaceTurn);
-        // HAL_Delay(730);
-
         turn(LeftTurn, InPlaceTurn, 1);
-
-        // moveForward(0.2f);
-        // turn(RightTurn, CurveTurn);
         HAL_Delay(730);
 
-        // moveForward(0.18f);
-        // turn(LeftTurn, CurveTurn);
-        // moveForward(0.12f);
+        // searchMaze(1, 0, 0);
         break;
       case 3:
         //   moveUntilWall();
         //   moveForward(0.55);
         //   stop();
         //   adjust();
-        turnAround();
-        HAL_Delay(730);
+        // turnAround();
+        // HAL_Delay(730);
+        searchMaze(1, 0, 0);
         break;
       case 4:
         // Run the maze with curve turns and extra adjusts
