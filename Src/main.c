@@ -69,6 +69,7 @@ static const unsigned int NUM_MODES = 8UL;
 static const int REC_START = 3200;
 
 static const float MOVE_AFTER_TURN = 0.52f;
+static const float MOVE_AFTER_CURVE_TURN = 0.12f;
 
 static const int LF_TURN = 800; // Threshold for starting curve turn
 static const int RF_TURN = 800;
@@ -243,7 +244,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
         moveForward(0.20f);
       }
       turn(RightTurn, CurveTurn, useGyro);
-      moveForward(0.12f);
+      moveForward(MOVE_AFTER_CURVE_TURN);
       // moveForward(0.12f);
     }
     else
@@ -297,8 +298,7 @@ static inline void searchMaze(int doCurveTurn, int doExtraAdjust, int useGyro)
       }
 
       turn(LeftTurn, CurveTurn, useGyro);
-
-      moveForward(0.12f);
+      moveForward(MOVE_AFTER_CURVE_TURN);
       // moveForward(0.12f);
     }
     else

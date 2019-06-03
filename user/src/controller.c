@@ -15,7 +15,7 @@ static const int MOUSE_WIDTH = 69;     //74;  // The mouse has a width of 74mm
 // Variable should be 5762 according to speed_to_counts calculation?
 
 // TODO: Determine what this variable should be (not tested yet)
-static const int CELL_ENC_COUNT = 5260; // Encoder counts per cell length
+static const int CELL_ENC_COUNT = 5270; // Encoder counts per cell length
 // OLD VALUE
 // static const int CELL_ENC_COUNT = 5250; // Encoder counts per cell length
 
@@ -40,7 +40,7 @@ static const int MOTOR_ADJUST_LIMIT = 210;
 static const float ADJUST_DIVIDER = 1.01f;
 
 // IR sensor constants
-static const int SENSOR_DIVIDER = 98;
+static const int SENSOR_DIVIDER = 112;
 
 // OLD VALUES
 // static const int SENSOR_DIVIDER = 90;   // increase for less correction, decrease for more correction
@@ -79,7 +79,7 @@ static const float TURN_CONST_TIME = 0.996f;
 // static const float TURN_CONST_TIME = 0.996f;
 static const float TURN_INPLACE_CONST_TIME = 0.9f;
 // This value controls how much to curve turn
-static const float TURN_CURVE_CONST_TIME = 0.84f;
+static const float TURN_CURVE_CONST_TIME = 0.85f;
 
 // PID constants
 static const float kpX = 2;
